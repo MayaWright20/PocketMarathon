@@ -1,0 +1,17 @@
+export const COLORS = {
+    WHITE: 'rgb(255,255,255)',
+    YELLOW : 'rgb(251, 248, 204)',
+    LIGHT_ORANGE : 'rgb(253, 228, 207)',
+    ORANGE: 'rgb(255, 207, 210)',
+    PINK: 'rgb(241, 192, 232)',
+    PURPLE: 'rgb(207, 186, 240)',
+    DARK_BLUE: 'rgb(163, 196, 243)',
+    HIGHTLIGHT_DARK_BLUE:'rgb(96, 155, 238)',
+    MEDIUM_BLUE: 'rgb(144, 219, 244)',
+    LIGHT_BLUE: 'rgb(142, 236, 245)',
+    MINT_GREEN: 'rgb(152, 245, 225)',
+    GREEN: 'rgb(185, 251, 192)',
+    LIGHT_GREY: 'rgb(228, 228, 228)',
+    DARK_GREY: 'rgb(165, 165, 165)',
+    BLACK: 'rgb(0,0,0)',
+}

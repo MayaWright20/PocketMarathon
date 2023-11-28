@@ -7,7 +7,11 @@ const Stack = createStackNavigator();
 export default function GamesRunScreens_Stack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="GamesScreen_HomeScreen" component={GamesScreen_HomeScreen} />
+      <Stack.Screen 
+      name="GamesScreen_HomeScreen" 
+      component={GamesScreen_HomeScreen} 
+      options={{title: 'Games'}}
+      />
     </Stack.Navigator>
   );
 }
