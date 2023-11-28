@@ -73,7 +73,7 @@ export default function BottomTabNavigator() {
         name="ProfilesScreens_Stack"
         component={ProfileScreens_Stack}
         options={{
-          tabBarLabel: 'History',
+          tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
             <Octicons name="person" size={24} color={color} />
           ),
