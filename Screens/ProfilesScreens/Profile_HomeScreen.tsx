@@ -4,10 +4,10 @@ import { View, Text, StyleSheet } from "react-native";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../../Constants/DIMENSIONS";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 
-export default function CustomRun_HomeScreen(){
+export default function Profile_HomeScreen(){
     return(
         <ScreenLinearBackground>
-            <Text>CustomRun_HomeScreen</Text>
+            <Text>Profile_HomeScreen</Text>
         </ScreenLinearBackground>
     )
 };

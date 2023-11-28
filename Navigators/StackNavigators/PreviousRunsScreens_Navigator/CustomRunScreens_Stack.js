@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
-import CustomRun_HomeScreen from '../../../Screens/CustomRunScreens/CustomRun_HomeScreen';
+import PreviousRuns_HomeScreen from '../../../Screens/PreviousRunsScreens/PreviousRuns_HomeScreen';
 import { COLORS } from '../../../Constants/COLORS';
 
 const Stack = createStackNavigator();
 
-export default function CustomRunScreens_Stack() {
+export default function PreviousRunsScreens_Stack() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -15,10 +15,10 @@ export default function CustomRunScreens_Stack() {
       }}
     >
       <Stack.Screen 
-      name="CustomRun_HomeScreen" 
-      component={CustomRun_HomeScreen} 
+      name="PreviousRuns_HomeScreen" 
+      component={PreviousRuns_HomeScreen} 
       options={{
-        title: 'Cutomise Run'
+        title: 'Previous Runs'
       }}
       />
     </Stack.Navigator>
