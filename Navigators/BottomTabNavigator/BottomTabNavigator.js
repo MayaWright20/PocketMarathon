@@ -10,5 +10,5 @@ export default function BottomTabNavigator() {
       <Tab.Screen name="CustomRunScreens_Stack" component={CustomRunScreens_Stack} />
       <Tab.Screen name="GamesRunScreens_Stack" component={GamesRunScreens_Stack} />
     </Tab.Navigator>
-  );
+  )
 }
