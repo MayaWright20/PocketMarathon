@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { TouchableHighlight, Text, StyleSheet, View } from "react-native";
 
-import { SCREEN_WIDTH } from "../Constants/DIMENSIONS";
-import { COLORS } from "../Constants/COLORS";
-import { BORDER_RADIUS, BORDER_WIDTH } from "../Constants/Styling/STYLES";
+import { SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
+import { COLORS } from "../../Constants/COLORS";
+import { BORDER_RADIUS, BORDER_WIDTH } from "../../Constants/Styling/STYLES";
 
 
 type SquareCTAButtonProps = {
@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
         height: SCREEN_WIDTH / 4,
         borderRadius: BORDER_RADIUS,
         overflow: 'hidden',
-        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         margin: 5,
@@ -51,7 +50,6 @@ const styles = StyleSheet.create({
     linearGradient: {
         width: SCREEN_WIDTH / 4,
         height: SCREEN_WIDTH / 4,
-        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
     },

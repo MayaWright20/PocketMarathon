@@ -1,9 +1,11 @@
 import React, { useReducer } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
-import SquareCTAButton from "../../Components/SquareCTAButton";
+import SquareCTAButton from "../../Components/Buttons/SquareCTAButton";
 import { COLORS } from "../../Constants/COLORS";
 import { HEADER_1 } from "../../Constants/Styling/STYLES";
+import CustomiseRunPieChart from "../../Components/CustomiseRunPieChart";
+import { IrunIntervalsData } from "../../Components/CustomiseRunPieChart";
 
 function reducer(state: {
 
@@ -190,11 +192,6 @@ function reducer(state: {
             console.log('WARNING DISTANCE')
         }
     };
-
-
-
-
-
 };
 
 export default function CustomRun_HomeScreen() {
@@ -208,6 +205,13 @@ export default function CustomRun_HomeScreen() {
         h1And: '',
         option2: undefined
     });
+
+    const runIntervalsData: Array<IrunIntervalsData> = [
+        {
+            value: 1,
+            color: COLORS.LIGHT_GREY,
+        },
+    ];
 
     return (
         <ScreenLinearBackground>
@@ -243,13 +247,14 @@ export default function CustomRun_HomeScreen() {
                     overlayColor={state.overlayColor3 === false ? 'transparent' : COLORS.DARK_GREY}
                 />
             </View>
+
+            <CustomiseRunPieChart runIntervalsData={runIntervalsData}/>
         </ScreenLinearBackground>
     )
 };
 
 const styles = StyleSheet.create({
     optionsButtonContainer: {
-        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center'
     },
@@ -259,7 +264,6 @@ const styles = StyleSheet.create({
         fontWeight: "600"
     },
     h1Wrapper: {
-        display: 'flex',
         flexDirection: 'row'
     }
 });
