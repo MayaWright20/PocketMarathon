@@ -12,6 +12,7 @@ export const COLORS = {
     MINT_GREEN: 'rgb(152, 245, 225)',
     GREEN: 'rgb(185, 251, 192)',
     LIGHT_GREY: 'rgb(228, 228, 228)',
+    MEDIUM_GREY: 'rgb(193, 193, 193)',
     DARK_GREY: 'rgb(165, 165, 165)',
     BLACK: 'rgb(0,0,0)',
 }

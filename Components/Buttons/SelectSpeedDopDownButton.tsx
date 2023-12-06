@@ -67,20 +67,20 @@ export default function SelectSpeedDropDownButton() {
                     keyExtractor={item => item.id}
                 />
             </View>
-            <View style={styles.wordWrapper}>
+            {/* <View style={styles.wordWrapper}>
                 <Text style={styles.title}>for</Text>
-            </View>
+            </View> */}
         </View>
     )
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: '40%',
+        width: '50%',
         flexDirection: 'row'
     },
     wordWrapper:{
-        padding: 5
+        // padding: 5
     },
     titleWrapper: {
         flexDirection: 'row',
@@ -89,10 +89,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: BORDER_RADIUS / 2,
         borderTopRightRadius: BORDER_RADIUS / 2,
         borderColor: COLORS.LIGHT_BLUE,
-        paddingLeft: 5,
-        paddingRight: 5,
-        paddingBottom: 5,
-        paddingTop: 5,
+        padding: 5,
         justifyContent: 'space-between'
     },
     title: {
@@ -116,6 +113,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderColor: COLORS.LIGHT_BLUE,
         paddingTop: 6,
-        paddingBottom: 4
+        paddingBottom: 4,
+        backgroundColor: COLORS.WHITE
     }
 });

@@ -10,7 +10,7 @@ import { BORDER_RADIUS, BORDER_WIDTH } from "../../Constants/Styling/STYLES";
 type SquareCTAButtonProps = {
     linearGradientColor1: string;
     linearGradientColor2: string;
-    emoji: string;
+    emoji ?: string;
     title: string;
     overlayColor: string;
     onPress: () => any;
