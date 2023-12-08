@@ -21,6 +21,7 @@ export default function CustomRun_HomeScreen() {
    const [ optionsArr, setOptionsArr ] = useState(Array<IOptions | undefined>(2));
    const [ overlay, setOverlay ] = useState({time: false, speed: false, distance: false});
    
+   
     const timeOption: IOptions = {
         overlayColor: overlay.time,
         option: 'TIME',
@@ -30,13 +31,13 @@ export default function CustomRun_HomeScreen() {
     const speedOption: IOptions = {
         overlayColor: false,
         option: 'SPEED',
-        optionColor: COLORS.PINK,
+        optionColor: COLORS.MEDIUM_BLUE,
     };
 
     const distanceOption: IOptions = {
         overlayColor: false,
         option: 'DISTANCE',
-        optionColor: COLORS.PINK,
+        optionColor: COLORS.GREEN,
     };
 
     function setOptionHandler( option: IOptions ){
@@ -134,9 +135,9 @@ export default function CustomRun_HomeScreen() {
         <ScreenLinearBackground>
             <View style={styles.h1Wrapper}>
                 <Text style={styles.h1}>Customise run by </Text>
-                <Text style={[styles.h1, styles.option1]}>{optionsArr[0]?.option}</Text>
+                <Text style={[styles.h1, styles.option1, {color: optionsArr[0]?.optionColor}]}>{optionsArr[0]?.option}</Text>
                 <Text style={styles.h1}>{optionsArr[0] !== undefined ? ' and ' : ''}</Text>
-                <Text style={[styles.h1, styles.option1, ]}>{optionsArr[1]?.option}</Text>
+                <Text style={[styles.h1, styles.option1, {color: optionsArr[1]?.optionColor}]}>{optionsArr[1]?.option}</Text>
             </View>
             <View style={styles.optionsButtonContainer}>
                 <SquareCTAButton
