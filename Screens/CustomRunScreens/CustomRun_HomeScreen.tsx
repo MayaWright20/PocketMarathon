@@ -10,7 +10,7 @@ import { SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
 
 
 interface IOptions {
-    overlayColor : boolean;
+    overlay : boolean | undefined;
     option: string | undefined;
     optionColor: string;
 };
@@ -19,40 +19,28 @@ interface IOptions {
 export default function CustomRun_HomeScreen() {
 // can refactor again
    const [ optionsArr, setOptionsArr ] = useState(Array<IOptions | undefined>(2));
-   const [ overlay, setOverlay ] = useState({time: false, speed: false, distance: false});
-   
    
     const timeOption: IOptions = {
-        overlayColor: overlay.time,
+        overlay: optionsArr[0]?.overlay || optionsArr[1]?.overlay,
         option: 'TIME',
         optionColor: COLORS.PINK,
     };
 
     const speedOption: IOptions = {
-        overlayColor: false,
+        overlay: optionsArr[0]?.overlay || optionsArr[1]?.overlay,
         option: 'SPEED',
         optionColor: COLORS.MEDIUM_BLUE,
     };
 
     const distanceOption: IOptions = {
-        overlayColor: false,
+        overlay: optionsArr[0]?.overlay || optionsArr[1]?.overlay,
         option: 'DISTANCE',
         optionColor: COLORS.GREEN,
     };
 
     function setOptionHandler( option: IOptions ){
-        //can refactor more into a switch statement
         
         if( optionsArr[0]?.option === undefined &&  optionsArr[1]?.option === undefined){
-            setOverlay((prevState) => {
-                let opt = option.option?.toLowerCase();
-                console.log(opt, 'opt')
-                let obj = {...prevState};
-                console.log(obj[opt as keyof typeof obj], 'obj.opt')
-                obj[opt as keyof typeof obj] = !obj[opt as keyof typeof obj]
-                return obj;
-            });
-            
             setOptionsArr(()=>{
                 let arr = [...optionsArr];
                 arr[0] = option;
@@ -62,14 +50,6 @@ export default function CustomRun_HomeScreen() {
         };
 
         if( optionsArr[0]?.option === option?.option ){
-            setOverlay((prevState) => {
-                let opt = option.option?.toLowerCase();
-                console.log(opt, 'opt')
-                let obj = {...prevState};
-                console.log(obj[opt as keyof typeof obj], 'obj.opt')
-                obj[opt as keyof typeof obj] = !obj[opt as keyof typeof obj]
-                return obj;
-            });
             setOptionsArr(()=>{
                 let arr = [...optionsArr];
                 arr[0] = arr[1];
@@ -79,14 +59,6 @@ export default function CustomRun_HomeScreen() {
         };
 
         if( optionsArr[1]?.option === option?.option ){
-            setOverlay((prevState) => {
-                let opt = option.option?.toLowerCase();
-                console.log(opt, 'opt')
-                let obj = {...prevState};
-                console.log(obj[opt as keyof typeof obj], 'obj.opt')
-                obj[opt as keyof typeof obj] = !obj[opt as keyof typeof obj]
-                return obj;
-            });
             setOptionsArr(()=>{
                 let arr = [...optionsArr];
                 arr[0] = arr[0];
@@ -100,14 +72,6 @@ export default function CustomRun_HomeScreen() {
         };
 
         if( optionsArr[0]?.option !== undefined && optionsArr[0].option !== option?.option ){
-            setOverlay((prevState) => {
-                let opt = option.option?.toLowerCase();
-                console.log(opt, 'opt')
-                let obj = {...prevState};
-                console.log(obj[opt as keyof typeof obj], 'obj.opt')
-                obj[opt as keyof typeof obj] = !obj[opt as keyof typeof obj]
-                return obj;
-            });
             setOptionsArr(()=>{
                 let arr = [...optionsArr];
                 arr[0] = arr[0];
@@ -146,7 +110,7 @@ export default function CustomRun_HomeScreen() {
                     onPress={() => { setOptionHandler(timeOption)}}
                     emoji={`⏱️`}
                     title={"TIME"}
-                    overlayColor={ overlay.time === false ?  'transparent' : COLORS.MEDIUM_GREY}
+                    overlayColor={optionsArr[0]?.option === 'TIME' || optionsArr[1]?.option === 'TIME' ? COLORS.MEDIUM_GREY : 'transparent'}
                 />
                 <SquareCTAButton
                     linearGradientColor1={COLORS.LIGHT_BLUE}
@@ -154,7 +118,7 @@ export default function CustomRun_HomeScreen() {
                     onPress={() => { setOptionHandler(speedOption)}}
                     emoji={`🏎️`}
                     title={"SPEED"}
-                    overlayColor={overlay.speed === false ?  'transparent' : COLORS.MEDIUM_GREY}
+                    overlayColor={optionsArr[0]?.option === 'SPEED' || optionsArr[1]?.option === 'SPEED' ? COLORS.MEDIUM_GREY : 'transparent'}
                 />
                 <SquareCTAButton
                     linearGradientColor1={COLORS.MINT_GREEN}
@@ -162,7 +126,7 @@ export default function CustomRun_HomeScreen() {
                     onPress={() => { setOptionHandler(distanceOption)}}
                     emoji={`📏`}
                     title={"DISTANCE"}
-                    overlayColor={overlay.distance === false ?  'transparent' : COLORS.MEDIUM_GREY}
+                    overlayColor={optionsArr[0]?.option === 'DISTANCE' || optionsArr[1]?.option === 'DISTANCE' ? COLORS.MEDIUM_GREY : 'transparent'}
                 />
             </View>
 
