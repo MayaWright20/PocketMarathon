@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet, TextInput, KeyboardTypeOptions } from "react-native";
 
-import { COLORS } from "../Constants/COLORS";
-import { BORDER_RADIUS } from "../Constants/Styling/STYLES";
+import { COLORS } from "../../Constants/COLORS";
+import { BORDER_RADIUS } from "../../Constants/Styling/STYLES";
 
 type InputButtonProps = {
     width: number;

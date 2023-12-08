@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import InputButton from "../InputButton";
-import { SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
-import { COLORS } from "../../Constants/COLORS";
+import InputButton from "../../General/InputButton";
+import { SCREEN_WIDTH } from "../../../Constants/DIMENSIONS";
+import { COLORS } from "../../../Constants/COLORS";
 
 export default function TimeDistanceInputButton() {
 

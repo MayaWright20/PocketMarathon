@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { TouchableHighlight, Text, StyleSheet, View } from "react-native";
 
-import { SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
-import { COLORS } from "../../Constants/COLORS";
-import { BORDER_RADIUS, BORDER_WIDTH } from "../../Constants/Styling/STYLES";
+import { SCREEN_WIDTH } from "../../../Constants/DIMENSIONS";
+import { COLORS } from "../../../Constants/COLORS";
+import { BORDER_RADIUS, BORDER_WIDTH } from "../../../Constants/Styling/STYLES";
 
 
 type SquareCTAButtonProps = {
@@ -17,7 +17,6 @@ type SquareCTAButtonProps = {
 };
 
 export default function SquareCTAButton(props: SquareCTAButtonProps): JSX.Element {
-
 
     return (
         <TouchableHighlight style={styles.container} onPress={props.onPress}>

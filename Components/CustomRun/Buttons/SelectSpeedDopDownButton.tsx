@@ -9,8 +9,8 @@ import {
 } from "react-native";
 
 import { AntDesign } from '@expo/vector-icons';
-import { COLORS } from "../../Constants/COLORS";
-import { BORDER_RADIUS } from "../../Constants/Styling/STYLES";
+import { COLORS } from "../../../Constants/COLORS";
+import { BORDER_RADIUS } from "../../../Constants/Styling/STYLES";
 
 
 const DATA = [

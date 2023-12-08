@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import { Donut } from 'react-native-donut-chart';
-import CustomiseRunPieChartText from "../Components/CustomiseRunPieChartText";
-import { COLORS } from "../Constants/COLORS";
+import CustomiseRunPieChartText from "./CustomiseRunPieChartText";
+import { COLORS } from "../../../../Constants/COLORS";
 
 export interface IrunIntervalsData {
     readonly value: 1;
