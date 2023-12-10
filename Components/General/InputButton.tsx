@@ -10,7 +10,9 @@ type InputButtonProps = {
     maxLength: number;
     borderColor: string;
     placeholder: string;
-}
+    value?: any;
+    onChangeText?: any;
+};
 
 export default function InputButton(props: InputButtonProps): JSX.Element {
     return (
@@ -19,6 +21,8 @@ export default function InputButton(props: InputButtonProps): JSX.Element {
             keyboardType={props.keyboardtype}
             maxLength={props.maxLength}
             placeholder={props.placeholder}
+            value={props.value}
+            onChangeText={props.onChangeText}
         />
     )
 };

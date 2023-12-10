@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
     View,
     Text,
@@ -7,6 +7,8 @@ import {
     TouchableHighlight,
     Pressable
 } from "react-native";
+
+import { OptionsContext } from "../../../Context/CustomRunContext/OptionsContext";
 
 import { AntDesign } from '@expo/vector-icons';
 import { COLORS } from "../../../Constants/COLORS";
@@ -30,18 +32,23 @@ const DATA = [
 
 type ItemProps = { title: string };
 
-
-
 export default function SelectSpeedDropDownButton() {
-    const [showSpeeds, setShowSpeeds] = useState(false);
-    const [selectTitle, setSelectTitle] = useState('Speed');
+    const [ showSpeeds, setShowSpeeds ] = useState(false);
+    const [ selectTitle, setSelectTitle ] = useState('SELECT SPEED');
+
+    const optionsCtx = useContext( OptionsContext );
+
+    function setSpeedHandler( speed: ItemProps){
+        setSelectTitle(speed.title);
+        optionsCtx.makeIntervalHandler("SPEED", speed.title);
+    };
 
     const Item = ({ title }: ItemProps) => (
         <TouchableHighlight
             style={styles.speedButton}
             activeOpacity={0.6}
             underlayColor="#DDDDDD"
-            onPress={() => setSelectTitle(title)}>
+            onPress={() => setSpeedHandler({title}) }>
             <Text style={styles.title}>{title}</Text>
         </TouchableHighlight>
     );
@@ -67,20 +74,15 @@ export default function SelectSpeedDropDownButton() {
                     keyExtractor={item => item.id}
                 />
             </View>
-            {/* <View style={styles.wordWrapper}>
-                <Text style={styles.title}>for</Text>
-            </View> */}
         </View>
     )
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: '50%',
-        flexDirection: 'row'
-    },
-    wordWrapper:{
-        // padding: 5
+        width: '60%',
+        flexDirection: 'row',
+        zIndex: 1,
     },
     titleWrapper: {
         flexDirection: 'row',
@@ -107,13 +109,13 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: BORDER_RADIUS / 2,
         borderBottomRightRadius: BORDER_RADIUS / 2,
         borderColor: COLORS.LIGHT_BLUE,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor: COLORS.WHITE,
     },
     speedButton: {
         borderBottomWidth: 2,
         borderColor: COLORS.LIGHT_BLUE,
         paddingTop: 6,
         paddingBottom: 4,
-        backgroundColor: COLORS.WHITE
     }
 });

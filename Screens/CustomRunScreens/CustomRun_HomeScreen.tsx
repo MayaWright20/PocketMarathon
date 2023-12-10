@@ -1,5 +1,5 @@
-import React, { useReducer, useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import React, { useReducer, useState, useContext, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableHighlight, Pressable } from "react-native";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import { COLORS } from "../../Constants/COLORS";
 
@@ -7,16 +7,23 @@ import { IrunIntervalsData } from "../../Components/CustomRun/Sections/PieChart/
 
 import CustomiseRunPieChart from "../../Components/CustomRun/Sections/PieChart/CustomiseRunPieChart";
 import ChooseOptionsSection from "../../Components/CustomRun/Sections/ChooseOptions/ChooseOptionsSection";
-import OptionsContextProvider from "../../Context/CustomRunContext/OptionsContext";
+import OptionsContextProvider, { OptionsContext, IOptions } from "../../Context/CustomRunContext/OptionsContext";
 
 export default function CustomRun_HomeScreen() {
 
-    //give type
+    const optionsCtx = useContext(OptionsContext);
+    // const [ ints, setInts ] = useState();
+    // const [ intArr, setIntArr ] = useState<IntervalObjType[]>([]);
+
+    function addInterval(){
+        //
+    };
+
     const runIntervalsData = [
         {
             value: 1,
-            color: COLORS.LIGHT_GREY,
-        },
+            color: COLORS.LIGHT_GREY
+        }
     ];
 
     return (
@@ -24,13 +31,14 @@ export default function CustomRun_HomeScreen() {
             <OptionsContextProvider>
                 <ChooseOptionsSection />
                 <CustomiseRunPieChart runIntervalsData={runIntervalsData} />
+                <Pressable onPress={addInterval}>
+                    <Text>Add interval</Text>
+                </Pressable>
             </OptionsContextProvider>
         </ScreenLinearBackground>
     )
 };
 
 const styles = StyleSheet.create({
-
-
 });
 

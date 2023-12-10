@@ -1,8 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Donut } from 'react-native-donut-chart';
 import CustomiseRunPieChartText from "./CustomiseRunPieChartText";
-import { COLORS } from "../../../../Constants/COLORS";
 
 export interface IrunIntervalsData {
     readonly value: 1;
@@ -12,7 +11,6 @@ export interface IrunIntervalsData {
 type Props = {
     runIntervalsData: Array<IrunIntervalsData>
 };
-
 
 export default function CustomiseRunPieChart({ runIntervalsData }: Props): JSX.Element {
     return (
@@ -38,10 +36,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 15,
-    },
-    textContainer: {
-        backgroundColor: 'yellow',
-        position: 'absolute'
     },
     pieChartTextWrapper: {
         position: 'absolute'

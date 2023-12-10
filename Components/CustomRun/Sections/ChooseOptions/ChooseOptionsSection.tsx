@@ -44,9 +44,9 @@ export default function ChooseOptionsSection() {
                 let arr = [...optionsArr];
                 arr[0] = option;
                 arr[1] = undefined;
+                optionsCtx.optionsHandler(arr);
                 return arr;
             });
-            optionsCtx.optionsHandler(optionsArr);
         };
 
         if (optionsArr[0]?.option === option?.option) {
@@ -54,9 +54,9 @@ export default function ChooseOptionsSection() {
                 let arr = [...optionsArr];
                 arr[0] = arr[1];
                 arr[1] = undefined;
+                optionsCtx.optionsHandler(arr);
                 return arr;
             });
-            optionsCtx.optionsHandler(optionsArr);
         };
 
         if (optionsArr[1]?.option === option?.option) {
@@ -64,10 +64,9 @@ export default function ChooseOptionsSection() {
                 let arr = [...optionsArr];
                 arr[0] = arr[0];
                 arr[1] = undefined;
+                optionsCtx.optionsHandler(arr);
                 return arr;
             });
-            optionsCtx.optionsHandler(optionsArr);
-            
         };
 
         if (optionsArr[0] !== undefined && optionsArr[1] !== undefined) {
@@ -79,9 +78,9 @@ export default function ChooseOptionsSection() {
                 let arr = [...optionsArr];
                 arr[0] = arr[0];
                 arr[1] = option;
+                optionsCtx.optionsHandler(arr);
                 return arr;
             });
-            optionsCtx.optionsHandler(optionsArr);
         };
     };
 
