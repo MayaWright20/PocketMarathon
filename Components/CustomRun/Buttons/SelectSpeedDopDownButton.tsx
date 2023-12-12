@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -13,6 +13,8 @@ import { OptionsContext } from "../../../Context/CustomRunContext/OptionsContext
 import { AntDesign } from '@expo/vector-icons';
 import { COLORS } from "../../../Constants/COLORS";
 import { BORDER_RADIUS } from "../../../Constants/Styling/STYLES";
+
+import { SPEED } from "../../../Types/Types";
 
 
 const DATA = [
@@ -30,17 +32,21 @@ const DATA = [
     },
 ];
 
-type ItemProps = { title: string };
+type ItemProps = { title: SPEED };
 
 export default function SelectSpeedDropDownButton() {
     const [ showSpeeds, setShowSpeeds ] = useState(false);
-    const [ selectTitle, setSelectTitle ] = useState('SELECT SPEED');
+    const [ selectTitle, setSelectTitle ] = useState<SPEED | 'SELECT SPEED'>('SELECT SPEED');
 
     const optionsCtx = useContext( OptionsContext );
+    
+    useEffect(() => {
+        //intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME
+        optionsCtx.makeIntervalHandler("SPEED", selectTitle);
+    }, [ selectTitle ]);
 
     function setSpeedHandler( speed: ItemProps){
         setSelectTitle(speed.title);
-        optionsCtx.makeIntervalHandler("SPEED", speed.title);
     };
 
     const Item = ({ title }: ItemProps) => (
@@ -70,8 +76,9 @@ export default function SelectSpeedDropDownButton() {
             ]}>
                 <FlatList
                     data={DATA}
-                    renderItem={({ item }) => <Item title={item.title} />}
+                    renderItem={({ item }) => <Item title={item.title as SPEED} />}
                     keyExtractor={item => item.id}
+                    scrollEnabled={false}
                 />
             </View>
         </View>

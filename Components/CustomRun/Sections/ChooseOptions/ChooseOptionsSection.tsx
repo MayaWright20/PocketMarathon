@@ -13,7 +13,6 @@ export interface IOptions {
     optionColor: string;
 };
 
-
 export default function ChooseOptionsSection() {
 
     const optionsCtx = useContext( OptionsContext );

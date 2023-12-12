@@ -2,14 +2,10 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Donut } from 'react-native-donut-chart';
 import CustomiseRunPieChartText from "./CustomiseRunPieChartText";
-
-export interface IrunIntervalsData {
-    readonly value: 1;
-    color: string;
-};
+import { IRunIntervalsData } from "../../../../Types/Types";
 
 type Props = {
-    runIntervalsData: Array<IrunIntervalsData>
+    runIntervalsData: Array<IRunIntervalsData>;
 };
 
 export default function CustomiseRunPieChart({ runIntervalsData }: Props): JSX.Element {

@@ -1,112 +1,95 @@
 import { createContext, useState, useEffect } from "react";
 
-export interface IOptions {
-    overlay: boolean | undefined;
-    option: string | undefined;
-    optionColor: string;
-};
-
-type IntervalType = 'SPEED' | 'TIME' | 'DISTANCE';
-
-type IntervalObjType = {
-    TIME: undefined | { hours: string; mins: string; secs: string };
-    SPEED: undefined | string;
-    DISTANCE: undefined | { miles: string; kms: string; metres: string };
-};
+import * as Type from "../../Types/Types";
+import { COLORS } from "../../Constants/COLORS";
   
 const optionsCtxObj = {
-    arr: Array<IOptions | undefined | null>(2),
+    arr: Array<Type.IOptions | undefined | null>(2),
     optionsHandler: (opt: any) => {},
-    makeIntervalHandler : ( intervalType: IntervalType, intervalData: any ) => {},
+    makeIntervalHandler : ( intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME ) => {},
     addIntervalHandler: () => {},
     interval: {},
-    intervalsArr: [] as IntervalObjType[]
+    intervalsArr: [] as Array<Type.IRunIntervalsData | undefined>
 };
 
 export const OptionsContext = createContext<{
-    arr: Array<IOptions | undefined | null>;
+    arr: Array<Type.IOptions | undefined | null>;
     optionsHandler : (opt: any) => void;
-    makeIntervalHandler : ( intervalType: IntervalType, intervalData: any ) => void;
-    addIntervalHandler: () => void,
-    interval: {},
-    intervalsArr: IntervalObjType[]
+    makeIntervalHandler : ( intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME ) => void;
+    addIntervalHandler: () => void;
+    interval: {};
+    intervalsArr: Array<Type.IRunIntervalsData | undefined>;
 }>(optionsCtxObj);
 
 export default function OptionsContextProvider({ children }: any){
 
-    const [ options, setOptions ] = useState(Array<IOptions | undefined | null>(2));
-    const [ interval, setInterval ] = useState({'SPEED': undefined, 'TIME': undefined, 'DISTANCE': undefined});
-    const [ intervalsArr, setIntervalsArr ] = useState<IntervalObjType[]>([]);
+    const [ options, setOptions ] = useState(Array<Type.IOptions | undefined | null>(2));
+    const [ interval, setInterval ] = useState<Type.IRunIntervalsData>({ value: 2 as const, color: 'black', 'DISTANCE': undefined, 'SPEED': undefined, 'TIME': undefined});
+    const [ intervalsArr, setIntervalsArr ] = useState<Type.IRunIntervalsData[]>([{ value: 2, color: COLORS.LIGHT_GREY }]);
 
-    function optionsHandler(opt: any){    
+    useEffect(() => {
+        //updated all the time
+        
+        console.log('useEffect CTx: intervalsArr', intervalsArr);
+    }, [ options, intervalsArr, interval]);
+
+    function optionsHandler(opt: any){ 
         setOptions(opt);
+    };
+
+    function makeIntervalHandler( intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME ) {
+        setInterval((prevInterval) => ({
+            ...prevInterval,
+            [intervalType]: intervalTypeData,
+        }));
+    };
+
+    function addIntervalHandler() {
+
+        if( options[0]?.option !== 'TIME' && options[1]?.option !== 'TIME' ){
+            setInterval((prevInterval) => ({
+                ...prevInterval,
+                color: 'red',
+                'TIME': undefined
+            }));
+        };
+
+        if( options[0]?.option !== 'SPEED' && options[1]?.option !== 'SPEED' ){
+            setInterval((prevInterval) => ({
+                ...prevInterval,
+                color: '#00ff15',
+                'SPEED': undefined
+            }));
+        };
+
+        if( options[0]?.option !== 'DISTANCE' && options[1]?.option !== 'DISTANCE' ){
+            setInterval((prevInterval) => ({
+                ...prevInterval,
+                color: '#00eeff',
+                'DISTANCE': undefined
+            }));
+        };  
+
+        //SORT THIS OUT SO IT NO LONGER SHOWS BLACK
+        // need to click once to add first run which is incrorect
+        if( interval.color === 'black'){
+            return
+        }else{
+            setIntervalsArr((prevArray) => ([...prevArray, interval]));
+        }
+        
+        
+        
     };
 
     const value = {
         arr: options,
         optionsHandler: optionsHandler,
         makeIntervalHandler: makeIntervalHandler,
-        addintervalHandler: addintervalHandler,
+        addIntervalHandler: addIntervalHandler, 
+        interval: interval,
         intervalsArr: intervalsArr
     };
-
-    function makeIntervalHandler( intervalType: IntervalType, intervalData: any ){
-        let intervalObj;
-        setInterval(() => {
-            intervalObj = {...interval};
-            intervalObj[intervalType] = intervalData;
-            return intervalObj;
-        });
-        return intervalObj;
-    };
-
-
-    function addintervalHandler(){
-    //    let intervalObj : IntervalObjType;
-
-    //    if( options[0]?.option === 'TIME' || options[1]?.option === 'TIME' ){
-    //     return;
-    //    }else{
-    //     setInterval(prevState => {
-    //         console.log('prevState', prevState);
-    //         return {
-    //             ...prevState,
-    //             'TIME': undefined,
-    //         };
-    //     });
-    //    };
-
-    //    if( options[0]?.option === 'SPEED' || options[1]?.option === 'SPEED'){
-    //     return;
-    //    }else{
-    //     setInterval(prevState => {
-    //         return {
-    //             ...prevState,
-    //             'SPEED': undefined
-    //         };
-    //     });
-    //    };
-
-    //    if( options[0]?.option === 'DISTANCE' || options[1]?.option === 'DISTANCE'){
-    //     return;
-    //    }else{
-    //     setInterval(prevState => {
-    //         return {
-    //             ...prevState,
-    //             'DISTANCE': undefined
-    //         };
-    //     });
-    //    };
-
-    //    setIntervalsArr(()=>{
-    //     let arr = [ ...intervalsArr, interval ];
-    //     return arr;
-    //    });
-       
-    //    return console.log('intervalsArr', ...intervalsArr)
-    };
-
-   
 
     return <OptionsContext.Provider value={value}>{children}</OptionsContext.Provider>
 };

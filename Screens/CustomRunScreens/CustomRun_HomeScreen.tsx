@@ -1,40 +1,38 @@
 import React, { useReducer, useState, useContext, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableHighlight, Pressable } from "react-native";
+import { View, Text, StyleSheet, TouchableHighlight, Pressable, Button } from "react-native";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import { COLORS } from "../../Constants/COLORS";
 
-import { IrunIntervalsData } from "../../Components/CustomRun/Sections/PieChart/CustomiseRunPieChart";
+import { IRunIntervalsData } from "../../Types/Types";
 
 import CustomiseRunPieChart from "../../Components/CustomRun/Sections/PieChart/CustomiseRunPieChart";
 import ChooseOptionsSection from "../../Components/CustomRun/Sections/ChooseOptions/ChooseOptionsSection";
-import OptionsContextProvider, { OptionsContext, IOptions } from "../../Context/CustomRunContext/OptionsContext";
+import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
 
 export default function CustomRun_HomeScreen() {
 
     const optionsCtx = useContext(OptionsContext);
-    // const [ ints, setInts ] = useState();
-    // const [ intArr, setIntArr ] = useState<IntervalObjType[]>([]);
+
+    const [ runIntervalsData, setRunIntervalsData ] = useState<IRunIntervalsData[]>(optionsCtx.intervalsArr as IRunIntervalsData[]);
+
+    useEffect(()=>{
+        setRunIntervalsData( optionsCtx.intervalsArr as IRunIntervalsData[] );
+    },[ runIntervalsData, optionsCtx.intervalsArr]);
 
     function addInterval(){
-        //
+        console.log('add')
+        optionsCtx.addIntervalHandler();
+        // setRunIntervalsData( optionsCtx.intervalsArr as IRunIntervalsData[] );
+        // setRunIntervalsData(optionsCtx.intervalsArr.filter(interval => interval !== undefined) as IRunIntervalsData[]);
     };
-
-    const runIntervalsData = [
-        {
-            value: 1,
-            color: COLORS.LIGHT_GREY
-        }
-    ];
 
     return (
         <ScreenLinearBackground>
-            <OptionsContextProvider>
                 <ChooseOptionsSection />
                 <CustomiseRunPieChart runIntervalsData={runIntervalsData} />
                 <Pressable onPress={addInterval}>
                     <Text>Add interval</Text>
                 </Pressable>
-            </OptionsContextProvider>
         </ScreenLinearBackground>
     )
 };
