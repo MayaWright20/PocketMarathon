@@ -13,7 +13,7 @@ export default function CustomiseRunPieChart({ runIntervalsData }: Props): JSX.E
         <View style={styles.container}>
             <Donut
                 data={runIntervalsData}
-                radius={180}
+                radius={200}
                 fill={'transparent'}
                 strokeWidth={25}
                 strokeLinejoin={'round'}
