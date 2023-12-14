@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
     linearbackground: {
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT,
-        padding: 15
+        paddingHorizontal: 15
     }
 });

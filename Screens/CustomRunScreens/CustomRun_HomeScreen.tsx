@@ -1,5 +1,5 @@
 import React, { useReducer, useState, useContext, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableHighlight, Pressable, Button } from "react-native";
+import { View, Text, StyleSheet, TouchableHighlight, Pressable, Button, ScrollView } from "react-native";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import { COLORS } from "../../Constants/COLORS";
 
@@ -11,6 +11,7 @@ import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
 import { BORDER_RADIUS, HEADER_1 } from "../../Constants/Styling/STYLES";
 import { LinearGradient } from "expo-linear-gradient";
 import { SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
+import IntervalsList from "../../Components/CustomRun/Sections/Intervals/IntervalsList";
 
 export default function CustomRun_HomeScreen() {
 
@@ -32,6 +33,7 @@ export default function CustomRun_HomeScreen() {
 
     return (
         <ScreenLinearBackground>
+            <ScrollView style={styles.container}>
             <ChooseOptionsSection />
             <CustomiseRunPieChart runIntervalsData={runIntervalsData} />
             <View style={styles.ctaButtonContainer}>
@@ -52,11 +54,16 @@ export default function CustomRun_HomeScreen() {
                     </LinearGradient>
                 </TouchableHighlight>
             </View>
+            <IntervalsList/>
+            </ScrollView>
         </ScreenLinearBackground>
     )
 };
 
 const styles = StyleSheet.create({
+    container:{
+        paddingVertical: 15
+    },
     h1: {
         ...HEADER_1,
         textAlign: 'center'
