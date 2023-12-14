@@ -37,7 +37,7 @@ export default function CustomRun_HomeScreen() {
 
     return (
         <ScreenLinearBackground>
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.horizontalPadding}>
                 <ChooseOptionsSection />
             <CustomiseRunPieChart runIntervalsData={runIntervalsData} />
@@ -61,14 +61,16 @@ export default function CustomRun_HomeScreen() {
             </View>
                 </View>
             <IntervalsList/>
+            <View style={{display: optionsCtx.intervalsArr.length < 2 ? 'none' : 'flex'}}>            
             <TouchableHighlight onPress={startRunHandler} style={[styles.ctaButtonWrapper, styles.startButton]}>
                     <LinearGradient
-                        colors={[COLORS.ORANGE, COLORS.PINK]}
+                        colors={[COLORS.LIGHT_ORANGE, COLORS.ORANGE]}
                         style={styles.ctaButton}
                     >
                         <Text style={styles.h1}>START</Text>
                     </LinearGradient>
                 </TouchableHighlight>
+            </View>
             </ScrollView>
         </ScreenLinearBackground>
     )

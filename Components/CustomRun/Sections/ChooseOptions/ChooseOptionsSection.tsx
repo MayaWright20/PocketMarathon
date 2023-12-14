@@ -6,6 +6,7 @@ import { HEADER_1 } from "../../../../Constants/Styling/STYLES";
 import SquareCTAButton from "../../Buttons/SquareCTAButton";
 
 import { OptionsContext } from "../../../../Context/CustomRunContext/OptionsContext";
+import { SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
 
 export interface IOptions {
     overlay: boolean | undefined;
@@ -13,9 +14,9 @@ export interface IOptions {
     optionColor: string;
 };
 
-
 export default function ChooseOptionsSection() {
 
+    const buttonDimensions = SCREEN_WIDTH / 4;
     const optionsCtx = useContext( OptionsContext );
     const [ optionsArr, setOptionsArr ] = useState(Array<IOptions | undefined | null>(2));
 
@@ -38,6 +39,7 @@ export default function ChooseOptionsSection() {
     };
 
     function setOptionHandler(option: IOptions) {
+        
         if (optionsArr[0]?.option === undefined && optionsArr[1]?.option === undefined) {
             setOptionsArr(() => {
                 let arr = [...optionsArr];
@@ -47,8 +49,6 @@ export default function ChooseOptionsSection() {
                 return arr;
             });
         };
-
-        
 
         if (optionsArr[0]?.option === option?.option) {
             setOptionsArr(() => {
@@ -74,7 +74,6 @@ export default function ChooseOptionsSection() {
             return;
         };
 
-
         if (optionsArr[0]?.option !== undefined && optionsArr[0].option !== option?.option) {
             setOptionsArr(() => {
                 let arr = [...optionsArr];
@@ -96,12 +95,16 @@ export default function ChooseOptionsSection() {
                 </View>
                 <View style={styles.squareCTAButtonWrapper}>
                     <SquareCTAButton
-                        linearGradientColor1={COLORS.ORANGE}
-                        linearGradientColor2={COLORS.PINK}
-                        onPress={() => { setOptionHandler(timeOption) }}
-                        emoji={`⏱️`}
-                        title={"TIME"}
-                        overlayColor={optionsArr[0]?.option === 'TIME' || optionsArr[1]?.option === 'TIME' ? COLORS.MEDIUM_GREY : 'transparent'}
+                    linearGradientColor1={COLORS.ORANGE}
+                    linearGradientColor2={COLORS.PINK}
+                    onPress={() => { setOptionHandler(timeOption); } }
+                    emoji={`⏱️`}
+                    title={"TIME"}
+                    overlayColor={optionsArr[0]?.option === 'TIME' || optionsArr[1]?.option === 'TIME' ? COLORS.MEDIUM_GREY : 'transparent'} 
+                    width={buttonDimensions} 
+                    height={buttonDimensions}
+                    emojiSize={50}
+                    titleSize={16}
                     />
                     <SquareCTAButton
                         linearGradientColor1={COLORS.LIGHT_BLUE}
@@ -110,6 +113,10 @@ export default function ChooseOptionsSection() {
                         emoji={`🏎️`}
                         title={"SPEED"}
                         overlayColor={optionsArr[0]?.option === 'SPEED' || optionsArr[1]?.option === 'SPEED' ? COLORS.MEDIUM_GREY : 'transparent'}
+                        width={buttonDimensions} 
+                        height={buttonDimensions}
+                        emojiSize={50}
+                        titleSize={16}
                     />
                     <SquareCTAButton
                         linearGradientColor1={COLORS.MINT_GREEN}
@@ -118,6 +125,10 @@ export default function ChooseOptionsSection() {
                         emoji={`📏`}
                         title={"DISTANCE"}
                         overlayColor={optionsArr[0]?.option === 'DISTANCE' || optionsArr[1]?.option === 'DISTANCE' ? COLORS.MEDIUM_GREY : 'transparent'}
+                        width={buttonDimensions} 
+                        height={buttonDimensions}
+                        emojiSize={50}
+                        titleSize={16}
                     />
                 </View>
         </View>
