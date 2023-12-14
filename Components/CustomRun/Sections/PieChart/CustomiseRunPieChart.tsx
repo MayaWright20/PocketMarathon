@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 15,
+        marginTop: 5,
+        marginBottom: 5
     },
     pieChartTextWrapper: {
         position: 'absolute'

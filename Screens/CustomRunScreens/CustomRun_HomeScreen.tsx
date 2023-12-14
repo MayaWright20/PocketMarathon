@@ -8,6 +8,9 @@ import { IRunIntervalsData } from "../../Types/Types";
 import CustomiseRunPieChart from "../../Components/CustomRun/Sections/PieChart/CustomiseRunPieChart";
 import ChooseOptionsSection from "../../Components/CustomRun/Sections/ChooseOptions/ChooseOptionsSection";
 import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
+import { BORDER_RADIUS, HEADER_1 } from "../../Constants/Styling/STYLES";
+import { LinearGradient } from "expo-linear-gradient";
+import { SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
 
 export default function CustomRun_HomeScreen() {
 
@@ -20,23 +23,41 @@ export default function CustomRun_HomeScreen() {
     },[ runIntervalsData, optionsCtx.intervalsArr]);
 
     function addInterval(){
-        console.log('add')
         optionsCtx.addIntervalHandler();
-        // setRunIntervalsData( optionsCtx.intervalsArr as IRunIntervalsData[] );
-        // setRunIntervalsData(optionsCtx.intervalsArr.filter(interval => interval !== undefined) as IRunIntervalsData[]);
     };
 
     return (
         <ScreenLinearBackground>
                 <ChooseOptionsSection />
                 <CustomiseRunPieChart runIntervalsData={runIntervalsData} />
-                <Pressable onPress={addInterval}>
-                    <Text>Add interval</Text>
-                </Pressable>
+                <TouchableHighlight onPress={addInterval} style={styles.ctaButtonContainer}>
+                    <LinearGradient 
+                    colors={[COLORS.LIGHT_ORANGE, COLORS.ORANGE]}
+                    style={styles.ctaButton}
+                    >
+                    <Text style={styles.h1}>Add interval</Text>
+                    </LinearGradient>
+                </TouchableHighlight>
         </ScreenLinearBackground>
     )
 };
 
 const styles = StyleSheet.create({
+    h1: { 
+        ...HEADER_1,
+        textAlign: 'center'
+    },
+    ctaButtonContainer:{
+        overflow: 'hidden',
+        backgroundColor: 'pink',
+        width: SCREEN_WIDTH / 2.5,
+        borderRadius: BORDER_RADIUS,
+        borderColor: COLORS.MEDIUM_GREY,
+        borderWidth: 2
+    },
+    ctaButton:{
+        padding: 15,
+        width: '100%',
+    }
 });
 

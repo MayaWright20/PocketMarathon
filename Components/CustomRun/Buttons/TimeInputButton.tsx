@@ -10,63 +10,76 @@ import { OptionsContext } from "../../../Context/CustomRunContext/OptionsContext
 
 export default function TimeInputButton() {
 
-    const inputButtonWidth = SCREEN_WIDTH / 5.5;
-    const [ hours, setHours ] = useState();
-    const [ mins, setMins ] = useState();
-    const [ secs, setSecs ] = useState();
+    const inputButtonWidth = SCREEN_WIDTH / 4.7;
+    const [hours, setHours] = useState();
+    const [mins, setMins] = useState();
+    const [secs, setSecs] = useState();
 
     const optionsCtx = useContext(OptionsContext);
     const time = { 'HOURS': hours, 'MINS': mins, 'SECS': secs };
 
-    useEffect(()=>{
-        optionsCtx.makeIntervalHandler('TIME', time );
-    },[ hours, mins, secs ]);
+    useEffect(() => {
+        optionsCtx.makeIntervalHandler('TIME', time);
+
+    }, [hours, mins, secs]);
 
     return (
         <View style={styles.container}>
             {
-            <InputButton 
-            width={inputButtonWidth}
-            keyboardtype={"number-pad"}
-            maxLength={2}
-            borderColor={"pink"}
-            placeholder={"hrs"} 
-            value={hours}       
-            onChangeText={(hrs: any) => {
-                if (Number(hrs) <= 10) {
-                    setHours(hrs);
-                }
-            }}      
-        />
+                <InputButton
+                    width={inputButtonWidth}
+                    keyboardtype={"number-pad"}
+                    maxLength={2}
+                    borderColor={"pink"}
+                    placeholder={"HOURS"}
+                    value={hours}
+                    onChangeText={(hrs: any) => {
+                        if (hrs === "" || undefined) {
+                            setHours(undefined)
+                        } else if (Number(hrs) <= 10) {
+                            setHours(hrs);
+                        } else {
+                            setHours(undefined)
+                        }
+                    }}
+                />
             }
-            <Text style={{color: 'pink'}}>:</Text>
-            <InputButton 
+            <Text style={styles.semiColon}>:</Text>
+            <InputButton
                 width={inputButtonWidth}
                 keyboardtype={"number-pad"}
                 maxLength={2}
-                borderColor={"pink"} 
-                placeholder={"mins"}  
-                value={mins}       
+                borderColor={"pink"}
+                placeholder={"MINS"}
+                value={mins}
                 onChangeText={(mins: any) => {
-                    if (Number(mins) <= 59) {
+                    if (mins === "" || undefined) {
+                        setMins(undefined)
+                    } else if (Number(mins) <= 59) {
                         setMins(mins);
+                    } else {
+                        setMins(undefined)
                     }
-                }}         
-                />
-            <Text style={{color: 'pink'}}>:</Text>
-            <InputButton 
+                }}
+            />
+            <Text style={styles.semiColon}>:</Text>
+            <InputButton
                 width={inputButtonWidth}
-                keyboardtype={"number-pad"} 
+                keyboardtype={"number-pad"}
                 maxLength={2}
-                borderColor={"pink"} 
-                placeholder={"secs"}  
-                value={secs}       
+                borderColor={"pink"}
+                placeholder={"SECS"}
+                value={secs}
                 onChangeText={(secs: any) => {
-                    if (Number(secs) <= 59) {
+                    if (secs === "" || undefined) {
+                        setSecs(undefined)
+                    } else if (Number(secs) <= 59) {
                         setSecs(secs);
+                    } else {
+                        setSecs(undefined)
                     }
-                }}           
-                />
+                }}
+            />
         </View>
     )
 };
@@ -78,5 +91,9 @@ const styles = StyleSheet.create({
     },
     text: {
         color: COLORS.DARK_GREY
+    },
+    semiColon: {
+        color: 'pink',
+        fontWeight: '900'
     }
 });

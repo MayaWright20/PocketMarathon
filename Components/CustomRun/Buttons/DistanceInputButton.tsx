@@ -9,7 +9,7 @@ import { COLORS } from "../../../Constants/COLORS";
 
 export default function DistanceInputButton() {
 
-    const inputButtonWidth = SCREEN_WIDTH / 5.5;
+    const inputButtonWidth = SCREEN_WIDTH / 4.7;
     const [ miles, setMiles ] = useState();
     const [ kms, setKms ] = useState();
     const [ metres, setMetres ] = useState();
@@ -18,7 +18,11 @@ export default function DistanceInputButton() {
     const distance = { 'MILES': miles, 'KMS': kms, 'METRES': metres };
 
     useEffect(() => {
-        optionsCtx.makeIntervalHandler('DISTANCE', distance);
+        if( distance.MILES === undefined && distance.KMS === undefined && distance.METRES === undefined){
+            return;
+        }else{
+            optionsCtx.makeIntervalHandler('DISTANCE', distance);   
+        }
     }, [ miles, kms, metres ]);
 
     return (
@@ -29,40 +33,55 @@ export default function DistanceInputButton() {
                     keyboardtype={"number-pad"}
                     maxLength={2}
                     borderColor={COLORS.GREEN}
-                    placeholder={"miles"}
+                    placeholder={"MILES"}
                     value={ miles }
                     onChangeText={( m : any) => {
-                        if ( Number( m ) <= 50 ) {
+                        if(m === "" || undefined){
+                            setMiles(undefined)
+                        }
+                        else if ( Number( m ) <= 50 ) {
                             setMiles( m );
+                        }else{
+                            setMiles(undefined)
                         }
                     }}
                 />
             }
-            <Text style={{ color: COLORS.GREEN }}>:</Text>
+            <Text style={styles.semiColon}>:</Text>
             <InputButton
                 width={inputButtonWidth}
                 keyboardtype={"number-pad"}
                 maxLength={2}
                 borderColor={COLORS.GREEN}
-                placeholder={"kms"}
+                placeholder={"KMS"}
                 value={ kms }
                 onChangeText={( k: any) => {
-                    if ( Number( k ) <= 10) {
+                    if(k === "" || undefined){
+                        setKms(undefined)
+                    }
+                    else if ( Number( k ) <= 10) {
                         setKms( k );
+                    }else{
+                        setKms(undefined)
                     }
                 }}
             />
-            <Text style={{ color: COLORS.GREEN }}>:</Text>
+            <Text style={styles.semiColon}>:</Text>
             <InputButton
                 width={inputButtonWidth}
                 keyboardtype={"number-pad"}
                 maxLength={2}
                 borderColor={COLORS.GREEN}
-                placeholder={"metres"}
+                placeholder={"METRES"}
                 value={ metres }
                 onChangeText={( m: any) => {
-                    if (Number(m) <= 10) {
+                    if(m === ""){
+                        setMetres(undefined)
+                    }
+                    else if (Number(m) <= 10) {
                         setMetres(m);
+                    }else{
+                        setMetres(undefined)
                     }
                 }}
             />
@@ -77,5 +96,9 @@ const styles = StyleSheet.create({
     },
     text: {
         color: COLORS.DARK_GREY
+    },
+    semiColon:{ 
+        color: COLORS.GREEN,
+        fontWeight: '900' 
     }
 });

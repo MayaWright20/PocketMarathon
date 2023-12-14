@@ -13,9 +13,7 @@ import { OptionsContext } from "../../../Context/CustomRunContext/OptionsContext
 import { AntDesign } from '@expo/vector-icons';
 import { COLORS } from "../../../Constants/COLORS";
 import { BORDER_RADIUS } from "../../../Constants/Styling/STYLES";
-
 import { SPEED } from "../../../Types/Types";
-
 
 const DATA = [
     {
@@ -41,8 +39,11 @@ export default function SelectSpeedDropDownButton() {
     const optionsCtx = useContext( OptionsContext );
     
     useEffect(() => {
-        //intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME
-        optionsCtx.makeIntervalHandler("SPEED", selectTitle);
+        if( selectTitle === undefined || selectTitle === 'SELECT SPEED' ){
+            return;
+        }else{
+            optionsCtx.makeIntervalHandler("SPEED", selectTitle);
+        }
     }, [ selectTitle ]);
 
     function setSpeedHandler( speed: ItemProps){
