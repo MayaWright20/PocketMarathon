@@ -9,16 +9,17 @@ import { COLORS } from "../../../../Constants/COLORS";
 
 export default function IntervalsList() {
     const optionsCtx = useContext(OptionsContext);
+    const intervalsArr = optionsCtx.intervalsArr.slice(1);
 
     return (
         <ScrollView horizontal>
             <View style={styles.container}>
             <SquareCTAButton emoji={'📣'} linearGradientColor1={COLORS.LIGHT_GREY} linearGradientColor2={COLORS.MEDIUM_GREY} title={"START"} overlayColor={""} onPress={() => undefined} />
             <View style={styles.intervalListWrapper}>
-                {optionsCtx.intervalsArr.map((item, index) =>
+                {intervalsArr.map((item, index) =>
                 <Pressable key={index} onPress={()=> console.log('press')}>
                     <SquareCTAButton
-                        linearGradientColor1={item?.color}
+                        linearGradientColor1={item ? item.color : 'yellow'}
                         linearGradientColor2={"green"}
                         title={""}
                         overlayColor={""}

@@ -14,12 +14,13 @@ type SquareCTAButtonProps = {
     title: string;
     overlayColor: string;
     onPress: () => any;
+    onLongPress?: () => any;
 };
 
 export default function SquareCTAButton(props: SquareCTAButtonProps): JSX.Element {
 
     return (
-        <Pressable style={styles.container} onPress={props.onPress}>
+        <Pressable style={styles.container} onPress={props.onPress} onLongPress={props.onLongPress}>
             <LinearGradient
                 colors={[
                     props.linearGradientColor1,
