@@ -10,8 +10,8 @@ export default function CustomiseRunPieChartText(): JSX.Element {
 
     const [ optionText, setOptionsText ] = useState<React.ReactNode>();
     const options = useContext(OptionsContext);
-    const option1 = options.arr[0];
-    const option2 = options.arr[1];
+    const option1 = options.options[0];
+    const option2 = options.options[1];
 
     useEffect(()=>{
         if( (option1?.option === 'SPEED'  || option2?.option === 'SPEED') && (option1?.option === 'TIME'  || option2?.option === 'TIME')){

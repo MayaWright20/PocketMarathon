@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import { COLORS } from "../../../../Constants/COLORS";
@@ -12,6 +12,7 @@ export interface IOptions {
     option: string | undefined;
     optionColor: string;
 };
+
 
 export default function ChooseOptionsSection() {
 
@@ -37,7 +38,6 @@ export default function ChooseOptionsSection() {
     };
 
     function setOptionHandler(option: IOptions) {
-
         if (optionsArr[0]?.option === undefined && optionsArr[1]?.option === undefined) {
             setOptionsArr(() => {
                 let arr = [...optionsArr];
@@ -47,6 +47,8 @@ export default function ChooseOptionsSection() {
                 return arr;
             });
         };
+
+        
 
         if (optionsArr[0]?.option === option?.option) {
             setOptionsArr(() => {
@@ -71,6 +73,7 @@ export default function ChooseOptionsSection() {
         if (optionsArr[0] !== undefined && optionsArr[1] !== undefined) {
             return;
         };
+
 
         if (optionsArr[0]?.option !== undefined && optionsArr[0].option !== option?.option) {
             setOptionsArr(() => {

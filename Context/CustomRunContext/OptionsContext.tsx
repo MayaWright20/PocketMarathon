@@ -4,19 +4,21 @@ import * as Type from "../../Types/Types";
 import { COLORS } from "../../Constants/COLORS";
 
 const optionsCtxObj = {
-    arr: Array<Type.IOptions | undefined | null>(2),
+    options: Array<Type.IOptions | undefined | null>(2),
     optionsHandler: ( opt: any ) => { },
     makeIntervalHandler: ( intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME ) => { },
     addIntervalHandler: () => { },
+    cancelIntervalHandler: () => { },
     interval: {},
     intervalsArr: [] as Array<Type.IRunIntervalsData | undefined>
 };
 
 export const OptionsContext = createContext<{
-    arr: Array<Type.IOptions | undefined | null>;
+    options: Array<Type.IOptions | undefined | null>;
     optionsHandler: ( opt: any ) => void;
     makeIntervalHandler: ( intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME ) => void;
     addIntervalHandler: () => void;
+    cancelIntervalHandler: () => void;
     interval: {};
     intervalsArr: Array<Type.IRunIntervalsData | undefined>;
 }>(optionsCtxObj);
@@ -76,24 +78,34 @@ export default function OptionsContextProvider({ children }: any) {
             };
         };
 
-        if(options[0]?.option !== 'TIME' && options[1]?.option !== 'TIME' && 
-           options[0]?.option !== 'SPEED' && options[1]?.option !== 'SPEED'&&
-           options[0]?.option !== 'DISTANCE' && options[1]?.option !== 'DISTANCE'
-        ){
+        if(options[0] === undefined && options[1] === undefined){
             return;
-        }
+        };
+        // if(options[0]?.option !== 'TIME' && options[1]?.option !== 'TIME' && 
+        //    options[0]?.option !== 'SPEED' && options[1]?.option !== 'SPEED'&&
+        //    options[0]?.option !== 'DISTANCE' && options[1]?.option !== 'DISTANCE'
+        // ){
+        //     return;
+        // };
 
         setIntervalsArr((prevArray) => ([...prevArray, newInterval]));
         setInterval(newInterval);
     };
 
+    function cancelIntervalHandler(){
+        options[0] = undefined;
+        options[1] = undefined;
+        setOptions(() => ([options[0], options[1]]));
+    };
+
     const value = {
-        arr: options,
+        options: options,
         optionsHandler: optionsHandler,
         makeIntervalHandler: makeIntervalHandler,
         addIntervalHandler: addIntervalHandler,
         interval: interval,
-        intervalsArr: intervalsArr
+        intervalsArr: intervalsArr,
+        cancelIntervalHandler: cancelIntervalHandler
     };
 
     return <OptionsContext.Provider value={value}>{children}</OptionsContext.Provider>

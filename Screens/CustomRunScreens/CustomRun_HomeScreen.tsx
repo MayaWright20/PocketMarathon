@@ -16,38 +16,56 @@ export default function CustomRun_HomeScreen() {
 
     const optionsCtx = useContext(OptionsContext);
 
-    const [ runIntervalsData, setRunIntervalsData ] = useState<IRunIntervalsData[]>(optionsCtx.intervalsArr as IRunIntervalsData[]);
+    const [runIntervalsData, setRunIntervalsData] = useState<IRunIntervalsData[]>(optionsCtx.intervalsArr as IRunIntervalsData[]);
 
-    useEffect(()=>{
-        setRunIntervalsData( optionsCtx.intervalsArr as IRunIntervalsData[] );
-    },[ runIntervalsData, optionsCtx.intervalsArr]);
+    useEffect(() => {
+        setRunIntervalsData(optionsCtx.intervalsArr as IRunIntervalsData[]);
+    }, [runIntervalsData, optionsCtx.intervalsArr]);
 
-    function addInterval(){
+    function addIntervalHandler() {
         optionsCtx.addIntervalHandler();
+    };
+
+    function cancelIntervalHandler(){
+        optionsCtx.cancelIntervalHandler();
     };
 
     return (
         <ScreenLinearBackground>
-                <ChooseOptionsSection />
-                <CustomiseRunPieChart runIntervalsData={runIntervalsData} />
-                <TouchableHighlight onPress={addInterval} style={styles.ctaButtonContainer}>
-                    <LinearGradient 
-                    colors={[COLORS.LIGHT_ORANGE, COLORS.ORANGE]}
-                    style={styles.ctaButton}
+            <ChooseOptionsSection />
+            <CustomiseRunPieChart runIntervalsData={runIntervalsData} />
+            <View style={styles.ctaButtonContainer}>
+                <TouchableHighlight onPress={addIntervalHandler} style={styles.ctaButtonWrapper}>
+                    <LinearGradient
+                        colors={[COLORS.LIGHT_ORANGE, COLORS.ORANGE]}
+                        style={styles.ctaButton}
                     >
-                    <Text style={styles.h1}>Add interval</Text>
+                        <Text style={styles.h1}>ADD</Text>
                     </LinearGradient>
                 </TouchableHighlight>
+                <TouchableHighlight onPress={cancelIntervalHandler} style={styles.ctaButtonWrapper}>
+                    <LinearGradient
+                        colors={[COLORS.LIGHT_GREY, COLORS.MEDIUM_GREY]}
+                        style={styles.ctaButton}
+                    >
+                        <Text style={styles.h1}>CANCEL</Text>
+                    </LinearGradient>
+                </TouchableHighlight>
+            </View>
         </ScreenLinearBackground>
     )
 };
 
 const styles = StyleSheet.create({
-    h1: { 
+    h1: {
         ...HEADER_1,
         textAlign: 'center'
     },
     ctaButtonContainer:{
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    ctaButtonWrapper: {
         overflow: 'hidden',
         backgroundColor: 'pink',
         width: SCREEN_WIDTH / 2.5,
@@ -55,7 +73,7 @@ const styles = StyleSheet.create({
         borderColor: COLORS.MEDIUM_GREY,
         borderWidth: 2
     },
-    ctaButton:{
+    ctaButton: {
         padding: 15,
         width: '100%',
     }
