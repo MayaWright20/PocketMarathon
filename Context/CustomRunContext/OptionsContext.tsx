@@ -90,6 +90,9 @@ export default function OptionsContextProvider({ children }: any) {
 
         setIntervalsArr((prevArray) => ([...prevArray, newInterval]));
         setInterval(newInterval);
+        options[0] = undefined;
+        options[1] = undefined;
+        setOptions(() => ([options[0], options[1]]));
     };
 
     function cancelIntervalHandler(){

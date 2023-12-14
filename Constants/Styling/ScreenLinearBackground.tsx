@@ -19,7 +19,6 @@ export default function ScreenLinearBackground({ children }: any) {
 const styles = StyleSheet.create({
     linearbackground: {
         width: SCREEN_WIDTH,
-        height: SCREEN_HEIGHT,
-        paddingHorizontal: 15
+        height: SCREEN_HEIGHT
     }
 });

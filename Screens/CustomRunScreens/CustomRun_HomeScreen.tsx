@@ -1,5 +1,5 @@
-import React, { useReducer, useState, useContext, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableHighlight, Pressable, Button, ScrollView } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableHighlight, ScrollView } from "react-native";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import { COLORS } from "../../Constants/COLORS";
 
@@ -31,10 +31,15 @@ export default function CustomRun_HomeScreen() {
         optionsCtx.cancelIntervalHandler();
     };
 
+    function startRunHandler(){
+        console.log('start run handler');
+    };
+
     return (
         <ScreenLinearBackground>
             <ScrollView style={styles.container}>
-            <ChooseOptionsSection />
+                <View style={styles.horizontalPadding}>
+                <ChooseOptionsSection />
             <CustomiseRunPieChart runIntervalsData={runIntervalsData} />
             <View style={styles.ctaButtonContainer}>
                 <TouchableHighlight onPress={addIntervalHandler} style={styles.ctaButtonWrapper}>
@@ -54,7 +59,16 @@ export default function CustomRun_HomeScreen() {
                     </LinearGradient>
                 </TouchableHighlight>
             </View>
+                </View>
             <IntervalsList/>
+            <TouchableHighlight onPress={startRunHandler} style={[styles.ctaButtonWrapper, styles.startButton]}>
+                    <LinearGradient
+                        colors={[COLORS.ORANGE, COLORS.PINK]}
+                        style={styles.ctaButton}
+                    >
+                        <Text style={styles.h1}>START</Text>
+                    </LinearGradient>
+                </TouchableHighlight>
             </ScrollView>
         </ScreenLinearBackground>
     )
@@ -63,6 +77,9 @@ export default function CustomRun_HomeScreen() {
 const styles = StyleSheet.create({
     container:{
         paddingVertical: 15
+    },
+    horizontalPadding:{
+        paddingHorizontal: 15
     },
     h1: {
         ...HEADER_1,
@@ -83,6 +100,10 @@ const styles = StyleSheet.create({
     ctaButton: {
         padding: 15,
         width: '100%',
+    },
+    startButton:{
+        alignSelf: 'center',
+        marginBottom: 250
     }
 });
 
