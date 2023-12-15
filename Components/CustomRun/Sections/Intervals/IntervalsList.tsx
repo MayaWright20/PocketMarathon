@@ -13,19 +13,7 @@ export default function IntervalsList() {
     const buttonDimensions = SCREEN_WIDTH / 4.2;
     const emojiSize = 25;
     const titleSize = 14;
-    // let optionsObj = {
-    //     color1: '',
-    //     color2: '',
-    //     emoji1: '',
-    //     emoji2: '',
-    //     hours: '',
-    //     mins: '',
-    //     secs: '',
-    //     speed: '',
-    //     miles: '',
-    //     kms: '',
-    //     metres: ''
-    // };
+    console.log('j')
 
     function colorMaker(item: any){
         let color = '';
