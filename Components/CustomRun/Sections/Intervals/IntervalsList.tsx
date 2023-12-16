@@ -2,7 +2,7 @@ import React, { useContext, memo, useCallback, useState, useEffect } from "react
 import { View, StyleSheet } from "react-native";
 import DraggableGridView from 'react-native-drag-sort-gridview'
 
-import { SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
 import { OptionsContext } from "../../../../Context/CustomRunContext/OptionsContext";
 import SquareCTAButton from "../../Buttons/SquareCTAButton";
 import { HEADER_1 } from "../../../../Constants/Styling/STYLES";
@@ -101,8 +101,8 @@ const Item = memo(({ item }: { item: any }) => (
             title={titleMaker(item)}
             overlayColor={""}
             onPress={() => undefined}
-            width={SCREEN_WIDTH / 4.2} 
-            height={SCREEN_WIDTH / 4.2} 
+            width={SCREEN_WIDTH / 10} 
+            height={SCREEN_WIDTH / 10} 
             emojiSize={emojiSize}
             titleSize={titleSize}
         />
@@ -130,7 +130,7 @@ export default function IntervalsList() {
 
     return (
         <View style={styles.container}>
-            <SquareCTAButton
+            {/* <SquareCTAButton
             linearGradientColor1={COLORS.LIGHT_ORANGE}
             linearGradientColor2={COLORS.ORANGE}
             title={'START'}
@@ -141,13 +141,13 @@ export default function IntervalsList() {
             height={SCREEN_WIDTH / 4.2} 
             emojiSize={emojiSize}
             titleSize={titleSize}
-        />
+        /> */}
         <DraggableGridView
             // style={styles.bg}
-            // contentContainerStyle={styles.contentContainer}
+            contentContainerStyle={styles.draggableGridViewContainer}
             // itemContainerStyle={styles.itemContainer}
             isEditing={true}
-            numColumns={2}
+            numColumns={20}
             // itemHeight={50}
             data={data}
             shouldAnimOnRelease={true}
@@ -158,7 +158,7 @@ export default function IntervalsList() {
             shouldVibrate={false}
             // shouldAnimOnRelease={true}
         />
-        <SquareCTAButton
+        {/* <SquareCTAButton
             linearGradientColor1={COLORS.LIGHT_ORANGE}
             linearGradientColor2={COLORS.ORANGE}
             title={'FINISH'}
@@ -169,24 +169,30 @@ export default function IntervalsList() {
             height={SCREEN_WIDTH / 4.2} 
             emojiSize={emojiSize}
             titleSize={titleSize}
-        />
+        /> */}
         </View>
     )
 };
 
 const styles = StyleSheet.create({
+
     container: {
-        marginVertical: 50,
-        marginHorizontal: 50,
-        paddingLeft: 15,
+        // marginVertical: 50,
+        // marginHorizontal: 50,
+        // paddingLeft: 15,
         flexDirection: 'row',
         alignItems: 'center'
     },
     h1: HEADER_1,
+    draggableGridViewContainer:{
+        backgroundColor: 'green',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT /15,
+        justifyContent: 'center',
+        alignContent: 'center'
+    },
     item:{
         backgroundColor : 'yellow',
-        // alignItems: 'stretch',
-        marginRight: 1
     }
     
 });
