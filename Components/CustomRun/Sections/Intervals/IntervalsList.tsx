@@ -101,8 +101,8 @@ const Item = memo(({ item }: { item: any }) => (
             title={titleMaker(item)}
             overlayColor={""}
             onPress={() => undefined}
-            width={SCREEN_WIDTH / 10} 
-            height={SCREEN_WIDTH / 10} 
+            width={SCREEN_WIDTH / 4.7} 
+            height={SCREEN_WIDTH / 4.7} 
             emojiSize={emojiSize}
             titleSize={titleSize}
         />
@@ -144,7 +144,7 @@ export default function IntervalsList() {
         /> */}
         <DraggableGridView
             // style={styles.bg}
-            contentContainerStyle={styles.draggableGridViewContainer}
+            contentContainerStyle={[styles.draggableGridViewContainer, { width: data.length <= 3 ?  SCREEN_WIDTH : SCREEN_WIDTH + (SCREEN_WIDTH * data.length / 20)   }]}
             // itemContainerStyle={styles.itemContainer}
             isEditing={true}
             numColumns={20}
@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
 
     container: {
         // marginVertical: 50,
+        // marginBottom: 300,
         // marginHorizontal: 50,
         // paddingLeft: 15,
         flexDirection: 'row',
@@ -185,14 +186,15 @@ const styles = StyleSheet.create({
     },
     h1: HEADER_1,
     draggableGridViewContainer:{
-        backgroundColor: 'green',
-        width: SCREEN_WIDTH,
-        height: SCREEN_HEIGHT /15,
-        justifyContent: 'center',
-        alignContent: 'center'
+        marginTop: 10,
+        marginBottom: 30,
+        // backgroundColor: 'green',
+        // width: SCREEN_WIDTH * data,
+        height: SCREEN_HEIGHT /6,
+        justifyContent: 'space-evenly',
+        alignContent: 'center',
     },
     item:{
-        backgroundColor : 'yellow',
+        // backgroundColor : 'yellow',
     }
-    
 });
