@@ -144,7 +144,7 @@ export default function IntervalsList() {
         /> */}
         <DraggableGridView
             // style={styles.bg}
-            contentContainerStyle={[styles.draggableGridViewContainer, { width: data.length <= 3 ?  SCREEN_WIDTH : SCREEN_WIDTH + (SCREEN_WIDTH * data.length / 20)   }]}
+            contentContainerStyle={[styles.draggableGridViewContainer, { width: data.length <= 3 ?  SCREEN_WIDTH : SCREEN_WIDTH + (SCREEN_WIDTH * data.length / 10)   }]}
             // itemContainerStyle={styles.itemContainer}
             isEditing={true}
             numColumns={20}
@@ -156,6 +156,7 @@ export default function IntervalsList() {
             renderItem={renderItem}
             horizontal={true}
             shouldVibrate={false}
+            showsHorizontalScrollIndicator={false}
             // shouldAnimOnRelease={true}
         />
         {/* <SquareCTAButton
