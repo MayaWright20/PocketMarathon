@@ -1,5 +1,5 @@
 import React, { useContext, memo, useCallback, useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import DraggableGridView from 'react-native-drag-sort-gridview'
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
@@ -38,7 +38,7 @@ function colorMaker(item: any) {
     };
 
     return { color, color2 };
-}
+};
 
 function titleMaker(item: any) {
 
@@ -94,31 +94,28 @@ function titleMaker(item: any) {
 };
 
 const Item = memo(({ item }: { item: any }) => (
-    <View style={styles.item}>
-        <SquareCTAButton
-            linearGradientColor1={COLORS.LIGHT_ORANGE}
-            linearGradientColor2={item ? colorMaker(item).color2 : 'yellow'}
-            title={titleMaker(item)}
-            overlayColor={""}
-            onPress={() => undefined}
-            width={SCREEN_WIDTH / 4.7} 
-            height={SCREEN_WIDTH / 4.7} 
-            emojiSize={emojiSize}
-            titleSize={titleSize}
-        />
-    </View>
+    <SquareCTAButton
+        linearGradientColor1={COLORS.LIGHT_ORANGE}
+        linearGradientColor2={item ? colorMaker(item).color2 : 'yellow'}
+        title={titleMaker(item)}
+        overlayColor={""}
+        onPress={() => undefined}
+        width={SCREEN_WIDTH / 4.7}
+        height={SCREEN_WIDTH / 4.7}
+        emojiSize={emojiSize}
+        titleSize={titleSize}
+    />
 ));
-  
+
 export default function IntervalsList() {
-    
+
     const optionsCtx = useContext(OptionsContext);
     useEffect(() => {
         setData(optionsCtx.intervalsArr);
     }, [optionsCtx.intervalsArr]);
 
-    const [data, setData] = useState(optionsCtx.intervalsArr);
-    
-    
+    const [ data, setData ] = useState(optionsCtx.intervalsArr);
+
     const onOrderChanged = useCallback((orderedData: Array<any>) => {
         setData(orderedData);
     }, []);
@@ -126,74 +123,71 @@ export default function IntervalsList() {
     const renderItem = ({ item }: { item: any }) => <Item item={item} />
     const keyExtractor = ({ id }: any) => `gridview-${id}`;
 
-    
-
     return (
-        <View style={styles.container}>
-            {/* <SquareCTAButton
-            linearGradientColor1={COLORS.LIGHT_ORANGE}
-            linearGradientColor2={COLORS.ORANGE}
-            title={'START'}
-            emoji={'📣'}
-            overlayColor={""}
-            onPress={() => undefined}
-            width={SCREEN_WIDTH / 4.2} 
-            height={SCREEN_WIDTH / 4.2} 
-            emojiSize={emojiSize}
-            titleSize={titleSize}
-        /> */}
-        <DraggableGridView
-            // style={styles.bg}
-            contentContainerStyle={[styles.draggableGridViewContainer, { width: data.length <= 3 ?  SCREEN_WIDTH : SCREEN_WIDTH + (SCREEN_WIDTH * data.length / 10)   }]}
-            // itemContainerStyle={styles.itemContainer}
-            isEditing={true}
-            numColumns={20}
-            // itemHeight={50}
-            data={data}
-            shouldAnimOnRelease={true}
-            keyExtractor={keyExtractor}
-            onOrderChanged={onOrderChanged}
-            renderItem={renderItem}
-            horizontal={true}
-            shouldVibrate={false}
-            showsHorizontalScrollIndicator={false}
-            // shouldAnimOnRelease={true}
-        />
-        {/* <SquareCTAButton
-            linearGradientColor1={COLORS.LIGHT_ORANGE}
-            linearGradientColor2={COLORS.ORANGE}
-            title={'FINISH'}
-            emoji={'🏁'}
-            overlayColor={""}
-            onPress={() => undefined}
-            width={SCREEN_WIDTH / 4.2} 
-            height={SCREEN_WIDTH / 4.2} 
-            emojiSize={emojiSize}
-            titleSize={titleSize}
-        /> */}
-        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.container, {display: data.length <= 1 ? 'none' : 'flex'}]}>
+            <View style={[styles.startFinishIntervals, styles.startInterval]}>
+                <SquareCTAButton
+                    linearGradientColor1={COLORS.LIGHT_ORANGE}
+                    linearGradientColor2={COLORS.ORANGE}
+                    title={'START'}
+                    emoji={'📣'}
+                    overlayColor={""}
+                    onPress={() => undefined}
+                    width={SCREEN_WIDTH / 4.7}
+                    height={SCREEN_WIDTH / 4.7}
+                    emojiSize={emojiSize}
+                    titleSize={titleSize}
+                />
+            </View>
+            <DraggableGridView
+                contentContainerStyle={[styles.draggableGridViewContainer, { width: data.length <= 3 ? SCREEN_WIDTH : SCREEN_WIDTH + (SCREEN_WIDTH * data.length / 10) }]}
+                isEditing={true}
+                numColumns={20}
+                data={data}
+                shouldAnimOnRelease={false}
+                keyExtractor={keyExtractor}
+                onOrderChanged={onOrderChanged}
+                renderItem={renderItem}
+                horizontal={true}
+                shouldVibrate={false}
+                showsHorizontalScrollIndicator={false}
+            />
+            <View style={[styles.startFinishIntervals, styles.finishInterval]}>
+                <SquareCTAButton
+                    linearGradientColor1={COLORS.LIGHT_ORANGE}
+                    linearGradientColor2={COLORS.ORANGE}
+                    title={'FINISH'}
+                    emoji={'🏁'}
+                    overlayColor={""}
+                    onPress={() => undefined}
+                    width={SCREEN_WIDTH / 4.7}
+                    height={SCREEN_WIDTH / 4.7}
+                    emojiSize={emojiSize}
+                    titleSize={titleSize}
+                />
+            </View>
+        </ScrollView>
     )
 };
 
 const styles = StyleSheet.create({
 
     container: {
-        // marginVertical: 50,
-        // marginBottom: 300,
-        // marginHorizontal: 50,
-        // paddingLeft: 15,
-        flexDirection: 'row',
-        alignItems: 'center'
+        alignContent: 'center',
     },
     h1: HEADER_1,
-    draggableGridViewContainer:{
-        // marginTop: 10,
-        top: -20,
-        height: SCREEN_HEIGHT /6,
+    draggableGridViewContainer: {
+        height: SCREEN_HEIGHT / 6,
         justifyContent: 'space-evenly',
         alignContent: 'center',
     },
-    item:{
-        // backgroundColor : 'yellow',
+    startFinishIntervals: {
+        alignSelf: 'center',
+    },
+    startInterval: {
+        left: 30,
+    },
+    finishInterval: {
+        right: 30
     }
 });
