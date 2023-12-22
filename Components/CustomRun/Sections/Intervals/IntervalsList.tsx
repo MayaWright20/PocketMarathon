@@ -187,10 +187,8 @@ const styles = StyleSheet.create({
     },
     h1: HEADER_1,
     draggableGridViewContainer:{
-        marginTop: 10,
-        marginBottom: 30,
-        // backgroundColor: 'green',
-        // width: SCREEN_WIDTH * data,
+        // marginTop: 10,
+        top: -20,
         height: SCREEN_HEIGHT /6,
         justifyContent: 'space-evenly',
         alignContent: 'center',

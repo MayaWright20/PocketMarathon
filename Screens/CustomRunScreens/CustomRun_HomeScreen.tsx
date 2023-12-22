@@ -24,6 +24,7 @@ export default function CustomRun_HomeScreen() {
     }, [runIntervalsData, optionsCtx.intervalsArr]);
 
     function addIntervalHandler() {
+        console.log('hi')
         optionsCtx.addIntervalHandler();
     };
 
@@ -89,7 +90,8 @@ const styles = StyleSheet.create({
     },
     ctaButtonContainer:{
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        top: -25
     },
     ctaButtonWrapper: {
         overflow: 'hidden',
