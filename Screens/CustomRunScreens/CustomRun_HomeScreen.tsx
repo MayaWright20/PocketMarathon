@@ -61,7 +61,8 @@ export default function CustomRun_HomeScreen() {
                     </View>
                 </View>
                 <IntervalsList />
-                <View style={{ display: optionsCtx.intervalsArr.length < 2 ? 'none' : 'flex' }}>
+
+                <View style={{ display:  optionsCtx.intervalsArr.length < 1 ? 'none' : 'flex' }}>
                     <TouchableHighlight onPress={startRunHandler} style={[styles.ctaButtonWrapper, styles.startButton]}>
                         <LinearGradient
                             colors={[COLORS.LIGHT_ORANGE, COLORS.ORANGE]}

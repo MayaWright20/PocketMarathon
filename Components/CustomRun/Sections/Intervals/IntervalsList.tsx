@@ -95,8 +95,8 @@ function titleMaker(item: any) {
 
 const Item = memo(({ item }: { item: any }) => (
     <SquareCTAButton
-        linearGradientColor1={COLORS.LIGHT_ORANGE}
-        linearGradientColor2={item ? colorMaker(item).color2 : 'yellow'}
+        linearGradientColor1={ item ? colorMaker(item).color : COLORS.LIGHT_ORANGE }
+        linearGradientColor2={ item ? colorMaker(item).color2 : COLORS.ORANGE }
         title={titleMaker(item)}
         overlayColor={""}
         onPress={() => undefined}
@@ -122,9 +122,11 @@ export default function IntervalsList() {
 
     const renderItem = ({ item }: { item: any }) => <Item item={item} />
     const keyExtractor = ({ id }: any) => `gridview-${id}`;
-
+ 
     return (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.container, {display: data.length <= 1 ? 'none' : 'flex'}]}>
+        <View>
+            { data ?
+        <ScrollView horizontal showsHorizontalScrollIndicator={ false } style={[ styles.container, { display: data.length < 1 ? 'none' : 'flex' }]}>
             <View style={[styles.startFinishIntervals, styles.startInterval]}>
                 <SquareCTAButton
                     linearGradientColor1={COLORS.LIGHT_ORANGE}
@@ -167,6 +169,8 @@ export default function IntervalsList() {
                 />
             </View>
         </ScrollView>
+        : null}
+        </View>
     )
 };
 

@@ -26,8 +26,8 @@ export const OptionsContext = createContext<{
 export default function OptionsContextProvider({ children }: any) {
 
     const [options, setOptions] = useState(Array<Type.IOptions | undefined | null>(2));
-    const [interval, setInterval] = useState<Type.IRunIntervalsData>({ value: 2 as const, color: COLORS.LIGHT_GREY, 'DISTANCE': undefined, 'SPEED': undefined, 'TIME': undefined });
-    const [intervalsArr, setIntervalsArr] = useState<Type.IRunIntervalsData[]>([interval]);
+    const [interval, setInterval] = useState<Type.IRunIntervalsData | undefined>(undefined);
+    const [intervalsArr, setIntervalsArr] = useState<Type.IRunIntervalsData[] |[]>([]);
 
     useEffect(() => {
     }, [options, intervalsArr, interval]);
@@ -37,7 +37,6 @@ export default function OptionsContextProvider({ children }: any) {
     };
 
     function makeIntervalHandler( intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME ) {
-        
         setInterval(( prevInterval ) => ({
             ...prevInterval,
             [intervalType]: intervalTypeData,
