@@ -1,5 +1,5 @@
 import React, { useContext, memo, useCallback, useState, useEffect } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, TouchableWithoutFeedback } from "react-native";
 import DraggableGridView from 'react-native-drag-sort-gridview';
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
@@ -7,6 +7,7 @@ import { OptionsContext } from "../../../../Context/CustomRunContext/OptionsCont
 import SquareCTAButton from "../../Buttons/SquareCTAButton";
 import { HEADER_1 } from "../../../../Constants/Styling/STYLES";
 import { COLORS } from "../../../../Constants/COLORS";
+
 
 const emojiSize = 25;
 const titleSize = 14;
@@ -208,7 +209,7 @@ export default function IntervalsList() {
                         />
                     </View>
                 </ScrollView>
-                : null}
+                : null }
         </View>
     )
 };
