@@ -156,7 +156,7 @@ export default function IntervalsList() {
     const keyExtractor = ({ id }: any) => `gridview-${id}`;
 
     function vibrationHandler(){
-        if(editable === true){
+        if( editable === true ){
             return true;
         }else{
             return false;
