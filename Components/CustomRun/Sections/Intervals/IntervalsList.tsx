@@ -1,5 +1,5 @@
 import React, { useContext, memo, useCallback, useState, useEffect } from "react";
-import { View, StyleSheet, ScrollView, TouchableWithoutFeedback } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import DraggableGridView from 'react-native-drag-sort-gridview';
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
