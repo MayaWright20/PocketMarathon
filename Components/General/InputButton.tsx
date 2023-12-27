@@ -1,8 +1,7 @@
 import React from "react";
-import { View, StyleSheet, TextInput, KeyboardTypeOptions } from "react-native";
+import { StyleSheet, TextInput, KeyboardTypeOptions } from "react-native";
 
 import { DissmissKeyboard } from "./KeyboardDissmiss";
-
 import { COLORS } from "../../Constants/COLORS";
 import { BORDER_RADIUS } from "../../Constants/Styling/STYLES";
 

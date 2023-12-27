@@ -11,7 +11,6 @@ import { COLORS } from "../../../../Constants/COLORS";
 const emojiSize = 25;
 const titleSize = 14;
 
-
 function colorMaker(item: any) {
 
     let color = '';
@@ -94,19 +93,44 @@ function titleMaker(item: any) {
 
 };
 
-const Item = memo(({ item }: { item: any }) => (
-    
-        <SquareCTAButton
-        linearGradientColor1={ item ? colorMaker(item).color : COLORS.LIGHT_ORANGE }
-        linearGradientColor2={ item ? colorMaker(item).color2 : COLORS.ORANGE }
-        title={titleMaker(item)}
-        overlayColor={ ''}
-        onPress={() => undefined }
+function squareCTAButtonOnPress(showBin: boolean, setShowBin: { (value: React.SetStateAction<boolean>): void; (arg0: boolean): void; }, editable: boolean, item: { id: any; }, optionsCtx: { intervalsArr: any; updateIntervalsArr: (arg0: any[]) => void; }) {
+   
+    if (showBin === true) {
+        
+        let arr = [...optionsCtx.intervalsArr];
+        let index = arr.findIndex(arrItem => arrItem.id === item.id);
+        if (index !== -1) {
+            arr.splice(index, 1);
+            optionsCtx.updateIntervalsArr(arr);
+        };
+        setShowBin((show)=> !show);
+    };
+
+    if (showBin === false && editable === false) {
+        setShowBin(true);
+        return;
+    };
+};
+
+function squareCTAButtonOnLongPress(item, setEditable) {
+    console.log('onLongPress');
+    setEditable((edit: boolean) => !edit);
+};
+
+const Item = memo(({ item, editable, setEditable,  showBin, setShowBin, optionsCtx }: { item: any, editable: boolean, setEditable: React.Dispatch<React.SetStateAction<boolean>>, showBin: boolean, setShowBin: React.Dispatch<React.SetStateAction<boolean>>, optionsCtx: any }) => (
+
+    <SquareCTAButton
+        linearGradientColor1={item ? colorMaker(item).color : COLORS.LIGHT_ORANGE}
+        linearGradientColor2={item ? colorMaker(item).color2 : COLORS.ORANGE}
+        title={showBin ? 'Delete' : titleMaker(item)}
+        emoji={showBin ? '🗑️' : ''}
+        overlayColor={''}
+        onPress={!editable ? () => squareCTAButtonOnPress(showBin, setShowBin, editable, item,  optionsCtx) : () => { }}
         width={SCREEN_WIDTH / 4.7}
         height={SCREEN_WIDTH / 4.7}
         emojiSize={emojiSize}
         titleSize={titleSize}
-        onLongPress={() => undefined}
+        onLongPress={() => squareCTAButtonOnLongPress(item, setEditable)}
     />
 ));
 
@@ -118,66 +142,74 @@ export default function IntervalsList() {
         setData(optionsCtx.intervalsArr);
     }, [optionsCtx.intervalsArr]);
 
-    const [ data, setData ] = useState(optionsCtx.intervalsArr);
+    const [data, setData] = useState(optionsCtx.intervalsArr);
 
     const onOrderChanged = useCallback((orderedData: Array<any>) => {
         setData(orderedData);
         optionsCtx.updateIntervalsArr(orderedData);
+        setEditable((edit: boolean) => !edit);
     }, []);
 
-
-    const renderItem = ({ item }: { item: any }) => <Item key={item.id} item={item} />
+    const [editable, setEditable] = useState(false);
+    const [showBin, setShowBin] = useState(false);
+    const renderItem = ({ item }: { item: any }) => <Item key={item.id} item={item} editable={editable} setEditable={setEditable} data={data} showBin={showBin} setShowBin={setShowBin} optionsCtx={optionsCtx}/>
     const keyExtractor = ({ id }: any) => `gridview-${id}`;
 
-   
- 
+    function vibrationHandler(){
+        if(editable === true){
+            return true;
+        }else{
+            return false;
+        }
+    };
+
     return (
         <View>
             { data ?
-        <ScrollView horizontal showsHorizontalScrollIndicator={ false } style={[ styles.container, { display: data.length < 1 ? 'none' : 'flex' }]}>
-            <View style={[styles.startFinishIntervals, styles.startInterval]}>
-                <SquareCTAButton
-                    linearGradientColor1={COLORS.LIGHT_ORANGE}
-                    linearGradientColor2={COLORS.ORANGE}
-                    title={'START'}
-                    emoji={'📣'}
-                    overlayColor={""}
-                    onPress={() => undefined}
-                    width={SCREEN_WIDTH / 4.7}
-                    height={SCREEN_WIDTH / 4.7}
-                    emojiSize={emojiSize}
-                    titleSize={titleSize}
-                />
-            </View>
-            <DraggableGridView
-                contentContainerStyle={[styles.draggableGridViewContainer, { width: data.length * SCREEN_WIDTH / 3 }]}
-                isEditing={true}
-                numColumns={data.length <= 3 ? 3 : data.length}
-                data={data}
-                shouldAnimOnRelease={true}
-                keyExtractor={keyExtractor}
-                onOrderChanged={onOrderChanged}
-                renderItem={renderItem}
-                horizontal={true}
-                shouldVibrate={false}
-                showsHorizontalScrollIndicator={false}
-            />
-            <View style={[styles.startFinishIntervals, styles.finishInterval]}>
-                <SquareCTAButton
-                    linearGradientColor1={COLORS.LIGHT_ORANGE}
-                    linearGradientColor2={COLORS.ORANGE}
-                    title={'FINISH'}
-                    emoji={'🏁'}
-                    overlayColor={""}
-                    onPress={() => undefined}
-                    width={SCREEN_WIDTH / 4.7}
-                    height={SCREEN_WIDTH / 4.7}
-                    emojiSize={emojiSize}
-                    titleSize={titleSize}
-                />
-            </View>
-        </ScrollView>
-        : null}
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.container, { display: data.length < 1 ? 'none' : 'flex' }]}>
+                    <View style={[styles.startFinishIntervals, styles.startInterval]}>
+                        <SquareCTAButton
+                            linearGradientColor1={COLORS.LIGHT_ORANGE}
+                            linearGradientColor2={COLORS.ORANGE}
+                            title={'START'}
+                            emoji={'📣'}
+                            overlayColor={""}
+                            onPress={() => undefined}
+                            width={SCREEN_WIDTH / 4.7}
+                            height={SCREEN_WIDTH / 4.7}
+                            emojiSize={emojiSize}
+                            titleSize={titleSize}
+                        />
+                    </View>
+                    <DraggableGridView
+                        contentContainerStyle={[ styles.draggableGridViewContainer, { width: data.length * SCREEN_WIDTH / 3 } ]}
+                        isEditing={editable}
+                        numColumns={data.length <= 3 ? 3 : data.length}
+                        data={data}
+                        shouldAnimOnRelease={true}
+                        keyExtractor={keyExtractor}
+                        onOrderChanged={onOrderChanged}
+                        renderItem={renderItem}
+                        horizontal={true}
+                        shouldVibrate={vibrationHandler}
+                        showsHorizontalScrollIndicator={false}
+                    />
+                    <View style={[styles.startFinishIntervals, styles.finishInterval]}>
+                        <SquareCTAButton
+                            linearGradientColor1={COLORS.LIGHT_ORANGE}
+                            linearGradientColor2={COLORS.ORANGE}
+                            title={'FINISH'}
+                            emoji={'🏁'}
+                            overlayColor={""}
+                            onPress={() => undefined}
+                            width={SCREEN_WIDTH / 4.7}
+                            height={SCREEN_WIDTH / 4.7}
+                            emojiSize={emojiSize}
+                            titleSize={titleSize}
+                        />
+                    </View>
+                </ScrollView>
+                : null}
         </View>
     )
 };
