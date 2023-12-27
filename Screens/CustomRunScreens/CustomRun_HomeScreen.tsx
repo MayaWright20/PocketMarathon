@@ -13,7 +13,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
 import IntervalsList from "../../Components/CustomRun/Sections/Intervals/IntervalsList";
 
-//ADD UNIQUE IDS UUID PACKAGE INSTALLED ALREADY
 export default function CustomRun_HomeScreen() {
 
     const optionsCtx = useContext(OptionsContext);
