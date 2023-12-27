@@ -38,7 +38,6 @@ function colorMaker(item: any) {
         return { color, color2 };
     };
 
-    console.log('COLORS',{color, color2})
     return { color, color2 };
 };
 
@@ -96,7 +95,7 @@ function titleMaker(item: any) {
 };
 
 const Item = memo(({ item }: { item: any }) => (
-    <SquareCTAButton
+        <SquareCTAButton
         linearGradientColor1={ item ? colorMaker(item).color : COLORS.LIGHT_ORANGE }
         linearGradientColor2={ item ? colorMaker(item).color2 : COLORS.ORANGE }
         title={titleMaker(item)}
@@ -115,20 +114,16 @@ export default function IntervalsList() {
 
     useEffect(() => {
         setData(optionsCtx.intervalsArr);
-        console.log('OPTIONSCTXINTERVALSARR:', optionsCtx.intervalsArr)
     }, [optionsCtx.intervalsArr]);
 
     const [ data, setData ] = useState(optionsCtx.intervalsArr);
 
     const onOrderChanged = useCallback((orderedData: Array<any>) => {
         setData(orderedData);
-        optionsCtx.intervalsArr = orderedData;
-        console.log('HERE', optionsCtx.intervalsArr)
-        //update the order of the optionsCtx.intervalsArr HERE
+        optionsCtx.updateIntervalsArr(orderedData);
     }, []);
 
-    console.log('HERE1', optionsCtx.intervalsArr)
-    const renderItem = ({ item }: { item: any }) => <Item item={item} />
+    const renderItem = ({ item }: { item: any }) => <Item key={item.id} item={item} />
     const keyExtractor = ({ id }: any) => `gridview-${id}`;
  
     return (
@@ -150,11 +145,11 @@ export default function IntervalsList() {
                 />
             </View>
             <DraggableGridView
-                contentContainerStyle={[styles.draggableGridViewContainer, { width: data.length <= 3 ? SCREEN_WIDTH : SCREEN_WIDTH + (SCREEN_WIDTH * data.length / 10) }]}
+                contentContainerStyle={[styles.draggableGridViewContainer, { width: data.length * SCREEN_WIDTH / 3 }]}
                 isEditing={true}
-                numColumns={20}
+                numColumns={data.length <= 3 ? 3 : data.length}
                 data={data}
-                shouldAnimOnRelease={false}
+                shouldAnimOnRelease={true}
                 keyExtractor={keyExtractor}
                 onOrderChanged={onOrderChanged}
                 renderItem={renderItem}
@@ -192,6 +187,7 @@ const styles = StyleSheet.create({
         height: SCREEN_HEIGHT / 6,
         justifyContent: 'space-evenly',
         alignContent: 'center',
+        // backgroundColor: 'pink'
     },
     startFinishIntervals: {
         alignSelf: 'center',

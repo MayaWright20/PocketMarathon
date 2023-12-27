@@ -13,6 +13,7 @@ export type TIME = {
 export type SPEED = 'WALK' | 'JOG' | 'SPRINT' | 'SELECT SPEED';
 
 export interface IRunIntervalsData {
+    id?: string;
     readonly value: 1 | 2;
     color: Array<string>;
     'DISTANCE' ?: DISTANCE;

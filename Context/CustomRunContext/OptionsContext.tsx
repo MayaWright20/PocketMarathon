@@ -1,4 +1,6 @@
 import { createContext, useState, useEffect } from "react";
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 import * as Type from "../../Types/Types";
 import { COLORS } from "../../Constants/COLORS";
@@ -10,7 +12,8 @@ const optionsCtxObj = {
     addIntervalHandler: () => { },
     cancelIntervalHandler: () => { },
     interval: {},
-    intervalsArr: [] as Array<Type.IRunIntervalsData | undefined>
+    intervalsArr: [] as Array<Type.IRunIntervalsData | undefined>,
+    updateIntervalsArr: ( newArr : Array<Type.IRunIntervalsData> | undefined ) => { }
 };
 
 export const OptionsContext = createContext<{
@@ -21,6 +24,7 @@ export const OptionsContext = createContext<{
     cancelIntervalHandler: () => void;
     interval: {};
     intervalsArr: Array<Type.IRunIntervalsData | undefined>;
+    updateIntervalsArr: ( newArr : Array<Type.IRunIntervalsData> ) => void;
 }>(optionsCtxObj);
 
 export default function OptionsContextProvider({ children }: any) {
@@ -44,8 +48,9 @@ export default function OptionsContextProvider({ children }: any) {
     };
 
     function addIntervalHandler() {
-
         //CAN ALL BE REFACTORED INTO FUNCTIONS
+        const uuid = uuidv4(); 
+      
         let newInterval = { ...interval };
       
 
@@ -57,6 +62,7 @@ export default function OptionsContextProvider({ children }: any) {
 
             newInterval = {
                 ...newInterval,
+                id: uuid,
                 color: [COLORS.MEDIUM_BLUE, COLORS.GREEN],
                 'TIME': undefined
             };
@@ -65,6 +71,7 @@ export default function OptionsContextProvider({ children }: any) {
         if (options[0]?.option !== 'SPEED' && options[1]?.option !== 'SPEED') {
             newInterval = {
                 ...newInterval,
+                id: uuid,
                 color: [COLORS.PINK, COLORS.GREEN],
                 'SPEED': undefined
             };
@@ -73,6 +80,7 @@ export default function OptionsContextProvider({ children }: any) {
         if (options[0]?.option !== 'DISTANCE' && options[1]?.option !== 'DISTANCE') {
             newInterval = {
                 ...newInterval,
+                id: uuid,
                 color: [COLORS.MEDIUM_BLUE, COLORS.PINK],
                 'DISTANCE': undefined
             };
@@ -89,6 +97,10 @@ export default function OptionsContextProvider({ children }: any) {
         setOptions(() => ([options[0], options[1]]));
     };
 
+    function updateIntervalsArr(newArr: Array<Type.IRunIntervalsData>){
+        setIntervalsArr(newArr);
+    };
+
     function cancelIntervalHandler(){
         options[0] = undefined;
         options[1] = undefined;
@@ -102,7 +114,8 @@ export default function OptionsContextProvider({ children }: any) {
         addIntervalHandler: addIntervalHandler,
         interval: interval,
         intervalsArr: intervalsArr,
-        cancelIntervalHandler: cancelIntervalHandler
+        cancelIntervalHandler: cancelIntervalHandler,
+        updateIntervalsArr: updateIntervalsArr
     };
 
     return <OptionsContext.Provider value={value}>{children}</OptionsContext.Provider>

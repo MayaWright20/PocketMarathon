@@ -15,4 +15,4 @@ export const COLORS = {
     MEDIUM_GREY: 'rgb(193, 193, 193)',
     DARK_GREY: 'rgb(165, 165, 165)',
     BLACK: 'rgb(0,0,0)',
-}
+};
