@@ -113,7 +113,6 @@ function squareCTAButtonOnPress(showBin: boolean, setShowBin: { (value: React.Se
 };
 
 function squareCTAButtonOnLongPress(item, setEditable) {
-    console.log('onLongPress');
     setEditable((edit: boolean) => !edit);
 };
 
