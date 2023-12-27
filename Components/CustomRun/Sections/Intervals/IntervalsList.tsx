@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
         height: SCREEN_HEIGHT / 6,
         justifyContent: 'space-evenly',
         alignContent: 'center',
-        // backgroundColor: 'pink'
     },
     startFinishIntervals: {
         alignSelf: 'center',
