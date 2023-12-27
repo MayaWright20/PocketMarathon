@@ -1,6 +1,7 @@
 import React, { useContext, memo, useCallback, useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import DraggableGridView from 'react-native-drag-sort-gridview'
+import DraggableGridView from 'react-native-drag-sort-gridview';
+
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
 import { OptionsContext } from "../../../../Context/CustomRunContext/OptionsContext";
@@ -37,6 +38,7 @@ function colorMaker(item: any) {
         return { color, color2 };
     };
 
+    console.log('COLORS',{color, color2})
     return { color, color2 };
 };
 
@@ -110,16 +112,22 @@ const Item = memo(({ item }: { item: any }) => (
 export default function IntervalsList() {
 
     const optionsCtx = useContext(OptionsContext);
+
     useEffect(() => {
         setData(optionsCtx.intervalsArr);
+        console.log('OPTIONSCTXINTERVALSARR:', optionsCtx.intervalsArr)
     }, [optionsCtx.intervalsArr]);
 
     const [ data, setData ] = useState(optionsCtx.intervalsArr);
 
     const onOrderChanged = useCallback((orderedData: Array<any>) => {
         setData(orderedData);
+        optionsCtx.intervalsArr = orderedData;
+        console.log('HERE', optionsCtx.intervalsArr)
+        //update the order of the optionsCtx.intervalsArr HERE
     }, []);
 
+    console.log('HERE1', optionsCtx.intervalsArr)
     const renderItem = ({ item }: { item: any }) => <Item item={item} />
     const keyExtractor = ({ id }: any) => `gridview-${id}`;
  

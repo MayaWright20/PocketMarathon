@@ -21,7 +21,6 @@
     "react": "18.2.0",
     "react-addons-update": "^15.6.3",
     "react-native": "0.72.6",
-    "react-native-donut-chart": "^0.0.16",
     "react-native-drag-sort-gridview": "^1.4.3",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-indicators": "^0.17.0",
@@ -31,7 +30,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "^13.4.0",
     "react-native-svg-path-gradient": "^0.4.0",
-    "react-native-vector-icons": "^10.0.2"
+    "react-native-vector-icons": "^10.0.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

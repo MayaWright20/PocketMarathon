@@ -13,11 +13,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import { SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
 import IntervalsList from "../../Components/CustomRun/Sections/Intervals/IntervalsList";
 
+//ADD UNIQUE IDS UUID PACKAGE INSTALLED ALREADY
 export default function CustomRun_HomeScreen() {
 
     const optionsCtx = useContext(OptionsContext);
 
-    const [runIntervalsData, setRunIntervalsData] = useState<IRunIntervalsData[]>(optionsCtx.intervalsArr as IRunIntervalsData[]);
+    const [ runIntervalsData, setRunIntervalsData ] = useState<IRunIntervalsData[]>(optionsCtx.intervalsArr as IRunIntervalsData[]);
 
     useEffect(() => {
         setRunIntervalsData(optionsCtx.intervalsArr as IRunIntervalsData[]);
@@ -61,7 +62,6 @@ export default function CustomRun_HomeScreen() {
                     </View>
                 </View>
                 <IntervalsList />
-
                 <View style={{ display:  optionsCtx.intervalsArr.length < 1 ? 'none' : 'flex' }}>
                     <TouchableHighlight onPress={startRunHandler} style={[styles.ctaButtonWrapper, styles.startButton]}>
                         <LinearGradient
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'pink',
         width: SCREEN_WIDTH / 2.5,
         borderRadius: BORDER_RADIUS,
-        borderColor: COLORS.MEDIUM_GREY,
+        borderColor: COLORS.LIGHT_GREY,
         borderWidth: 2
     },
     ctaButton: {

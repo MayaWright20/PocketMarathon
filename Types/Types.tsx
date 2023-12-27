@@ -14,18 +14,13 @@ export type SPEED = 'WALK' | 'JOG' | 'SPRINT' | 'SELECT SPEED';
 
 export interface IRunIntervalsData {
     readonly value: 1 | 2;
-    color: string;
+    color: Array<string>;
     'DISTANCE' ?: DISTANCE;
     'SPEED' ?: SPEED;
     'TIME' ?: TIME;
 };
 
 export type Option = 'TIME' | 'SPEED' | 'DISTANCE';
-
-export type PieChartInitialVals = [{
-    value: 1;
-    color: 'COLOURS.LIGHT_GREY';
-}];
 
 export interface IOptions {
     overlay: boolean | undefined;

@@ -47,6 +47,7 @@ export default function OptionsContextProvider({ children }: any) {
 
         //CAN ALL BE REFACTORED INTO FUNCTIONS
         let newInterval = { ...interval };
+      
 
         if((options[0]?.option === 'SPEED' || options[1]?.option === 'SPEED') && ( newInterval.SPEED === undefined || newInterval.SPEED === 'SELECT SPEED' )) return;
         if((options[0]?.option === 'DISTANCE' || options[1]?.option === 'DISTANCE') && newInterval.DISTANCE === undefined || (newInterval.DISTANCE && (Object.values(newInterval.DISTANCE).length > 1 && Object.values(newInterval.DISTANCE).every((item)=> item === undefined)))) return;
@@ -56,7 +57,7 @@ export default function OptionsContextProvider({ children }: any) {
 
             newInterval = {
                 ...newInterval,
-                color: 'red',
+                color: [COLORS.MEDIUM_BLUE, COLORS.GREEN],
                 'TIME': undefined
             };
         };
@@ -64,7 +65,7 @@ export default function OptionsContextProvider({ children }: any) {
         if (options[0]?.option !== 'SPEED' && options[1]?.option !== 'SPEED') {
             newInterval = {
                 ...newInterval,
-                color: '#00ff15',
+                color: [COLORS.PINK, COLORS.GREEN],
                 'SPEED': undefined
             };
         };
@@ -72,7 +73,7 @@ export default function OptionsContextProvider({ children }: any) {
         if (options[0]?.option !== 'DISTANCE' && options[1]?.option !== 'DISTANCE') {
             newInterval = {
                 ...newInterval,
-                color: '#00eeff',
+                color: [COLORS.MEDIUM_BLUE, COLORS.PINK],
                 'DISTANCE': undefined
             };
         };
@@ -80,12 +81,6 @@ export default function OptionsContextProvider({ children }: any) {
         if(options[0] === undefined && options[1] === undefined){
             return;
         };
-        // if(options[0]?.option !== 'TIME' && options[1]?.option !== 'TIME' && 
-        //    options[0]?.option !== 'SPEED' && options[1]?.option !== 'SPEED'&&
-        //    options[0]?.option !== 'DISTANCE' && options[1]?.option !== 'DISTANCE'
-        // ){
-        //     return;
-        // };
 
         setIntervalsArr((prevArray) => ([...prevArray, newInterval]));
         setInterval(newInterval);

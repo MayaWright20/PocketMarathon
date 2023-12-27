@@ -11,7 +11,7 @@ type Props = {
 export default function CustomiseRunPieChart({ runIntervalsData }: Props): JSX.Element {
     return (
         <View style={styles.container}>
-            <PieChart/>
+            <PieChart />
             <View style={styles.pieChartTextWrapper}>
                 <CustomiseRunPieChartText />
             </View>
