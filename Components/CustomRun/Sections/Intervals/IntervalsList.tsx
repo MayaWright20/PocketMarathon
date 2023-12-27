@@ -113,11 +113,12 @@ function squareCTAButtonOnPress(showBin: boolean, setShowBin: { (value: React.Se
     };
 };
 
-function squareCTAButtonOnLongPress(item, setEditable) {
+function squareCTAButtonOnLongPress(item, data, setEditable) {
+    if(data.length <=1)return;
     setEditable((edit: boolean) => !edit);
 };
 
-const Item = memo(({ item, editable, setEditable,  showBin, setShowBin, optionsCtx }: { item: any, editable: boolean, setEditable: React.Dispatch<React.SetStateAction<boolean>>, showBin: boolean, setShowBin: React.Dispatch<React.SetStateAction<boolean>>, optionsCtx: any }) => (
+const Item = memo(({ item, editable, setEditable,data,  showBin, setShowBin, optionsCtx }: { item: any, data:any, editable: boolean, setEditable: React.Dispatch<React.SetStateAction<boolean>>, showBin: boolean, setShowBin: React.Dispatch<React.SetStateAction<boolean>>, optionsCtx: any }) => (
 
     <SquareCTAButton
         linearGradientColor1={item ? colorMaker(item).color : COLORS.LIGHT_ORANGE}
@@ -130,31 +131,13 @@ const Item = memo(({ item, editable, setEditable,  showBin, setShowBin, optionsC
         height={SCREEN_WIDTH / 4.7}
         emojiSize={emojiSize}
         titleSize={titleSize}
-        onLongPress={() => squareCTAButtonOnLongPress(item, setEditable)}
+        onLongPress={() => squareCTAButtonOnLongPress(item, data, setEditable)}
     />
 ));
 
 export default function IntervalsList() {
 
     const optionsCtx = useContext(OptionsContext);
-
-    useEffect(() => {
-        setData(optionsCtx.intervalsArr);
-    }, [optionsCtx.intervalsArr]);
-
-    const [data, setData] = useState(optionsCtx.intervalsArr);
-
-    const onOrderChanged = useCallback((orderedData: Array<any>) => {
-        setData(orderedData);
-        optionsCtx.updateIntervalsArr(orderedData);
-        setEditable((edit: boolean) => !edit);
-    }, []);
-
-    const [editable, setEditable] = useState(false);
-    const [showBin, setShowBin] = useState(false);
-    const renderItem = ({ item }: { item: any }) => <Item key={item.id} item={item} editable={editable} setEditable={setEditable} data={data} showBin={showBin} setShowBin={setShowBin} optionsCtx={optionsCtx}/>
-    const keyExtractor = ({ id }: any) => `gridview-${id}`;
-
     function vibrationHandler(){
         if( editable === true ){
             return true;
@@ -162,6 +145,28 @@ export default function IntervalsList() {
             return false;
         }
     };
+
+    useEffect(() => {
+        setData(optionsCtx.intervalsArr);
+    }, [optionsCtx.intervalsArr, vibrationHandler]);
+
+    const [data, setData] = useState(optionsCtx.intervalsArr);
+
+   
+
+    const onOrderChanged = useCallback((orderedData: Array<any>) => {
+        setData(orderedData);
+        optionsCtx.updateIntervalsArr(orderedData);
+        setEditable(false);
+        vibrationHandler()
+    }, []);
+
+    const [editable, setEditable] = useState(false);
+    const [showBin, setShowBin] = useState(false);
+    const renderItem = ({ item }: { item: any }) => <Item key={item.id} item={item} editable={editable} setEditable={setEditable} data={data} showBin={showBin} setShowBin={setShowBin} optionsCtx={optionsCtx}/>
+    const keyExtractor = ({ id }: any) => `gridview-${id}`;
+
+    
 
     return (
         <View>
