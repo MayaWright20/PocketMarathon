@@ -1,6 +1,8 @@
 import React from "react";
 import { View, StyleSheet, TextInput, KeyboardTypeOptions } from "react-native";
 
+import { DissmissKeyboard } from "./KeyboardDissmiss";
+
 import { COLORS } from "../../Constants/COLORS";
 import { BORDER_RADIUS } from "../../Constants/Styling/STYLES";
 
@@ -16,7 +18,8 @@ type InputButtonProps = {
 
 export default function InputButton(props: InputButtonProps): JSX.Element {
     return (
-        <TextInput
+        <DissmissKeyboard>
+            <TextInput
             style={[styles.textInputWrapper, { width: props.width, borderColor: props.borderColor }]}
             keyboardType={props.keyboardtype}
             maxLength={props.maxLength}
@@ -24,6 +27,7 @@ export default function InputButton(props: InputButtonProps): JSX.Element {
             value={props.value}
             onChangeText={props.onChangeText}
         />
+        </DissmissKeyboard>
     )
 };
 
