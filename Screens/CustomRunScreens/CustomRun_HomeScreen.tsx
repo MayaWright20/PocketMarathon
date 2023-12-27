@@ -5,15 +5,13 @@ import { COLORS } from "../../Constants/COLORS";
 
 import { IRunIntervalsData } from "../../Types/Types";
 
+import PillCTAButton from "../../Components/CustomRun/Buttons/PillCTAButton";
 import CustomiseRunPieChart from "../../Components/CustomRun/Sections/PieChart/CustomiseRunPieChart";
 import ChooseOptionsSection from "../../Components/CustomRun/Sections/ChooseOptions/ChooseOptionsSection";
 import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
-import { BORDER_RADIUS, HEADER_1 } from "../../Constants/Styling/STYLES";
-import { LinearGradient } from "expo-linear-gradient";
-import { SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
 import IntervalsList from "../../Components/CustomRun/Sections/Intervals/IntervalsList";
 
-export default function CustomRun_HomeScreen() {
+export default function CustomRun_HomeScreen({navigation}) {
 
     const optionsCtx = useContext(OptionsContext);
 
@@ -31,8 +29,8 @@ export default function CustomRun_HomeScreen() {
         optionsCtx.cancelIntervalHandler();
     };
 
-    function startRunHandler() {
-        console.log('start run handler');
+    function nextIntervalsSummaryScreenHandler() {
+        navigation.navigate('CustomRun_IntervalsSummaryScreen');
     };
 
     return (
@@ -42,34 +40,13 @@ export default function CustomRun_HomeScreen() {
                     <ChooseOptionsSection />
                     <CustomiseRunPieChart runIntervalsData={runIntervalsData} />
                     <View style={styles.ctaButtonContainer}>
-                        <TouchableHighlight onPress={addIntervalHandler} style={styles.ctaButtonWrapper}>
-                            <LinearGradient
-                                colors={[COLORS.LIGHT_ORANGE, COLORS.ORANGE]}
-                                style={styles.ctaButton}
-                            >
-                                <Text style={styles.h1}>ADD</Text>
-                            </LinearGradient>
-                        </TouchableHighlight>
-                        <TouchableHighlight onPress={cancelIntervalHandler} style={styles.ctaButtonWrapper}>
-                            <LinearGradient
-                                colors={[COLORS.LIGHT_GREY, COLORS.MEDIUM_GREY]}
-                                style={styles.ctaButton}
-                            >
-                                <Text style={styles.h1}>CANCEL</Text>
-                            </LinearGradient>
-                        </TouchableHighlight>
+                        <PillCTAButton onPress={addIntervalHandler} color1={COLORS.LIGHT_ORANGE} color2={COLORS.ORANGE} title={"ADD"}/>    
+                        <PillCTAButton onPress={cancelIntervalHandler} color1={COLORS.LIGHT_GREY} color2={COLORS.MEDIUM_GREY} title={"CANCEL"}/>
                     </View>
                 </View>
                 <IntervalsList />
-                <View style={{ display:  optionsCtx.intervalsArr.length < 1 ? 'none' : 'flex' }}>
-                    <TouchableHighlight onPress={startRunHandler} style={[styles.ctaButtonWrapper, styles.startButton]}>
-                        <LinearGradient
-                            colors={[COLORS.LIGHT_ORANGE, COLORS.ORANGE]}
-                            style={styles.ctaButton}
-                        >
-                            <Text style={styles.h1}>START</Text>
-                        </LinearGradient>
-                    </TouchableHighlight>
+                <View style={[{ display:  optionsCtx.intervalsArr.length < 1 ? 'none' : 'flex' }, styles.startButton]}>
+                    <PillCTAButton onPress={nextIntervalsSummaryScreenHandler} color1={COLORS.LIGHT_ORANGE} color2={COLORS.ORANGE} title={"NEXT"}/>
                 </View>
             </ScrollView>
         </ScreenLinearBackground>
@@ -83,26 +60,10 @@ const styles = StyleSheet.create({
     horizontalPadding: {
         paddingHorizontal: 15
     },
-    h1: {
-        ...HEADER_1,
-        textAlign: 'center'
-    },
     ctaButtonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         top: -25
-    },
-    ctaButtonWrapper: {
-        overflow: 'hidden',
-        backgroundColor: 'pink',
-        width: SCREEN_WIDTH / 2.5,
-        borderRadius: BORDER_RADIUS,
-        borderColor: COLORS.LIGHT_GREY,
-        borderWidth: 2
-    },
-    ctaButton: {
-        padding: 15,
-        width: '100%',
     },
     startButton: {
         alignSelf: 'center',

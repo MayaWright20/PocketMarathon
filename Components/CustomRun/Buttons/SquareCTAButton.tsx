@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     linearGradient: {
-        width: SCREEN_WIDTH / 4,
-        height: SCREEN_WIDTH / 4,
+        width: '100%',
+        height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
     },
