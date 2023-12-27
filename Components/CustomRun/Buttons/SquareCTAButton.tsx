@@ -12,15 +12,15 @@ type SquareCTAButtonProps = {
     emoji ?: string;
     title: string;
     overlayColor: string;
-    onPress: () => any;
-    onLongPress?: () => any;
+    onPress: () => void;
+    onLongPress?: () => void;
     width: number;
     height: number;
     emojiSize: number;
     titleSize: number;
 };
 
-export default function SquareCTAButton(props: SquareCTAButtonProps): JSX.Element {
+export default function SquareCTAButton( props: SquareCTAButtonProps ): JSX.Element {
 
     return (
         <Pressable style={[styles.container, {width: props.width, height: props.height}]} onPress={props.onPress} onLongPress={props.onLongPress}>

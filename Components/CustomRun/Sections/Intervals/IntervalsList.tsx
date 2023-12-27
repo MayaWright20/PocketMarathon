@@ -2,7 +2,6 @@ import React, { useContext, memo, useCallback, useState, useEffect } from "react
 import { View, StyleSheet, ScrollView } from "react-native";
 import DraggableGridView from 'react-native-drag-sort-gridview';
 
-
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
 import { OptionsContext } from "../../../../Context/CustomRunContext/OptionsContext";
 import SquareCTAButton from "../../Buttons/SquareCTAButton";
@@ -11,6 +10,7 @@ import { COLORS } from "../../../../Constants/COLORS";
 
 const emojiSize = 25;
 const titleSize = 14;
+
 
 function colorMaker(item: any) {
 
@@ -95,16 +95,18 @@ function titleMaker(item: any) {
 };
 
 const Item = memo(({ item }: { item: any }) => (
+    
         <SquareCTAButton
         linearGradientColor1={ item ? colorMaker(item).color : COLORS.LIGHT_ORANGE }
         linearGradientColor2={ item ? colorMaker(item).color2 : COLORS.ORANGE }
         title={titleMaker(item)}
-        overlayColor={""}
-        onPress={() => undefined}
+        overlayColor={ ''}
+        onPress={() => undefined }
         width={SCREEN_WIDTH / 4.7}
         height={SCREEN_WIDTH / 4.7}
         emojiSize={emojiSize}
         titleSize={titleSize}
+        onLongPress={() => undefined}
     />
 ));
 
@@ -123,8 +125,11 @@ export default function IntervalsList() {
         optionsCtx.updateIntervalsArr(orderedData);
     }, []);
 
+
     const renderItem = ({ item }: { item: any }) => <Item key={item.id} item={item} />
     const keyExtractor = ({ id }: any) => `gridview-${id}`;
+
+   
  
     return (
         <View>
