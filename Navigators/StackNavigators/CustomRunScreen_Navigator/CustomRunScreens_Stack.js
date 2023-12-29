@@ -9,10 +9,6 @@ import CustomRun_StartRunScreen from '../../../Screens/CustomRunScreens/CustomRu
 import { COLORS } from '../../../Constants/COLORS';
 
 const Stack = createStackNavigator();
-const year = new Date().getUTCFullYear();
-const month = new Date().getUTCMonth() +1;
-const day = new Date().getUTCDay();
-// console.log('date', date)
 
 export default function CustomRunScreens_Stack() {
   return (
@@ -42,7 +38,7 @@ export default function CustomRunScreens_Stack() {
           name="CustomRun_StartRunScreen"
           component={CustomRun_StartRunScreen}
           options={{
-            title: `${day} / ${month} / ${year}`
+            title: `GIVE THIS A NEW TITLE`
           }}
         />
       </Stack.Navigator>
