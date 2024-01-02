@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
+import { useTimer } from 'react-timer-hook';
 
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
@@ -10,13 +11,15 @@ import { HEADER_1 } from "../../Constants/Styling/STYLES";
 import PillCTAButton from "../../Components/CustomRun/Buttons/PillCTAButton";
 import { COLORS } from "../../Constants/COLORS";
 import RectagularCTAButton from "../../Components/CustomRun/Buttons/RectangularCTAButton";
-import TitleMaker from "../../utils/CustomRun/TitleMaker";
-import ColorMaker from "../../utils/CustomRun/ColorMaker";
+import useTitleMaker from "../../utils/CustomRun/useTitleMaker";
+import useColorMaker from "../../utils/CustomRun/useColorMaker";
+
 
 
 export default function CustomRun_StartRunScreen() {
+
     const { intervalsArr } = useContext(OptionsContext);
-    console.log('intervalsArr', intervalsArr)
+
     let startRunIntervalsArr = [{
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
         title: 'START',
@@ -27,7 +30,6 @@ export default function CustomRun_StartRunScreen() {
         title: 'FINISH',
         emoji: "🏁",
     }];
-
 
     const renderItem = ({ item, index }: { item: any, index: number }) => {
 
@@ -52,9 +54,9 @@ export default function CustomRun_StartRunScreen() {
         )} else {
             return (
                 <SquareCTAButton
-                    linearGradientColor1={ColorMaker(item).color}
-                    linearGradientColor2={ColorMaker(item).color2}
-                    title={TitleMaker(item)}
+                    linearGradientColor1={useColorMaker(item).color}
+                    linearGradientColor2={useColorMaker(item).color2}
+                    title={useTitleMaker(item)}
                     overlayColor={""}
                     onPress={() => undefined}
                     width={SCREEN_WIDTH / 5}
@@ -67,7 +69,48 @@ export default function CustomRun_StartRunScreen() {
     };
 
 
+    const [ runTimeComplete, setRunTimeComplete ] = useState(false);
+    //convert all times to seconds
+    const expiryTimestamp = new Date();
+    expiryTimestamp.setSeconds(expiryTimestamp.getSeconds()+ 60);
 
+    const {
+        totalSeconds,
+        seconds: secs,
+        minutes,
+        hours,
+        days,
+        isRunning,
+        start,
+        pause,
+        resume,
+        restart,
+      } = useTimer({ expiryTimestamp , onExpire: () => setRunTimeComplete(true) });
+
+
+
+    //   const h = new Date();
+    //   h.setSeconds(h.getSeconds()+ 50);
+    //   const {
+    //     seconds: secs1,
+    //   } = useTimer({ expiryTimestamp: h , onExpire: () => setRunTimeComplete(true) });
+
+
+
+    function onPressPauseHandler(){
+        if(isRunning){
+            pause();
+            return;
+        }
+
+        if(!isRunning){
+            resume();
+            return;
+        }
+    };
+    
+
+  //how to change the intervals
     // do {
     //     setTimeout(()=>{
     //         console.log('j', startRunIntervalsArr)
@@ -76,9 +119,11 @@ export default function CustomRun_StartRunScreen() {
     //     }, 3000);
     // } while (startRunIntervalsArr.length > 1);
 
+
     return (
         <ScreenLinearBackground>
             <ScrollView showsVerticalScrollIndicator={false}>
+              
                 <View style={styles.pieChartFlatlistWrapper}>
                     <PieChart />
                     <View style={styles.currentInterval}>
@@ -86,6 +131,7 @@ export default function CustomRun_StartRunScreen() {
                             linearGradientColor1={startRunIntervalsArr[0]?.color[0]}
                             linearGradientColor2={startRunIntervalsArr[0]?.color[1]}
                             title={startRunIntervalsArr[0]['title']}
+                            //{secs1}
                             emoji={startRunIntervalsArr[0]['emoji']}
                             overlayColor={""}
                             onPress={() => undefined}
@@ -105,14 +151,21 @@ export default function CustomRun_StartRunScreen() {
                         ListHeaderComponent={<View style={{ width: SCREEN_WIDTH / 2, height: SCREEN_WIDTH / 3 }}></View>}
                     />
                 </View>
-
                 <View style={styles.statisticsContainer}>
+
                 <Text style={[styles.h1, styles.title]}>STATISTICS</Text>
                     <RectagularCTAButton colors={[COLORS.ORANGE, COLORS.PINK]} emoji={"⏱️"}>
-                        <Text>PUT TIMER HERE TIME</Text>
+                        <View style={styles.timerWrapper}>
+                        <Text style={styles.h1Timer}>
+                            {
+                            !runTimeComplete ? `${hours} : ${minutes} : ${secs}`:
+                            'COMPLETE'
+                            }
+                        </Text>
+                        </View>
                     </RectagularCTAButton>
                     <RectagularCTAButton colors={[COLORS.LIGHT_BLUE, COLORS.MEDIUM_BLUE]} emoji={"🏎️"}>
-                        <Text>PUT TIMER HERE SPEED</Text>
+                        <Text>PUT SPEED INTERVALS HERE</Text>
                     </RectagularCTAButton>
                     <RectagularCTAButton colors={[COLORS.MINT_GREEN, COLORS.GREEN]} emoji={"📏"}>
                         <Text>PUT TIMER HERE DISTANCE</Text>
@@ -120,8 +173,10 @@ export default function CustomRun_StartRunScreen() {
                 </View>
                
                 <View style={styles.pillCTAButtonWrapper}>
-                    <PillCTAButton onPress={() => undefined} color1={COLORS.LIGHT_ORANGE} color2={COLORS.ORANGE} title={"PAUSE"} />
+                    <PillCTAButton onPress={onPressPauseHandler} color1={COLORS.LIGHT_ORANGE} color2={COLORS.ORANGE} title={ isRunning ? 'PAUSE' : 'RESUME' } />
                 </View>
+
+              
             </ScrollView>
         </ScreenLinearBackground>
     )
@@ -137,6 +192,16 @@ const styles = StyleSheet.create({
     },
     h1: {
         ...HEADER_1,
+    },
+    h1Timer:{
+        fontSize: 35,
+    color: COLORS.DARK_GREY,
+    fontWeight: "500"
+    },
+    timerWrapper:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingRight: 20
     },
     title:{
         marginBottom: 5

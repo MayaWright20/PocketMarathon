@@ -31,6 +31,7 @@
     "react-native-svg": "^13.4.0",
     "react-native-svg-path-gradient": "^0.4.0",
     "react-native-vector-icons": "^10.0.2",
+    "react-timer-hook": "^3.0.7",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

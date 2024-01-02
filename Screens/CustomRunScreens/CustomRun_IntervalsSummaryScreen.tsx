@@ -4,8 +4,8 @@ import { FlatList, Text, StyleSheet, View } from "react-native";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import PillCTAButton from "../../Components/CustomRun/Buttons/PillCTAButton";
 import SquareCTAButton from "../../Components/CustomRun/Buttons/SquareCTAButton";
-import ColorMaker from "../../utils/CustomRun/ColorMaker";
-import TitleMaker from "../../utils/CustomRun/TitleMaker";
+import useColorMaker from "../../utils/CustomRun/useColorMaker";
+import useTitleMaker from "../../utils/CustomRun/useTitleMaker";
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
 import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
@@ -16,9 +16,9 @@ import { COLORS } from "../../Constants/COLORS";
 const Item = ({ item }: { item: any }) => (
 
     <SquareCTAButton
-        linearGradientColor1={item ? ColorMaker(item).color : COLORS.LIGHT_ORANGE}
-        linearGradientColor2={item ? ColorMaker(item).color2 : COLORS.ORANGE}
-        title={TitleMaker(item)}
+        linearGradientColor1={item ? useColorMaker(item).color : COLORS.LIGHT_ORANGE}
+        linearGradientColor2={item ? useColorMaker(item).color2 : COLORS.ORANGE}
+        title={useTitleMaker(item)}
         emoji={''}
         overlayColor={''}
         onPress={() => { }}

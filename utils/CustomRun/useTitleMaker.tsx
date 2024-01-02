@@ -1,5 +1,5 @@
 
-export default function TitleMaker(item: any) {
+export default function useTitleMaker(item: any) {
 
     let title = '';
 

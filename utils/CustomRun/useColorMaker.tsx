@@ -1,6 +1,6 @@
 import { COLORS } from "../../Constants/COLORS";
 
-export default function ColorMaker(item: any) {
+export default function useColorMaker(item: any) {
 
     let color = '';
     let color2 = '';
