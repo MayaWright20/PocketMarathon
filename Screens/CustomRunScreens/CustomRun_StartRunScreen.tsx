@@ -68,26 +68,56 @@ export default function CustomRun_StartRunScreen() {
         }
     };
 
+    const speedStatisticsItemRender = ({ item, index}: {item: any, index: number}) => {
+        return(
+            <View style={styles.statisticsWrapper}>
+                <Text style={styles.h1Timer}>{item?.SPEED} ·</Text>
+            </View>
+        )
+    };
 
     const [ runTimeComplete, setRunTimeComplete ] = useState(false);
-    //convert all times to seconds
+ 
+    let hours = 0;
+    let mins = 0;
+    let secs = 0; 
+
+    startRunIntervalsArr.forEach(( item )=>{
+        
+        if( item?.TIME ){
+            if(item?.TIME.HOURS !== undefined){
+                hours += Number(item?.TIME.HOURS) 
+            }
+
+            if(item?.TIME.MINS !== undefined){
+                mins += Number(item?.TIME.MINS) 
+            }
+
+            if(item?.TIME.SECS !== undefined){
+                secs += Number(item?.TIME.SECS) 
+            }
+        };
+        
+    });
+
+    const totalIntervalSeconds = (hours * 60 * 60) + (mins * 60) + secs 
     const expiryTimestamp = new Date();
-    expiryTimestamp.setSeconds(expiryTimestamp.getSeconds()+ 60);
+    expiryTimestamp.setSeconds(expiryTimestamp.getSeconds()+ totalIntervalSeconds);
 
     const {
         totalSeconds,
-        seconds: secs,
-        minutes,
-        hours,
+        seconds: totalSecondsLeft,
+        minutes: totalMinutesLeft,
+        hours: totalHoursLeft,
         days,
         isRunning,
         start,
         pause,
         resume,
         restart,
-      } = useTimer({ expiryTimestamp , onExpire: () => setRunTimeComplete(true) });
+    } = useTimer({ expiryTimestamp , autoStart: false, onExpire: () => setRunTimeComplete(true) });
 
-
+    
 
     //   const h = new Date();
     //   h.setSeconds(h.getSeconds()+ 50);
@@ -108,6 +138,9 @@ export default function CustomRun_StartRunScreen() {
             return;
         }
     };
+
+    
+    
     
 
   //how to change the intervals
@@ -155,20 +188,26 @@ export default function CustomRun_StartRunScreen() {
 
                 <Text style={[styles.h1, styles.title]}>STATISTICS</Text>
                     <RectagularCTAButton colors={[COLORS.ORANGE, COLORS.PINK]} emoji={"⏱️"}>
-                        <View style={styles.timerWrapper}>
+                        <View style={styles.statisticsWrapper}>
                         <Text style={styles.h1Timer}>
                             {
-                            !runTimeComplete ? `${hours} : ${minutes} : ${secs}`:
+                            !runTimeComplete ? `${totalHoursLeft} : ${totalMinutesLeft} : ${totalSecondsLeft}`:
                             'COMPLETE'
                             }
                         </Text>
                         </View>
                     </RectagularCTAButton>
                     <RectagularCTAButton colors={[COLORS.LIGHT_BLUE, COLORS.MEDIUM_BLUE]} emoji={"🏎️"}>
-                        <Text>PUT SPEED INTERVALS HERE</Text>
+                        <FlatList
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        data={startRunIntervalsArr.filter((item)=> item?.['SPEED'])}
+                        renderItem={speedStatisticsItemRender}
+                        />
                     </RectagularCTAButton>
+
                     <RectagularCTAButton colors={[COLORS.MINT_GREEN, COLORS.GREEN]} emoji={"📏"}>
-                        <Text>PUT TIMER HERE DISTANCE</Text>
+                    <Text>THIS WILL CONTAINER A TIMER LIKE TIME</Text>
                     </RectagularCTAButton>
                 </View>
                
@@ -198,7 +237,7 @@ const styles = StyleSheet.create({
     color: COLORS.DARK_GREY,
     fontWeight: "500"
     },
-    timerWrapper:{
+    statisticsWrapper:{
         alignItems: 'center',
         justifyContent: 'center',
         paddingRight: 20
