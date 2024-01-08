@@ -2,10 +2,14 @@
 
 <h2>How to Run the App</h2>
 
-1. install dependancies 
+1. Install dependancies 
 ```npm install```
 
-2. Run application
+2. Create a **.env** file in the root folder with an environment variable called **EXPO_PUBLIC_MY_ENDPOINT** this should link to your localhost IP address used in the backend e.g 
+
+    > EXPO_PUBLIC_MY_ENDPOINT="http://localhost:3000/text-to-speech/synthesize"
+
+3. Run application
 ```npm start```
 
 <h2>Documentation</h2>
