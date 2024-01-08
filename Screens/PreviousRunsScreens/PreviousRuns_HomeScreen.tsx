@@ -55,7 +55,7 @@ export default function PreviousRuns_HomeScreen() {
     return (
         <ScreenLinearBackground>
             <Text>PreviousRuns_HomeScreen</Text>
-            <Button title="Send message" onPress={() => onPressHandler("hi hi hihow are you! Great day aye. I'm Maya and I just got the google API working. HOW EXCITING!!! SHAME it sounds like a robot still. All this work for it to just sound like a bloody robot!")} />
+            <Button title="Send message" onPress={() => onPressHandler("hi test hi hihow are you! Great day aye. I'm Maya and I just got the google API working. HOW EXCITING!!! SHAME it sounds like a robot still. All this work for it to just sound like a bloody robot!")} />
         </ScreenLinearBackground>
     )
 };
