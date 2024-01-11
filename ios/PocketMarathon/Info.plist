@@ -4,10 +4,6 @@
   <dict>
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
-    <key>UIBackgroundModes</key>
-   <array>
-     <string>location</string>
-   </array>
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
@@ -59,7 +55,7 @@
       </dict>
     </dict>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Pocket Marathon needs location permissions to calculate distance run.</string>
+    <string>Allow Pocket Marathon to use your location.</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>Pocket Marathon uses your location setting in order to calculate the distance travelled</string>
     <key>NSLocationUsageDescription</key>

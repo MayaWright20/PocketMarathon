@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import * as Location from 'expo-location';
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, Button } from "react-native";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 
 interface distanceCoords {
@@ -41,11 +41,14 @@ export default function Profile_HomeScreen(){
     text = JSON.stringify(location);
   };
 
+  function onPressHandler(){
+    
+  }
 
     return(
         <ScreenLinearBackground>
             <Text>Profiled_HomeScreen {text}</Text>
-            {/* <Button title="press" onPress={onPressHandler}/> */}
+            <Button title="press" onPress={onPressHandler}/>
         </ScreenLinearBackground>
     )
 };

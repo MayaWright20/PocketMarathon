@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.anonymous.PocketMarathon">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-=======
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
->>>>>>> parent of 7e54dff (added text to speech native plugin and no longer using expo)
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
