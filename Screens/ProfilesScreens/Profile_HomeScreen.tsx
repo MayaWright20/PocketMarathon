@@ -19,7 +19,7 @@ export default function Profile_HomeScreen(){
       
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        setErrorMsg('Permission to access location was denied!');
         return;
       };
 
