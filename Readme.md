@@ -12,6 +12,10 @@
 3. Run application
 ```npm start```
 
+```npx react-native run-ios```
+
+```npx expo start```
+
 <h2>Documentation</h2>
 
 * [Full Documentation](https://www.notion.so/Pocket-Marathon-bd59f5b44b774effa2c08e25b1d07836?pvs=4)

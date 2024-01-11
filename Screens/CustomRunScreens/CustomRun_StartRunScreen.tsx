@@ -118,7 +118,7 @@ export default function CustomRun_StartRunScreen() {
     } = useTimer({ expiryTimestamp , autoStart: false, onExpire: () => setRunTimeComplete(true) });
 
     
-
+    // for the intervals that will be shown in the pie chart
     //   const h = new Date();
     //   h.setSeconds(h.getSeconds()+ 50);
     //   const {
@@ -143,7 +143,7 @@ export default function CustomRun_StartRunScreen() {
     
     
 
-  //how to change the intervals
+    //how to change the intervals
     // do {
     //     setTimeout(()=>{
     //         console.log('j', startRunIntervalsArr)

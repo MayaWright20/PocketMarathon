@@ -1,9 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
-import Tts from 'react-native-tts';
+// import Tts from 'react-native-tts';
 import * as FileSystem from 'expo-file-system';
 import { Audio } from 'expo-av';
-//59 mins
 import { fetchAudio } from "../../utils/General/fetchAudio";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "../../Constants/DIMENSIONS";
 
@@ -15,21 +14,22 @@ import { playFromPath } from "../../utils/General/playFromPath";
 
 export default function PreviousRuns_HomeScreen() {
 
-    function onPressHandler(){
-        Tts.setDucking(true);
-        Tts.setDefaultRate(0.6);
-        Tts.setDefaultPitch(1.5);
-        Tts.speak('Hello,dfds world!', {
-            iosVoiceId: 'com.apple.ttsbundle.Moira-compact',
-            rate: 0.5,
-          });
-    }
+    // function onPressHandler(){
+    //     Tts.setDucking(true);
+    //     Tts.setDefaultRate(0.6);
+    //     Tts.setDefaultPitch(1.5);
+    //     Tts.speak('Hello,dfds world!', {
+    //         iosVoiceId: 'com.apple.ttsbundle.Moira-compact',
+    //         rate: 0.5,
+    //       });
+    //     console.log('pressed button for text to speech')
+    // }
 
 
     return (
         <ScreenLinearBackground>
             <Text>PreviousRuns_HomeScreen</Text>
-            <Button title="Send message" onPress={onPressHandler} />
+            {/* <Button title="Send message" onPress={onPressHandler} /> */}
         </ScreenLinearBackground>
     )
 };

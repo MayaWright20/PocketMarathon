@@ -16,7 +16,12 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.PocketMarathon"
+      "bundleIdentifier": "com.anonymous.PocketMarathon",
+      "infoPlist": {
+        "NSLocationAlwaysUsageDescription": "Pocket Marathon uses your location setting in order to calculate the distance travelled",
+        "NSLocationWhenInUseUsageDescription": "Pocket Marathon uses your location in order to calculate distance travelled",
+        "NSLocationUsageDescription": "Pocket Marathon uses your location in order to calculate distance travelled"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -38,7 +43,18 @@
         {
           "microphonePermission": "Allow Pocket Marathon to access your microphone."
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Pocket Marathon to use your location."
+        }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8d93f24b-c108-47e3-ba6f-222cf80d1000"
+      }
+    }
   }
 }

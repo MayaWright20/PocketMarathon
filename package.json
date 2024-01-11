@@ -4,7 +4,7 @@
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
-    "ios": "expo run:ios",
+    "ios": "npx react-native run-ios",
     "web": "expo start --web"
   },
   "dependencies": {
@@ -15,10 +15,12 @@
     "@react-navigation/material-bottom-tabs": "^6.2.19",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
-    "expo": "~49.0.15",
+    "expo": "^49.0.0",
     "expo-av": "~13.4.1",
+    "expo-dev-client": "~2.4.12",
     "expo-file-system": "~15.4.5",
     "expo-linear-gradient": "~12.3.0",
+    "expo-location": "~16.1.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
@@ -35,7 +37,6 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-svg-path-gradient": "^0.4.0",
-    "react-native-tts": "^4.1.0",
     "react-native-vector-icons": "^10.0.2",
     "react-navigation": "^5.0.0",
     "react-timer-hook": "^3.0.7",
