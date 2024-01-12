@@ -41,7 +41,8 @@ export default function PreviousRuns_HomeScreen() {
         // console.log(await Speech.isSpeakingAsync())
         Tts.setDucking(true);
         Tts.setDefaultPitch(1.2);
-        Tts.speak('Hello, you world!', {
+        Tts.setIgnoreSilentSwitch("ignore");
+        Tts.speak('Hello, you world yay!', {
             iosVoiceId: 'com.apple.ttsbundle.Moira-compact',
             rate: 0.5,
           });
