@@ -35,10 +35,7 @@ export default function PreviousRuns_HomeScreen() {
 
    
 
-      async function speak(){
-        // const thingToSay = '1 for every no thing today hi';
-        // Speech.speak(thingToSay);
-        // console.log(await Speech.isSpeakingAsync())
+      function speak(){
         Tts.setDucking(true);
         Tts.setDefaultPitch(1.2);
         Tts.setIgnoreSilentSwitch("ignore");

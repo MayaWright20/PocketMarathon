@@ -12,6 +12,8 @@
 3. Run application
 ```npm start```
 
+```npm run ios```
+
 ```npx react-native run-ios```
 
 ```npx expo start```
