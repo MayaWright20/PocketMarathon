@@ -1,8 +1,8 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { COLORS } from "../COLORS";
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../DIMENSIONS";
+import { COLORS } from "../General/COLORS";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../General/DIMENSIONS";
 
 export default function ScreenLinearBackground({ children }: any) {
     return (

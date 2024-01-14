@@ -4,11 +4,11 @@ import DraggableGridView from 'react-native-drag-sort-gridview';
 
 import useColorMaker from "../../../../utils/CustomRun/useColorMaker";
 import useTitleMaker from "../../../../utils/CustomRun/useTitleMaker";
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../../Constants/General/DIMENSIONS";
 import { OptionsContext } from "../../../../Context/CustomRunContext/OptionsContext";
 import SquareCTAButton from "../../Buttons/SquareCTAButton";
 import { HEADER_1 } from "../../../../Constants/Styling/STYLES";
-import { COLORS } from "../../../../Constants/COLORS";
+import { COLORS } from "../../../../Constants/General/COLORS";
 
 
 const emojiSize = 25;

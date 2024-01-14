@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { BORDER_RADIUS } from "../../../Constants/Styling/STYLES";
-import { COLORS } from "../../../Constants/COLORS";
+import { COLORS } from "../../../Constants/General/COLORS";
 import { LinearGradient } from "expo-linear-gradient";
-import { SCREEN_HEIGHT } from "../../../Constants/DIMENSIONS";
+import { SCREEN_HEIGHT } from "../../../Constants/General/DIMENSIONS";
 
 interface RectangularCTAButtonProps {
     colors: string[];

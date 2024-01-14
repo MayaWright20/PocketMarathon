@@ -1,4 +1,4 @@
-import { COLORS } from "../../Constants/COLORS";
+import { COLORS } from "../../Constants/General/COLORS";
 
 export default function useColorMaker(item: any) {
 

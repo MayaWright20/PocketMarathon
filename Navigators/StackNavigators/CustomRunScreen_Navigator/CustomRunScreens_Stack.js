@@ -6,7 +6,7 @@ import CustomRun_HomeScreen from '../../../Screens/CustomRunScreens/CustomRun_Ho
 import CustomRun_IntervalsSummaryScreen from '../../../Screens/CustomRunScreens/CustomRun_IntervalsSummaryScreen';
 import CustomRun_StartRunScreen from '../../../Screens/CustomRunScreens/CustomRun_StartRunScreen';
 
-import { COLORS } from '../../../Constants/COLORS';
+import { COLORS } from '../../../Constants/General/COLORS';
 
 const Stack = createStackNavigator();
 

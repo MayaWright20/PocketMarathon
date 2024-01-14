@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TextInput, KeyboardTypeOptions } from "react-native";
 
 import { DissmissKeyboard } from "./KeyboardDissmiss";
-import { COLORS } from "../../Constants/COLORS";
+import { COLORS } from "../../Constants/General/COLORS";
 import { BORDER_RADIUS } from "../../Constants/Styling/STYLES";
 
 type InputButtonProps = {

@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-import { COLORS } from "../../../../Constants/COLORS";
+import { COLORS } from "../../../../Constants/General/COLORS";
 import { HEADER_1 } from "../../../../Constants/Styling/STYLES";
 import SquareCTAButton from "../../Buttons/SquareCTAButton";
 
 import { OptionsContext } from "../../../../Context/CustomRunContext/OptionsContext";
-import { SCREEN_WIDTH } from "../../../../Constants/DIMENSIONS";
+import { SCREEN_WIDTH } from "../../../../Constants/General/DIMENSIONS";
 
 export interface IOptions {
     overlay: boolean | undefined;

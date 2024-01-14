@@ -3,8 +3,8 @@ import { View, StyleSheet, Text } from "react-native";
 
 import InputButton from "../../General/InputButton";
 
-import { SCREEN_WIDTH } from "../../../Constants/DIMENSIONS";
-import { COLORS } from "../../../Constants/COLORS";
+import { SCREEN_WIDTH } from "../../../Constants/General/DIMENSIONS";
+import { COLORS } from "../../../Constants/General/COLORS";
 import { OptionsContext } from "../../../Context/CustomRunContext/OptionsContext";
 
 

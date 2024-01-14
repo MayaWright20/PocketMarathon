@@ -11,7 +11,7 @@ import {
 import { OptionsContext } from "../../../Context/CustomRunContext/OptionsContext";
 
 import { AntDesign } from '@expo/vector-icons';
-import { COLORS } from "../../../Constants/COLORS";
+import { COLORS } from "../../../Constants/General/COLORS";
 import { BORDER_RADIUS } from "../../../Constants/Styling/STYLES";
 import { SPEED } from "../../../Types/Types";
 

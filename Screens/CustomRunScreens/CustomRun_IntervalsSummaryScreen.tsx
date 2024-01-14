@@ -7,10 +7,10 @@ import SquareCTAButton from "../../Components/CustomRun/Buttons/SquareCTAButton"
 import useColorMaker from "../../utils/CustomRun/useColorMaker";
 import useTitleMaker from "../../utils/CustomRun/useTitleMaker";
 
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../Constants/DIMENSIONS";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../Constants/General/DIMENSIONS";
 import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
 import { BORDER_RADIUS } from "../../Constants/Styling/STYLES";
-import { COLORS } from "../../Constants/COLORS";
+import { COLORS } from "../../Constants/General/COLORS";
 
 
 const Item = ({ item }: { item: any }) => (

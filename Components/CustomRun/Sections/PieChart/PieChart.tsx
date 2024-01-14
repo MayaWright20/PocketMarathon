@@ -3,8 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import GradientPath from 'react-native-svg-path-gradient';
 import { Svg } from 'react-native-svg';
 
-import { COLORS } from '../../../../Constants/COLORS';
-import { SCREEN_WIDTH } from '../../../../Constants/DIMENSIONS';
+import { COLORS } from '../../../../Constants/General/COLORS';
+import { SCREEN_WIDTH } from '../../../../Constants/General/DIMENSIONS';
 import { OptionsContext } from '../../../../Context/CustomRunContext/OptionsContext';
 
 export default function PieChart() {

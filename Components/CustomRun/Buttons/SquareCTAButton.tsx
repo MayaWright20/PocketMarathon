@@ -2,8 +2,8 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 
 import { Text, StyleSheet, View, Pressable } from "react-native";
-import { SCREEN_WIDTH } from "../../../Constants/DIMENSIONS";
-import { COLORS } from "../../../Constants/COLORS";
+import { SCREEN_WIDTH } from "../../../Constants/General/DIMENSIONS";
+import { COLORS } from "../../../Constants/General/COLORS";
 import { BORDER_RADIUS, BORDER_WIDTH } from "../../../Constants/Styling/STYLES";
 
 type SquareCTAButtonProps = {

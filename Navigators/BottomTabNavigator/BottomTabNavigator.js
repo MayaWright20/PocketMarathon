@@ -9,7 +9,7 @@ import GamesRunScreens_Stack from '../StackNavigators/GameScreens_Navigator/Game
 import PreviousRunsScreens_Stack from '../StackNavigators/PreviousRunsScreens_Navigator/CustomRunScreens_Stack';
 import ProfileScreens_Stack from '../StackNavigators/Profiles_Navigator/ProfileScreens_Stack';
 
-import { COLORS } from '../../Constants/COLORS';
+import { COLORS } from '../../Constants/General/COLORS';
 
 const Tab = createMaterialBottomTabNavigator();
 

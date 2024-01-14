@@ -2,8 +2,8 @@ import React from "react";
 import { TouchableHighlight, StyleSheet, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { COLORS } from "../../../Constants/COLORS";
-import { SCREEN_WIDTH } from "../../../Constants/DIMENSIONS";
+import { COLORS } from "../../../Constants/General/COLORS";
+import { SCREEN_WIDTH } from "../../../Constants/General/DIMENSIONS";
 import { BORDER_RADIUS, HEADER_1 } from "../../../Constants/Styling/STYLES";
 
 interface PillCTAButtonProps {

@@ -3,7 +3,7 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
 import * as Type from "../../Types/Types";
-import { COLORS } from "../../Constants/COLORS";
+import { COLORS } from "../../Constants/General/COLORS";
 
 const optionsCtxObj = {
     options: Array<Type.IOptions | undefined | null>(2),

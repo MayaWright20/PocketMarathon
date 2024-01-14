@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableHighlight, ScrollView } from "react-native";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
-import { COLORS } from "../../Constants/COLORS";
+import { COLORS } from "../../Constants/General/COLORS";
 
 import { IRunIntervalsData } from "../../Types/Types";
 

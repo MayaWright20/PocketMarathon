@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 import Profile_HomeScreen from '../../../Screens/ProfilesScreens/Profile_HomeScreen';
-import { COLORS } from '../../../Constants/COLORS';
+import { COLORS } from '../../../Constants/General/COLORS';
 
 const Stack = createStackNavigator();
 
