@@ -117,16 +117,6 @@ export default function CustomRun_StartRunScreen() {
         restart,
     } = useTimer({ expiryTimestamp , autoStart: false, onExpire: () => setRunTimeComplete(true) });
 
-    
-    // for the intervals that will be shown in the pie chart
-    //   const h = new Date();
-    //   h.setSeconds(h.getSeconds()+ 50);
-    //   const {
-    //     seconds: secs1,
-    //   } = useTimer({ expiryTimestamp: h , onExpire: () => setRunTimeComplete(true) });
-
-
-
     function onPressPauseHandler(){
         if(isRunning){
             pause();
@@ -138,20 +128,6 @@ export default function CustomRun_StartRunScreen() {
             return;
         }
     };
-
-    
-    
-    
-
-    //how to change the intervals
-    // do {
-    //     setTimeout(()=>{
-    //         console.log('j', startRunIntervalsArr)
-    //         startRunIntervalsArr.shift();
-    //         console.log('j3', startRunIntervalsArr)
-    //     }, 3000);
-    // } while (startRunIntervalsArr.length > 1);
-
 
     return (
         <ScreenLinearBackground>
@@ -214,8 +190,6 @@ export default function CustomRun_StartRunScreen() {
                 <View style={styles.pillCTAButtonWrapper}>
                     <PillCTAButton onPress={onPressPauseHandler} color1={COLORS.LIGHT_ORANGE} color2={COLORS.ORANGE} title={ isRunning ? 'PAUSE' : 'RESUME' } />
                 </View>
-
-              
             </ScrollView>
         </ScreenLinearBackground>
     )
