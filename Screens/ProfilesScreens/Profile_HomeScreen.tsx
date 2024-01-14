@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { Text, StyleSheet } from "react-native";
 import * as Location from 'expo-location';
-import { Text, StyleSheet, Button } from "react-native";
+
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 
 interface distanceCoords {
@@ -9,14 +10,14 @@ interface distanceCoords {
   speed: number | null
 };
 
-export default function Profile_HomeScreen(){
+export default function Profile_HomeScreen() {
 
   const [location, setLocation] = useState<distanceCoords | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
-      
+
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied!');
@@ -24,7 +25,7 @@ export default function Profile_HomeScreen(){
       };
 
 
-      let location = await Location.getCurrentPositionAsync({accuracy: 5});
+      let location = await Location.getCurrentPositionAsync({ accuracy: 5 });
       setLocation({
         longitude: location.coords.longitude,
         latitude: location.coords.latitude,
@@ -34,23 +35,18 @@ export default function Profile_HomeScreen(){
   }, [location]);
 
   let text = 'Waiting..';
-  
+
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
   };
 
-  function onPressHandler(){
-    
-  }
-
-    return(
-        <ScreenLinearBackground>
-            <Text>Profiled_HomeScreen {text}</Text>
-            <Button title="press" onPress={onPressHandler}/>
-        </ScreenLinearBackground>
-    )
+  return (
+    <ScreenLinearBackground>
+      <Text>Profiled_HomeScreen {text}</Text>
+    </ScreenLinearBackground>
+  )
 };
 
 const styles = StyleSheet.create({
