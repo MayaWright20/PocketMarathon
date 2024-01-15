@@ -10,7 +10,18 @@ export type TIME = {
     'SECS': string | undefined;
 };
 
-export type SPEED = 'WALK' | 'JOG' | 'SPRINT' | 'SELECT SPEED';
+export enum SPEED { 
+    WALK, 
+    JOG , 
+    SPRINT, 
+    'SELECT SPEED'
+};
+
+export enum IntervalCombination {
+    SPEED_TIME,
+    SPEED_DISTANCE,
+    DISTANCE_TIME
+};
 
 export interface IRunIntervalsData {
     id?: string;
@@ -19,6 +30,7 @@ export interface IRunIntervalsData {
     'DISTANCE' ?: DISTANCE;
     'SPEED' ?: SPEED;
     'TIME' ?: TIME;
+    intervalType ?: IntervalCombination;
 };
 
 export type Option = 'TIME' | 'SPEED' | 'DISTANCE';

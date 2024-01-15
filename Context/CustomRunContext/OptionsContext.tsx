@@ -54,7 +54,7 @@ export default function OptionsContextProvider({ children }: any) {
         let newInterval = { ...interval };
       
 
-        if((options[0]?.option === 'SPEED' || options[1]?.option === 'SPEED') && ( newInterval.SPEED === undefined || newInterval.SPEED === 'SELECT SPEED' )) return;
+        if((options[0]?.option === 'SPEED' || options[1]?.option === 'SPEED') && ( newInterval.SPEED === undefined || newInterval.SPEED === Type.SPEED["SELECT SPEED"] )) return;
         if((options[0]?.option === 'DISTANCE' || options[1]?.option === 'DISTANCE') && newInterval.DISTANCE === undefined || (newInterval.DISTANCE && (Object.values(newInterval.DISTANCE).length > 1 && Object.values(newInterval.DISTANCE).every((item)=> item === undefined)))) return;
         if((options[0]?.option === 'TIME' || options[1]?.option === 'TIME') && newInterval.TIME === undefined || (newInterval.TIME && (Object.values(newInterval.TIME).length > 1 && Object.values(newInterval.TIME).every((item)=> item === undefined)))) return;
 
@@ -64,7 +64,8 @@ export default function OptionsContextProvider({ children }: any) {
                 ...newInterval,
                 id: uuid,
                 color: [COLORS.MEDIUM_BLUE, COLORS.GREEN],
-                'TIME': undefined
+                'TIME': undefined,
+                intervalType: Type.IntervalCombination.SPEED_DISTANCE,
             };
         };
 
@@ -73,7 +74,8 @@ export default function OptionsContextProvider({ children }: any) {
                 ...newInterval,
                 id: uuid,
                 color: [COLORS.PINK, COLORS.GREEN],
-                'SPEED': undefined
+                'SPEED': undefined,
+                intervalType: Type.IntervalCombination.SPEED_TIME
             };
         };
 
@@ -82,7 +84,8 @@ export default function OptionsContextProvider({ children }: any) {
                 ...newInterval,
                 id: uuid,
                 color: [COLORS.MEDIUM_BLUE, COLORS.PINK],
-                'DISTANCE': undefined
+                'DISTANCE': undefined,
+                intervalType: Type.IntervalCombination.SPEED_TIME
             };
         };
 

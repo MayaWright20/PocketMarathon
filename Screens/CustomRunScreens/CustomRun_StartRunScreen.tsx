@@ -1,23 +1,35 @@
-import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
+import React, { useContext, useState, useLayoutEffect } from "react";
+import { View, Text, StyleSheet, FlatList, ScrollView, Button } from "react-native";
 import { useTimer } from 'react-timer-hook';
+import Tts from "react-native-tts";
 
-import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
-import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
 import PieChart from "../../Components/CustomRun/Sections/PieChart/PieChart";
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../Constants/General/DIMENSIONS";
+import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import SquareCTAButton from "../../Components/CustomRun/Buttons/SquareCTAButton";
-import { HEADER_1 } from "../../Constants/Styling/STYLES";
 import PillCTAButton from "../../Components/CustomRun/Buttons/PillCTAButton";
-import { COLORS } from "../../Constants/General/COLORS";
 import RectagularCTAButton from "../../Components/CustomRun/Buttons/RectangularCTAButton";
 import useTitleMaker from "../../utils/CustomRun/useTitleMaker";
 import useColorMaker from "../../utils/CustomRun/useColorMaker";
 
+import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../Constants/General/DIMENSIONS";
+import { HEADER_1 } from "../../Constants/Styling/STYLES";
+import { COLORS } from "../../Constants/General/COLORS";
+
 
 
 export default function CustomRun_StartRunScreen() {
+    const [ speaking, setSpeaking ] = useState(true);
+    const [ runComplete, setRunComplete ] = useState(false);
 
+    useLayoutEffect(()=>{
+        Tts.speak("Put the intro here, and they see if, you, hear, pauses",{
+                iosVoiceId: 'com.apple.ttsbundle.Moira-compact',
+        });
+    },[]);
+
+    if( runComplete ) console.log('hi')
+    
     const { intervalsArr } = useContext(OptionsContext);
 
     let startRunIntervalsArr = [{
@@ -71,7 +83,7 @@ export default function CustomRun_StartRunScreen() {
     const speedStatisticsItemRender = ({ item, index}: {item: any, index: number}) => {
         return(
             <View style={styles.statisticsWrapper}>
-                <Text style={styles.h1Timer}>{item?.SPEED} ·</Text>
+                <Text style={styles.h1Timer}>{item?.SPEED}</Text>
             </View>
         )
     };
@@ -82,6 +94,8 @@ export default function CustomRun_StartRunScreen() {
     let mins = 0;
     let secs = 0; 
 
+
+    //this should be made into numbers in context
     startRunIntervalsArr.forEach(( item )=>{
         
         if( item?.TIME ){
@@ -118,21 +132,25 @@ export default function CustomRun_StartRunScreen() {
     } = useTimer({ expiryTimestamp , autoStart: false, onExpire: () => setRunTimeComplete(true) });
 
     function onPressPauseHandler(){
-        if(isRunning){
-            pause();
-            return;
-        }
+        isRunning ? pause() : resume();
+        
+        if(speaking){
+            Tts.pause();
+            setSpeaking(false);
+        }else{
+            Tts.resume();
+            setSpeaking(true);
+        };
 
-        if(!isRunning){
-            resume();
-            return;
-        }
     };
+
+    
+ 
 
     return (
         <ScreenLinearBackground>
             <ScrollView showsVerticalScrollIndicator={false}>
-              
+                
                 <View style={styles.pieChartFlatlistWrapper}>
                     <PieChart />
                     <View style={styles.currentInterval}>

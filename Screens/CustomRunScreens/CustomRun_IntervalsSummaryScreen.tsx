@@ -1,6 +1,6 @@
-import React, { useContext, memo } from "react";
-import { FlatList, Text, StyleSheet, View } from "react-native";
-
+import React, { useContext } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import Tts from "react-native-tts";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import PillCTAButton from "../../Components/CustomRun/Buttons/PillCTAButton";
 import SquareCTAButton from "../../Components/CustomRun/Buttons/SquareCTAButton";
@@ -28,10 +28,10 @@ const Item = ({ item }: { item: any }) => (
         titleSize={14}
         onLongPress={() => undefined}
     />
-
 );
 
-export default function CustomRun_IntervalsSummaryScreen({navigation}) {
+export default function CustomRun_IntervalsSummaryScreen({ navigation }) {
+    Tts.stop();
 
     const { intervalsArr } = useContext(OptionsContext);
 
@@ -77,7 +77,6 @@ export default function CustomRun_IntervalsSummaryScreen({navigation}) {
                 ListHeaderComponent={startInterval}
                 ListFooterComponent={finishInterval}               
                 />
-                
             </View>
         </ScreenLinearBackground>
     )
