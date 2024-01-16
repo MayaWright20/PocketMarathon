@@ -47,6 +47,7 @@ export default function PieChart() {
                         colors={intervalsArrColors.length === 0 ? [ COLORS.LIGHT_GREY ] : intervalsArrColors}
                         strokeWidth={13}
                         roundedCorners
+                        // percent={.9}
                 />
                 </Svg>
             </Svg>
