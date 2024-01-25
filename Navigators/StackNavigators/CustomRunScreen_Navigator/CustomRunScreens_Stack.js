@@ -24,7 +24,7 @@ export default function CustomRunScreens_Stack() {
           name="CustomRun_HomeScreen"
           component={CustomRun_HomeScreen}
           options={{
-            title: 'Cutomise Run'
+            title: 'Customise Run'
           }}
         />
         <Stack.Screen
@@ -38,7 +38,7 @@ export default function CustomRunScreens_Stack() {
           name="CustomRun_StartRunScreen"
           component={CustomRun_StartRunScreen}
           options={{
-            title: `GIVE THIS A NEW TITLE`
+            title: `Start Run`
           }}
         />
       </Stack.Navigator>

@@ -1,7 +1,9 @@
 import React, { useContext, useState, useLayoutEffect } from "react";
-import { View, Text, StyleSheet, FlatList, ScrollView, Button } from "react-native";
+import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import { useTimer } from 'react-timer-hook';
 import Tts from "react-native-tts";
+import ConfettiCannon from 'react-native-confetti-cannon';
+
 
 import PieChart from "../../Components/CustomRun/Sections/PieChart/PieChart";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
@@ -15,35 +17,14 @@ import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../Constants/General/DIMENSIONS";
 import { HEADER_1 } from "../../Constants/Styling/STYLES";
 import { COLORS } from "../../Constants/General/COLORS";
+import { SPEACH_INTRO, speakText } from "../../Constants/Speach/CustomRun/SpeachMaker";
 
 export default function CustomRun_StartRunScreen() {
 
-    const [speaking, setSpeaking] = useState<boolean>(true);
-    const [ introComplete, setIntroComplete] = useState(false);
-
-   
-
-    async function introSpeech(){
-        
-        Tts.speak("Put the intro here and they see if you hear pauses", {
-            iosVoiceId: 'com.apple.ttsbundle.Moira-compact',
-            rate: 0.52,
-            androidParams: {}
-        });
-        Tts.addEventListener('tts-finish', ()=>setIntroComplete(true) );
-       
-    };
-
-    useLayoutEffect(() => {
-        introSpeech();
-    
-    }, []);
-
     const { intervalsArr } = useContext(OptionsContext);
-
     let startRunIntervalsArr = [{
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
-        title: 'START',
+        title: `START WARM UP WALK`,
         emoji: "📣",
     }, ...intervalsArr,
     {
@@ -52,11 +33,23 @@ export default function CustomRun_StartRunScreen() {
         emoji: "🏁",
     }];
 
-    if(introComplete){
-        startRunIntervalsArr.shift();
-        ()=> setIntroComplete(false)
-    };
-   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const renderItem = ({ item, index }: { item: any, index: number }) => {
 
@@ -104,8 +97,6 @@ export default function CustomRun_StartRunScreen() {
         )
     };
 
-    const [runTimeComplete, setRunTimeComplete] = useState(false);
-
     let hours = 0;
     let mins = 0;
     let secs = 0;
@@ -132,21 +123,20 @@ export default function CustomRun_StartRunScreen() {
     const expiryTimestamp = new Date();
     expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + totalIntervalSeconds);
 
+
+    //for the total remaining time component
+    const [runTimeComplete, setRunTimeComplete] = useState(false);
     const {
-        totalSeconds,
         seconds: totalSecondsLeft,
         minutes: totalMinutesLeft,
         hours: totalHoursLeft,
-        days,
-        isRunning,
-        start,
-        pause,
-        resume,
-        restart,
+        isRunning: totalIsRunning,
+        pause: totalPause,
+        resume: totalResume,
     } = useTimer({ expiryTimestamp, autoStart: false, onExpire: () => setRunTimeComplete(true) });
 
     function onPressPauseHandler() {
-        isRunning ? pause() : resume();
+        totalIsRunning ? totalPause() : totalResume();
 
         if (speaking) {
             Tts.pause();
@@ -160,17 +150,22 @@ export default function CustomRun_StartRunScreen() {
     return (
         <ScreenLinearBackground>
             <ScrollView showsVerticalScrollIndicator={false}>
-
+                {/* <View style={styles.confettiWrapper}>
+                    <ConfettiCannon
+                        count={runComplete ? 200 : 0}
+                        origin={{ x: -10, y: 0 }}
+                        autoStart={runComplete}
+                        colors={Object.values(COLORS)}
+                    />
+                </View> */}
                 <View style={styles.pieChartFlatlistWrapper}>
                     <PieChart />
                     <View style={styles.currentInterval}>
-                    {/* startRunIntervalsArr */}
-                    {console.log("st", startRunIntervalsArr[0])}
                         <SquareCTAButton
                             linearGradientColor1={startRunIntervalsArr[0]?.color[0]}
                             linearGradientColor2={startRunIntervalsArr[0]?.color[1]}
-                            title={ useTitleMaker(startRunIntervalsArr[0]) || startRunIntervalsArr[0]['title'] || undefined }
-                            emoji={startRunIntervalsArr[0]['emoji'] }
+                            title={useTitleMaker(startRunIntervalsArr[0]) || startRunIntervalsArr[0]['title'] || undefined}
+                            emoji={startRunIntervalsArr[0]['emoji']}
                             overlayColor={""}
                             onPress={() => undefined}
                             width={SCREEN_WIDTH / 2}
@@ -191,8 +186,7 @@ export default function CustomRun_StartRunScreen() {
                     />
                 </View>
                 <View style={styles.statisticsContainer}>
-
-                    <Text style={[styles.h1, styles.title]}>STATISTICS</Text>
+                    <Text style={[styles.h1, styles.title]}>TOTAL REMAINING</Text>
                     <RectagularCTAButton colors={[COLORS.ORANGE, COLORS.PINK]} emoji={"⏱️"}>
                         <View style={styles.statisticsWrapper}>
                             <Text style={styles.h1Timer}>
@@ -211,14 +205,12 @@ export default function CustomRun_StartRunScreen() {
                             renderItem={speedStatisticsItemRender}
                         />
                     </RectagularCTAButton>
-
                     <RectagularCTAButton colors={[COLORS.MINT_GREEN, COLORS.GREEN]} emoji={"📏"}>
                         <Text>THIS WILL CONTAINER A TIMER LIKE TIME</Text>
                     </RectagularCTAButton>
                 </View>
-
                 <View style={styles.pillCTAButtonWrapper}>
-                    <PillCTAButton onPress={onPressPauseHandler} color1={COLORS.LIGHT_ORANGE} color2={COLORS.ORANGE} title={isRunning ? 'PAUSE' : 'RESUME'} />
+                    <PillCTAButton onPress={onPressPauseHandler} color1={COLORS.LIGHT_ORANGE} color2={COLORS.ORANGE} title={totalIsRunning ? 'PAUSE' : 'RESUME'} />
                 </View>
             </ScrollView>
         </ScreenLinearBackground>
@@ -263,5 +255,10 @@ const styles = StyleSheet.create({
         top: -120,
         marginBottom: 150,
         alignSelf: 'center'
+    },
+    confettiWrapper: {
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
+        position: "absolute"
     }
 });
