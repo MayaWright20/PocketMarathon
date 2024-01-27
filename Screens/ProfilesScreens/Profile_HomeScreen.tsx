@@ -10,7 +10,7 @@ export default function Profile_HomeScreen() {
   const [num, setNum] = useState(0);
   
   let timer: any;
-  let arr = [{ 1000: "this is one how are you today i hope youre having a good day"}, { 20000: "this is two"},{ 6000: "this is three" }];
+  let arr = [{ 1000: "this is one how are you today i hope youre having a good day"}, { 1000: "this is two"},{ 1000: "this is three" }];
 
 useEffect(() => {
   if (!isRunning) {
