@@ -226,7 +226,7 @@ export default function CustomRun_StartRunScreen() {
     return (
         <ScreenLinearBackground>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.confettiWrapper}>
+                <View style={[styles.confettiWrapper, {zIndex: runComplete ? 2 : -1}]}>
                     <ConfettiCannon
                         count={runComplete ? 250 : 0}
                         origin={{ x: 10, y: 0 }}
@@ -254,9 +254,10 @@ export default function CustomRun_StartRunScreen() {
                 </View>
                 <View style={styles.flatlistWrapper}>
                     <FlatList
-                        data={startRunIntervalsArr}
-                        horizontal
+                        // data={startRunIntervalsArr}
+                        data={startRunIntervalsArr.slice(counter)}
                         showsHorizontalScrollIndicator={false}
+                        horizontal
                         renderItem={renderItem}
                         ListHeaderComponent={<View style={{ width: SCREEN_WIDTH / 2, height: SCREEN_WIDTH / 3 }}>
                         </View>}
@@ -337,6 +338,5 @@ const styles = StyleSheet.create({
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT,
         position: "absolute",
-        zIndex: 2
     }
 });
