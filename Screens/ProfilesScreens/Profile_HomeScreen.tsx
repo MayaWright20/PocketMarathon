@@ -5,39 +5,12 @@ import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackgrou
 import Tts from "react-native-tts";
 
 export default function Profile_HomeScreen() {
-  const [isRunning, setIsRunning] = useState(true);
-  const [counter, setCounter] = useState(3);
-  const [num, setNum] = useState(0);
 
-
-  let timer: any;
-  let arr = [{ 1000: "this is one how are you today i hope youre having a good day" }, { 1000: "this is two" }, { 1000: "this is three" }];
-
-  useEffect(() => {
-    if (!isRunning) {
-      clearInterval(timer);
-      Tts.pause();
-      return;
-    } else {
-      Tts.resume();
-    };
-
-    timer = counter > 0 && setInterval(() => {
-      Tts.speak(String(Object.values(arr[num])));
-      setNum(prev => prev + 1);
-      setCounter(prevCounter => prevCounter - 1);
-    }, Number(Object.keys(arr[num])));
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [counter, isRunning]);
 
 
   return (
     <ScreenLinearBackground>
-      <Text>{counter}</Text>
-      <Button title="Press" onPress={() => setIsRunning(!isRunning)} />
+      <Text>Profile_HomeScreen</Text>
     </ScreenLinearBackground>
   )
 };

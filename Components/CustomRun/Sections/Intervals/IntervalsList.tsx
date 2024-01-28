@@ -2,8 +2,8 @@ import React, { useContext, memo, useCallback, useState, useEffect } from "react
 import { View, StyleSheet, ScrollView } from "react-native";
 import DraggableGridView from 'react-native-drag-sort-gridview';
 
-import useColorMaker from "../../../../utils/CustomRun/useColorMaker";
-import useTitleMaker from "../../../../utils/CustomRun/useTitleMaker";
+import useColorMaker from "../../../../Utils/Hooks/CustomRun/useColorMaker";
+import useTitleMaker from "../../../../Utils/Hooks/CustomRun/useTitleMaker";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../../Constants/General/DIMENSIONS";
 import { OptionsContext } from "../../../../Context/CustomRunContext/OptionsContext";
 import SquareCTAButton from "../../Buttons/SquareCTAButton";

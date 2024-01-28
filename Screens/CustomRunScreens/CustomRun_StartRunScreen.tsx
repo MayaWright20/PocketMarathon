@@ -1,37 +1,106 @@
-import React, { useContext, useState, useLayoutEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import { useTimer } from 'react-timer-hook';
 import Tts from "react-native-tts";
 import ConfettiCannon from 'react-native-confetti-cannon';
-
 
 import PieChart from "../../Components/CustomRun/Sections/PieChart/PieChart";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import SquareCTAButton from "../../Components/CustomRun/Buttons/SquareCTAButton";
 import PillCTAButton from "../../Components/CustomRun/Buttons/PillCTAButton";
 import RectagularCTAButton from "../../Components/CustomRun/Buttons/RectangularCTAButton";
-import useTitleMaker from "../../utils/CustomRun/useTitleMaker";
-import useColorMaker from "../../utils/CustomRun/useColorMaker";
+import useTitleMaker from "../../Utils/Hooks/CustomRun/useTitleMaker";
+import useColorMaker from "../../Utils/Hooks/CustomRun/useColorMaker";
 
 import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../Constants/General/DIMENSIONS";
 import { HEADER_1 } from "../../Constants/Styling/STYLES";
 import { COLORS } from "../../Constants/General/COLORS";
-import { SPEACH_INTRO, speakText } from "../../Constants/Speach/CustomRun/SpeachMaker";
+import { SPEACH_INTRO, SPEACH_OUTRO } from "../../Constants/Speach/CustomRun/SpeachMaker";
 
 export default function CustomRun_StartRunScreen() {
 
     const { intervalsArr } = useContext(OptionsContext);
+
     let startRunIntervalsArr = [{
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
         title: `START WARM UP WALK`,
-        emoji: "📣",
+        emoji: `📣`,
+        "TIME": {
+            "HOURS": undefined,
+            "MINS": "5",
+            "SECS": undefined
+        },
+        speak: SPEACH_INTRO
     }, ...intervalsArr,
     {
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
         title: 'FINISH',
         emoji: "🏁",
+        "TIME": {
+            "HOURS": undefined,
+            "MINS": "5",
+            "SECS": undefined
+        },
+        speak: SPEACH_OUTRO
     }];
+
+    const [isRunning, setIsRunning] = useState(true);
+    const [counter, setCounter] = useState(0);
+    const [hasSpoken, setHasSpoken] = useState(false);
+
+    const [intervalHours, setIntervalHours] = useState(startRunIntervalsArr[counter]?.TIME?.HOURS === undefined ? 0 : Number(startRunIntervalsArr[counter]?.TIME?.HOURS));
+    const [intervalMins, setIntervalMins] = useState(startRunIntervalsArr[counter]?.TIME?.MINS === undefined ? 0 : Number(startRunIntervalsArr[counter]?.TIME?.MINS));
+    const [intervalSecs, setIntervalSecs] = useState(startRunIntervalsArr[counter]?.TIME?.SECS === undefined ? 0 : Number(startRunIntervalsArr[counter]?.TIME?.SECS));
+    const [timeLeftForInterval, setTimeLeftForInterval] = useState((intervalHours * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs *1000))
+
+    let timer: any;
+
+    useEffect(() => {
+        setTimeLeftForInterval((intervalHours * 60 * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs * 1000));
+        
+    }, [intervalHours, intervalMins, intervalSecs]);
+    
+
+    useEffect(() => {
+        
+        if (!isRunning) {
+            clearInterval(timer);
+            Tts.pause();
+            return;
+        } else {
+            Tts.resume();
+        };
+
+        if (!hasSpoken) {
+            Tts.speak(String(startRunIntervalsArr[counter]?.speak));
+            setHasSpoken(true);
+        };
+        
+        timer = counter < startRunIntervalsArr.length -1 && setInterval(() => {
+            
+            Tts.speak(String(startRunIntervalsArr[counter + 1]?.speak));
+            setIntervalHours(startRunIntervalsArr[counter + 1]?.TIME?.HOURS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.HOURS));
+            setIntervalMins(startRunIntervalsArr[counter + 1]?.TIME?.MINS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.MINS));
+            setIntervalSecs(startRunIntervalsArr[counter + 1]?.TIME?.SECS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.SECS));
+            setCounter(prevCounter => prevCounter + 1);
+            
+        }, timeLeftForInterval);
+        
+        return () => {
+            clearInterval(timer);
+        };
+
+    }, [counter, isRunning, hasSpoken]);
+
+   
+
+
+
+
+
+
+
 
 
 
@@ -137,14 +206,7 @@ export default function CustomRun_StartRunScreen() {
 
     function onPressPauseHandler() {
         totalIsRunning ? totalPause() : totalResume();
-
-        if (speaking) {
-            Tts.pause();
-            setSpeaking(false);
-        } else {
-            Tts.resume();
-            setSpeaking(true);
-        };
+        setIsRunning(!isRunning);
     };
 
     return (

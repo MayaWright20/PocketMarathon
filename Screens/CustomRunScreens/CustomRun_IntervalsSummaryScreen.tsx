@@ -4,8 +4,8 @@ import Tts from "react-native-tts";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import PillCTAButton from "../../Components/CustomRun/Buttons/PillCTAButton";
 import SquareCTAButton from "../../Components/CustomRun/Buttons/SquareCTAButton";
-import useColorMaker from "../../utils/CustomRun/useColorMaker";
-import useTitleMaker from "../../utils/CustomRun/useTitleMaker";
+import useColorMaker from "../../Utils/Hooks/CustomRun/useColorMaker";
+import useTitleMaker from "../../Utils/Hooks/CustomRun/useTitleMaker";
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../Constants/General/DIMENSIONS";
 import { OptionsContext } from "../../Context/CustomRunContext/OptionsContext";

@@ -31,6 +31,7 @@ export interface IRunIntervalsData {
     'SPEED' ?: SPEED;
     'TIME' ?: TIME;
     intervalType ?: IntervalCombination;
+    speak?: string
 };
 
 export type Option = 'TIME' | 'SPEED' | 'DISTANCE';
