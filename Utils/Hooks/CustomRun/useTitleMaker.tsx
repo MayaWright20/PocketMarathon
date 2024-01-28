@@ -3,6 +3,14 @@ export default function useTitleMaker(item: any) {
 
     let title = '';
 
+    if(item?.title === "START WARM UP WALK"){
+        title = `  WARM UP \n    WALK\n`
+    };
+
+    if(item?.title === "FINISH"){
+        title = `    FINISH\n`
+    };
+
     if (item?.SPEED) {
         title = `🏎️ ${item?.SPEED}\n`;
     };

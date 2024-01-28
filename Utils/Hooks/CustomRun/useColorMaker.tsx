@@ -5,6 +5,12 @@ export default function useColorMaker(item: any) {
     let color = '';
     let color2 = '';
 
+    if(item?.title === "FINISH"){
+        color = COLORS.LIGHT_ORANGE;
+        color2 = COLORS.ORANGE;
+        return { color, color2 }
+    }
+
     if (item?.SPEED) {
         color = COLORS.MEDIUM_BLUE;
         if (item?.TIME) {

@@ -27,10 +27,9 @@ export default function CustomRun_StartRunScreen() {
     Tts.setDucking(true);
     Tts.setIgnoreSilentSwitch(true);
 
-
     let startRunIntervalsArr = [{
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
-        title: `START WARM UP WALK`,
+        title: `START WARM UP WALK`, //if interval isnt showing the correct color look at the useColorMaker hook or useTitleMake for title
         emoji: `📣`,
         "TIME": {
             "HOURS": undefined,
@@ -41,7 +40,7 @@ export default function CustomRun_StartRunScreen() {
     }, ...intervalsArr,
     {
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
-        title: 'FINISH',
+        title: 'FINISH', //if interval isnt showing the correct color look at the useColorMaker hook or useTitleMake for title
         emoji: "🏁",
         "TIME": {
             "HOURS": undefined,
@@ -61,11 +60,6 @@ export default function CustomRun_StartRunScreen() {
     const [runComplete, setRunComplete] = useState(false);
 
     let timer: any;
-
-    useEffect(() => {
-        setTimeLeftForInterval((intervalHours * 60 * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs * 1000));
-    }, [intervalHours, intervalMins, intervalSecs]);
-    
 
     useEffect(() => {
         
@@ -94,67 +88,21 @@ export default function CustomRun_StartRunScreen() {
             setIntervalHours(startRunIntervalsArr[counter + 1]?.TIME?.HOURS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.HOURS));
             setIntervalMins(startRunIntervalsArr[counter + 1]?.TIME?.MINS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.MINS));
             setIntervalSecs(startRunIntervalsArr[counter + 1]?.TIME?.SECS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.SECS));
+            setTimeLeftForInterval((intervalHours * 60 * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs * 1000));
             setCounter(prevCounter => prevCounter + 1);
             
         }, timeLeftForInterval);
 
-        
-        
-        
         return () => {
             clearInterval(timer);
         };
 
-    }, [counter, isRunning, hasSpoken, runComplete]);
-
-   
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }, [counter, isRunning, hasSpoken, runComplete, intervalHours, intervalMins, intervalSecs]);
 
     const renderItem = ({ item, index }: { item: any, index: number }) => {
 
         if (index === 0) {
             return;
-
-        } else if (index === startRunIntervalsArr.length - 1) {
-
-            return (
-                <SquareCTAButton
-                    linearGradientColor1={COLORS.LIGHT_ORANGE}
-                    linearGradientColor2={COLORS.ORANGE}
-                    emoji={'🏁'}
-                    title={"FINISH"}
-                    overlayColor={""}
-                    onPress={() => undefined}
-                    width={SCREEN_WIDTH / 5}
-                    height={SCREEN_WIDTH / 5}
-                    emojiSize={30}
-                    titleSize={0}
-                />
-            )
         } else {
             return (
                 <SquareCTAButton
@@ -241,7 +189,7 @@ export default function CustomRun_StartRunScreen() {
                         <SquareCTAButton
                             linearGradientColor1={startRunIntervalsArr[counter]?.color[0]}
                             linearGradientColor2={startRunIntervalsArr[counter]?.color[1]}
-                            title={useTitleMaker(startRunIntervalsArr[counter]) || startRunIntervalsArr[counter]['title'] || undefined}
+                            title={useTitleMaker(startRunIntervalsArr[counter]) || undefined}
                             emoji={startRunIntervalsArr[counter]['emoji']}
                             overlayColor={""}
                             onPress={() => undefined}
@@ -254,7 +202,6 @@ export default function CustomRun_StartRunScreen() {
                 </View>
                 <View style={styles.flatlistWrapper}>
                     <FlatList
-                        // data={startRunIntervalsArr}
                         data={startRunIntervalsArr.slice(counter)}
                         showsHorizontalScrollIndicator={false}
                         horizontal
