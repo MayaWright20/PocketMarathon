@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import { useTimer } from 'react-timer-hook';
 import Tts from "react-native-tts";
@@ -18,9 +18,15 @@ import { HEADER_1 } from "../../Constants/Styling/STYLES";
 import { COLORS } from "../../Constants/General/COLORS";
 import { SPEACH_INTRO, SPEACH_OUTRO } from "../../Constants/Speach/CustomRun/SpeachMaker";
 
-export default function CustomRun_StartRunScreen() {
 
+export default function CustomRun_StartRunScreen() {
+    let explosion :any = useRef();
     const { intervalsArr } = useContext(OptionsContext);
+
+    Tts.setDefaultVoice('com.apple.voice.compact.en-IE.Moira');
+    Tts.setDucking(true);
+    Tts.setIgnoreSilentSwitch(true);
+
 
     let startRunIntervalsArr = [{
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
@@ -28,10 +34,10 @@ export default function CustomRun_StartRunScreen() {
         emoji: `📣`,
         "TIME": {
             "HOURS": undefined,
-            "MINS": "5",
-            "SECS": undefined
+            "MINS": undefined,
+            "SECS": "2"
         },
-        speak: SPEACH_INTRO
+        speak: "SPEACH_INTRO"
     }, ...intervalsArr,
     {
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
@@ -39,8 +45,8 @@ export default function CustomRun_StartRunScreen() {
         emoji: "🏁",
         "TIME": {
             "HOURS": undefined,
-            "MINS": "5",
-            "SECS": undefined
+            "MINS": undefined,
+            "SECS": "5"
         },
         speak: SPEACH_OUTRO
     }];
@@ -48,17 +54,16 @@ export default function CustomRun_StartRunScreen() {
     const [isRunning, setIsRunning] = useState(true);
     const [counter, setCounter] = useState(0);
     const [hasSpoken, setHasSpoken] = useState(false);
-
     const [intervalHours, setIntervalHours] = useState(startRunIntervalsArr[counter]?.TIME?.HOURS === undefined ? 0 : Number(startRunIntervalsArr[counter]?.TIME?.HOURS));
     const [intervalMins, setIntervalMins] = useState(startRunIntervalsArr[counter]?.TIME?.MINS === undefined ? 0 : Number(startRunIntervalsArr[counter]?.TIME?.MINS));
     const [intervalSecs, setIntervalSecs] = useState(startRunIntervalsArr[counter]?.TIME?.SECS === undefined ? 0 : Number(startRunIntervalsArr[counter]?.TIME?.SECS));
-    const [timeLeftForInterval, setTimeLeftForInterval] = useState((intervalHours * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs *1000))
+    const [timeLeftForInterval, setTimeLeftForInterval] = useState((intervalHours * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs *1000));
+    const [runComplete, setRunComplete] = useState(false);
 
     let timer: any;
 
     useEffect(() => {
         setTimeLeftForInterval((intervalHours * 60 * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs * 1000));
-        
     }, [intervalHours, intervalMins, intervalSecs]);
     
 
@@ -76,6 +81,12 @@ export default function CustomRun_StartRunScreen() {
             Tts.speak(String(startRunIntervalsArr[counter]?.speak));
             setHasSpoken(true);
         };
+
+        console.log('counter', counter, "startIntervalsArr.length",startRunIntervalsArr.length)
+        if(counter === startRunIntervalsArr.length -1){
+            setRunComplete(true);
+            explosion.current && explosion.current.start();
+        };
         
         timer = counter < startRunIntervalsArr.length -1 && setInterval(() => {
             
@@ -86,15 +97,18 @@ export default function CustomRun_StartRunScreen() {
             setCounter(prevCounter => prevCounter + 1);
             
         }, timeLeftForInterval);
+
+        
+        
         
         return () => {
             clearInterval(timer);
         };
 
-    }, [counter, isRunning, hasSpoken]);
+    }, [counter, isRunning, hasSpoken, runComplete]);
 
    
-
+    
 
 
 
@@ -212,22 +226,23 @@ export default function CustomRun_StartRunScreen() {
     return (
         <ScreenLinearBackground>
             <ScrollView showsVerticalScrollIndicator={false}>
-                {/* <View style={styles.confettiWrapper}>
+                <View style={styles.confettiWrapper}>
                     <ConfettiCannon
-                        count={runComplete ? 200 : 0}
-                        origin={{ x: -10, y: 0 }}
-                        autoStart={runComplete}
+                        count={runComplete ? 250 : 0}
+                        origin={{ x: 10, y: 0 }}
+                        autoStart={false}
                         colors={Object.values(COLORS)}
+                        ref={explosion}
                     />
-                </View> */}
+                </View>
                 <View style={styles.pieChartFlatlistWrapper}>
                     <PieChart />
                     <View style={styles.currentInterval}>
                         <SquareCTAButton
-                            linearGradientColor1={startRunIntervalsArr[0]?.color[0]}
-                            linearGradientColor2={startRunIntervalsArr[0]?.color[1]}
-                            title={useTitleMaker(startRunIntervalsArr[0]) || startRunIntervalsArr[0]['title'] || undefined}
-                            emoji={startRunIntervalsArr[0]['emoji']}
+                            linearGradientColor1={startRunIntervalsArr[counter]?.color[0]}
+                            linearGradientColor2={startRunIntervalsArr[counter]?.color[1]}
+                            title={useTitleMaker(startRunIntervalsArr[counter]) || startRunIntervalsArr[counter]['title'] || undefined}
+                            emoji={startRunIntervalsArr[counter]['emoji']}
                             overlayColor={""}
                             onPress={() => undefined}
                             width={SCREEN_WIDTH / 2}
@@ -321,6 +336,7 @@ const styles = StyleSheet.create({
     confettiWrapper: {
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT,
-        position: "absolute"
+        position: "absolute",
+        zIndex: 2
     }
 });
