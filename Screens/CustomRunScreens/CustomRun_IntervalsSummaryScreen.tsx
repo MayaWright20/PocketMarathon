@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import Tts from "react-native-tts";
+// import Tts from "react-native-tts";
+import * as Tts from "expo-speech";
+
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
 import PillCTAButton from "../../Components/CustomRun/Buttons/PillCTAButton";
 import SquareCTAButton from "../../Components/CustomRun/Buttons/SquareCTAButton";
@@ -33,7 +35,9 @@ const Item = ({ item }: { item: any }) => (
 export default function CustomRun_IntervalsSummaryScreen({ navigation }) {
     Tts.stop();
 
+    
     const { intervalsArr } = useContext(OptionsContext);
+    console.log(intervalsArr)
 
     const renderItem = ({ item }: { item: any }) => <Item key={item.id} item={item} />
     const startInterval = <SquareCTAButton

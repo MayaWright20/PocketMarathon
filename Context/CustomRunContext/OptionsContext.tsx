@@ -8,6 +8,8 @@ import { COLORS } from "../../Constants/General/COLORS";
 const optionsCtxObj = {
     options: Array<Type.IOptions | undefined | null>(2),
     optionsHandler: ( opt: any ) => { },
+    // distanceCompletion: any,
+    distanceIntervalCompletionHandler:(opt: boolean) => { },
     makeIntervalHandler: ( intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME ) => { },
     addIntervalHandler: () => { },
     cancelIntervalHandler: () => { },
@@ -19,6 +21,8 @@ const optionsCtxObj = {
 export const OptionsContext = createContext<{
     options: Array<Type.IOptions | undefined | null>;
     optionsHandler: ( opt: any ) => void;
+    distanceCompletion: boolean;
+    distanceIntervalCompletionHandler: (opt: boolean) => { };
     makeIntervalHandler: ( intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME ) => void;
     addIntervalHandler: () => void;
     cancelIntervalHandler: () => void;
@@ -32,6 +36,7 @@ export default function OptionsContextProvider({ children }: any) {
     const [options, setOptions] = useState(Array<Type.IOptions | undefined | null>(2));
     const [interval, setInterval] = useState<Type.IRunIntervalsData | undefined>(undefined);
     const [intervalsArr, setIntervalsArr] = useState<Type.IRunIntervalsData[] |[]>([]);
+    const [distanceCompletion, setDistanceCompletion] = useState<boolean | null>()
 
     useEffect(() => {
     }, [options, intervalsArr, interval]);
@@ -45,6 +50,10 @@ export default function OptionsContextProvider({ children }: any) {
             ...prevInterval,
             [intervalType]: intervalTypeData,
         }));
+    };
+
+    function distanceIntervalCompletionHandler(opt: boolean){
+        setDistanceCompletion(opt);
     };
 
     function addIntervalHandler() {
@@ -67,6 +76,7 @@ export default function OptionsContextProvider({ children }: any) {
                 'TIME': undefined,
                 intervalType: Type.IntervalCombination.SPEED_DISTANCE,
             };
+            setDistanceCompletion(null)
         };
 
         if (options[0]?.option !== 'SPEED' && options[1]?.option !== 'SPEED') {
@@ -113,6 +123,8 @@ export default function OptionsContextProvider({ children }: any) {
     const value = {
         options: options,
         optionsHandler: optionsHandler,
+        distanceIntervalCompletionHandler : distanceIntervalCompletionHandler,
+        distanceCompletion: distanceCompletion,
         makeIntervalHandler: makeIntervalHandler,
         addIntervalHandler: addIntervalHandler,
         interval: interval,

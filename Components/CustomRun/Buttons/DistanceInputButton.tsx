@@ -15,7 +15,7 @@ export default function DistanceInputButton() {
     const [ metres, setMetres ] = useState();
 
     const optionsCtx = useContext(OptionsContext);
-    const distance = { 'MILES': miles, 'KMS': kms, 'METRES': metres };
+    const distance = { 'MILES': miles, 'KMS': kms, 'METRES': metres, 'END_ON_DISTANCE': optionsCtx.distanceCompletion };
 
     useEffect(() => {
         if( distance.MILES === undefined && distance.KMS === undefined && distance.METRES === undefined){
@@ -23,7 +23,7 @@ export default function DistanceInputButton() {
         }else{
             optionsCtx.makeIntervalHandler('DISTANCE', distance);   
         }
-    }, [ miles, kms, metres ]);
+    }, [ miles, kms, metres, optionsCtx.distanceCompletion ]);
 
     return (
         <View style={styles.container}>

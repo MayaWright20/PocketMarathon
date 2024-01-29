@@ -2,6 +2,7 @@ export type DISTANCE = {
     'MILES': string | undefined;
     'KMS': string | undefined;
     'METRES': string | undefined;
+    'END_ON_DISTANCE' : boolean | null; //true = end when distance is over, false = end when timer is over
 };
 
 export type TIME = {

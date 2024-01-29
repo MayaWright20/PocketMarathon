@@ -7,7 +7,7 @@ export default function PreviousRuns_HomeScreen() {
 
     return (
         <ScreenLinearBackground>
-            <Text>PreviousRuns_HomeScreen hi</Text>
+            <Text>PreviousRuns_HomeScreen</Text>
         </ScreenLinearBackground>
     )
 };

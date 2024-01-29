@@ -39,12 +39,6 @@
     },
     "plugins": [
       [
-        "expo-av",
-        {
-          "microphonePermission": "Allow Pocket Marathon to access your microphone."
-        }
-      ],
-      [
         "expo-location",
         {
           "locationAlwaysAndWhenInUsePermission": "Allow Pocket Marathon to use your location."

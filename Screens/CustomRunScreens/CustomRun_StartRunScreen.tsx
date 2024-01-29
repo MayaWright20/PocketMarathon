@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import { useTimer } from 'react-timer-hook';
-import Tts from "react-native-tts";
+// import Tts from "react-native-tts";
+import * as Tts from "expo-speech";
 import ConfettiCannon from 'react-native-confetti-cannon';
 
 import PieChart from "../../Components/CustomRun/Sections/PieChart/PieChart";
@@ -23,9 +24,12 @@ export default function CustomRun_StartRunScreen() {
     let explosion :any = useRef();
     const { intervalsArr } = useContext(OptionsContext);
 
-    Tts.setDefaultVoice('com.apple.voice.compact.en-IE.Moira');
-    Tts.setDucking(true);
-    Tts.setIgnoreSilentSwitch(true);
+    // Tts.setDefaultVoice('com.apple.voice.compact.en-IE.Moira');
+    // Tts.setDucking(true);
+    // Tts.setIgnoreSilentSwitch(true);
+    const TtsOptions = {
+        voice: "com.apple.voice.enhanced.en-GB.Malcolm"
+    }
 
     let startRunIntervalsArr = [{
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
@@ -72,11 +76,10 @@ export default function CustomRun_StartRunScreen() {
         };
 
         if (!hasSpoken) {
-            Tts.speak(String(startRunIntervalsArr[counter]?.speak));
+            Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
             setHasSpoken(true);
         };
 
-        console.log('counter', counter, "startIntervalsArr.length",startRunIntervalsArr.length)
         if(counter === startRunIntervalsArr.length -1){
             setRunComplete(true);
             explosion.current && explosion.current.start();
@@ -84,7 +87,7 @@ export default function CustomRun_StartRunScreen() {
         
         timer = counter < startRunIntervalsArr.length -1 && setInterval(() => {
             
-            Tts.speak(String(startRunIntervalsArr[counter + 1]?.speak));
+            Tts.speak(String(startRunIntervalsArr[counter + 1]?.speak), TtsOptions);
             setIntervalHours(startRunIntervalsArr[counter + 1]?.TIME?.HOURS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.HOURS));
             setIntervalMins(startRunIntervalsArr[counter + 1]?.TIME?.MINS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.MINS));
             setIntervalSecs(startRunIntervalsArr[counter + 1]?.TIME?.SECS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.SECS));
