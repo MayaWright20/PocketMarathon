@@ -66,6 +66,11 @@ export default function CustomRun_StartRunScreen() {
     let timer: any;
 
     useEffect(() => {
+
+        if( startRunIntervalsArr[counter]?.['DISTANCE']?.['END_ON_DISTANCE'] === true ){
+            //code for waiting until distance is complete
+        }
+        
         
         if (!isRunning) {
             clearInterval(timer);
@@ -85,7 +90,7 @@ export default function CustomRun_StartRunScreen() {
             explosion.current && explosion.current.start();
         };
         
-        timer = counter < startRunIntervalsArr.length -1 && setInterval(() => {
+        timer = counter < startRunIntervalsArr.length -1 && startRunIntervalsArr[counter]?.['DISTANCE']?.['END_ON_DISTANCE'] !== true && setInterval(() => {
             
             Tts.speak(String(startRunIntervalsArr[counter + 1]?.speak), TtsOptions);
             setIntervalHours(startRunIntervalsArr[counter + 1]?.TIME?.HOURS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.HOURS));

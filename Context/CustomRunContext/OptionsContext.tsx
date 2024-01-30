@@ -8,7 +8,6 @@ import { COLORS } from "../../Constants/General/COLORS";
 const optionsCtxObj = {
     options: Array<Type.IOptions | undefined | null>(2),
     optionsHandler: ( opt: any ) => { },
-    // distanceCompletion: any,
     distanceIntervalCompletionHandler:(opt: boolean) => { },
     makeIntervalHandler: ( intervalType: Type.Option, intervalTypeData: Type.DISTANCE | Type.SPEED | Type.TIME ) => { },
     addIntervalHandler: () => { },
@@ -36,7 +35,7 @@ export default function OptionsContextProvider({ children }: any) {
     const [options, setOptions] = useState(Array<Type.IOptions | undefined | null>(2));
     const [interval, setInterval] = useState<Type.IRunIntervalsData | undefined>(undefined);
     const [intervalsArr, setIntervalsArr] = useState<Type.IRunIntervalsData[] |[]>([]);
-    const [distanceCompletion, setDistanceCompletion] = useState<boolean | null>()
+    const [distanceCompletion, setDistanceCompletion] = useState<boolean | null>(null);
 
     useEffect(() => {
     }, [options, intervalsArr, interval]);
@@ -85,8 +84,9 @@ export default function OptionsContextProvider({ children }: any) {
                 id: uuid,
                 color: [COLORS.PINK, COLORS.GREEN],
                 'SPEED': undefined,
-                intervalType: Type.IntervalCombination.SPEED_TIME
+                intervalType: Type.IntervalCombination.DISTANCE_TIME
             };
+            setDistanceCompletion(null)
         };
 
         if (options[0]?.option !== 'DISTANCE' && options[1]?.option !== 'DISTANCE') {
@@ -97,6 +97,7 @@ export default function OptionsContextProvider({ children }: any) {
                 'DISTANCE': undefined,
                 intervalType: Type.IntervalCombination.SPEED_TIME
             };
+            setDistanceCompletion(null)
         };
 
         if(options[0] === undefined && options[1] === undefined){
