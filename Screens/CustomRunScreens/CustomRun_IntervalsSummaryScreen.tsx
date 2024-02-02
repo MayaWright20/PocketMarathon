@@ -33,9 +33,10 @@ const Item = ({ item }: { item: any }) => (
 );
 
 export default function CustomRun_IntervalsSummaryScreen({ navigation }) {
+    
     Tts.stop();
     const { intervalsArr } = useContext(OptionsContext);
-    console.log(intervalsArr)
+
     const renderItem = ({ item }: { item: any }) => <Item key={item.id} item={item} />
     const startInterval = <SquareCTAButton
         linearGradientColor1={COLORS.LIGHT_ORANGE}

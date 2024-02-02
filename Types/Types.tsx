@@ -21,7 +21,8 @@ export enum SPEED {
 export enum IntervalCombination {
     SPEED_TIME = 'SPEED_TIME',
     SPEED_DISTANCE = 'SPEED_DISTANCE',
-    DISTANCE_TIME = 'DISTANCE_TIME'
+    DISTANCE_TIME = 'DISTANCE_TIME',
+    FINISH = 'FINISH'
 };
 
 export interface IRunIntervalsData {

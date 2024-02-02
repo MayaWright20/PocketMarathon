@@ -74,6 +74,7 @@ export default function OptionsContextProvider({ children }: any) {
                 color: [COLORS.MEDIUM_BLUE, COLORS.GREEN],
                 'TIME': undefined,
                 intervalType: Type.IntervalCombination.SPEED_DISTANCE,
+                speak: "not time"
             };
             setDistanceCompletion(null)
         };
@@ -84,7 +85,8 @@ export default function OptionsContextProvider({ children }: any) {
                 id: uuid,
                 color: [COLORS.PINK, COLORS.GREEN],
                 'SPEED': undefined,
-                intervalType: Type.IntervalCombination.DISTANCE_TIME
+                intervalType: Type.IntervalCombination.DISTANCE_TIME,
+                speak: "not  speed"
             };
             setDistanceCompletion(null)
         };
@@ -95,7 +97,8 @@ export default function OptionsContextProvider({ children }: any) {
                 id: uuid,
                 color: [COLORS.MEDIUM_BLUE, COLORS.PINK],
                 'DISTANCE': undefined,
-                intervalType: Type.IntervalCombination.SPEED_TIME
+                intervalType: Type.IntervalCombination.SPEED_TIME,
+                speak: "not distance"
             };
             setDistanceCompletion(null)
         };
