@@ -121,24 +121,29 @@ export default function CustomRun_StartRunScreen() {
             setPrevLocation(location && { longitude: location.coords.longitude, latitude: location.coords.latitude });
         };
     };
-        
-    function nextIntervalHandler(){
-        const nextInterval = startRunIntervalsArr[counter + 1]?.intervalType;
-        if(startRunIntervalsArr[counter + 1]?.['DISTANCE']?.['END_ON_DISTANCE']){
-            setDistanceNextInterval();
-            setTimeNextInterval();
-            setFirstTimeDistanceSpeak(true);
-            setCounter(prev => prev + 1);
-        }else if(nextInterval === 'SPEED_DISTANCE'){
-            setDistanceNextInterval();
-            clearTimeout(timer);
-            setFirstTimeDistanceSpeak(true);
-            setCounter(prev => prev + 1);
-        }else{
-            setTimeNextInterval();
-            setFirstTimeDistanceSpeak(true);
-            setCounter(prev => prev + 1);
+
+    function nextIntervalHandler() {
+        setTimeNextInterval();
+        setFirstTimeDistanceSpeak(true);
+        setCounter(prev => prev + 1);
+    };
+
+    function endOnDistance() {
+        //MIGHT WANT TO PUT THIS IN A REUSABLE FUNCTION
+        getCurrentPosition();
+        if (watchPosition && prevLocation) {
+            setDistance(haversine(watchPosition, prevLocation));
         };
+
+        if (distance && distance >= distanceLeftForInterval) {
+            setDistance(null);
+            setPass(false);
+            setPrevLocation(null);
+            setWatchPosition(null);
+            nextIntervalHandler();
+        };
+        setTimeNextInterval();
+        setDistanceNextInterval();
     };
 
     useEffect(() => {
@@ -152,68 +157,57 @@ export default function CustomRun_StartRunScreen() {
         };
 
         const intervalType = startRunIntervalsArr[counter]?.intervalType;
-        
+
         switch (intervalType) {
             case 'START':
-                Tts.speak('START', TtsOptions);
-                console.log('START');
-                timer = setTimeout(()=>{
-                    nextIntervalHandler();
-                }, timeLeftForInterval)
-                
-                break;
-            case 'SPEED_TIME':
-                Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
-                timer = setTimeout(()=>{
-                    nextIntervalHandler();
-                }, timeLeftForInterval)
-                
-                break;
-            case 'SPEED_DISTANCE':
-                //THIS WORKS
-                if(firstTimeDistanceSpeak){
+                if (firstTimeDistanceSpeak) {
                     Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
                     setFirstTimeDistanceSpeak(false);
                 };
-                
-
-                //MIGHT WANT TO PUT THIS IN A REUSABLE FUNCTION
-                getCurrentPosition();
-                if (watchPosition && prevLocation){
-                    setDistance(haversine(watchPosition, prevLocation));
-                };
-          
-                if(distance && distance >= distanceLeftForInterval){
-                    setDistance(null);
-                    setPass(false);
-                    setPrevLocation(null);
-                    setWatchPosition(null);
+                timer = setTimeout(() => {
                     nextIntervalHandler();
+                }, timeLeftForInterval)
+
+                break;
+            case 'SPEED_TIME':
+                if (firstTimeDistanceSpeak) {
+                    Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
+                    setFirstTimeDistanceSpeak(false);
                 };
-                
+                timer = setTimeout(() => {
+                    nextIntervalHandler();
+                }, timeLeftForInterval)
+
+                break;
+            case 'SPEED_DISTANCE':
+                //THIS WORKS
+                if (firstTimeDistanceSpeak) {
+                    Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
+                    setFirstTimeDistanceSpeak(false);
+                };
+                endOnDistance();
+
                 break;
             case 'DISTANCE_TIME':
-                
-                Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
-               
+                if (firstTimeDistanceSpeak) {
+                    Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
+                    setFirstTimeDistanceSpeak(false);
+                };
                 if(startRunIntervalsArr[counter]?.['DISTANCE']?.['END_ON_DISTANCE']){
                     clearTimeout(timer);
                 };
-                
-                if(useIsDistanceTravelledLocation() && useIsDistanceTravelledLocation() >= distanceLeftForInterval){
-                    nextIntervalHandler();
-                };
+                endOnDistance();
 
                 break;
             case 'FINISH':
-                if(firstFinishSpeech){
+                if (firstFinishSpeech) {
                     Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions); // add final Tts.speak('bye') with timer set to 5 mins
                     explosion.current && explosion.current.start();
                     setRunComplete(true);
                     clearTimeout(timer);
                     setFirstFinishSpeech(false);
                 };
-                
+
                 break;
             default:
                 Tts.speak('DEFAULT', TtsOptions);
@@ -232,7 +226,8 @@ export default function CustomRun_StartRunScreen() {
         timeLeftForInterval,
         distance,
         watchPosition,
-        prevLocation
+        prevLocation,
+
     ]);
 
     const renderItem = ({ item, index }: { item: any, index: number }) => {
