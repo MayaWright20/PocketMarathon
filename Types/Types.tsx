@@ -15,10 +15,12 @@ export enum SPEED {
     WALK, 
     JOG , 
     SPRINT, 
-    'SELECT SPEED'
+    'SELECT SPEED',
+    undefined
 };
 
 export enum IntervalCombination {
+    START = 'START',
     SPEED_TIME = 'SPEED_TIME',
     SPEED_DISTANCE = 'SPEED_DISTANCE',
     DISTANCE_TIME = 'DISTANCE_TIME',
@@ -33,7 +35,8 @@ export interface IRunIntervalsData {
     'SPEED' ?: SPEED;
     'TIME' ?: TIME;
     intervalType ?: IntervalCombination;
-    speak?: string
+    speak?: string;
+    emoji?: string | undefined;
 };
 
 export type Option = 'TIME' | 'SPEED' | 'DISTANCE';

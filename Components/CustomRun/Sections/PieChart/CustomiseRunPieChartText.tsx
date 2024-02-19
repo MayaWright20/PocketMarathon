@@ -18,6 +18,7 @@ export default function CustomiseRunPieChartText() {
 
     useEffect(() => {
         if ((option1?.option === 'SPEED' || option2?.option === 'SPEED') && (option1?.option === 'TIME' || option2?.option === 'TIME')) {
+            setIsEnabled(false);
             setOptionsText(<View style={styles.optionsContainer}>
                 <Text style={styles.h1}>I want to</Text>
                 <SelectSpeedDropDownButton />
@@ -27,6 +28,7 @@ export default function CustomiseRunPieChartText() {
         };
 
         if ((option1?.option === 'SPEED' || option2?.option === 'SPEED') && (option1?.option === 'DISTANCE' || option2?.option === 'DISTANCE')) {
+            setIsEnabled(true);
             setOptionsText(<View style={styles.optionsContainer}>
                 <Text style={styles.h1}>I want to</Text>
                 <SelectSpeedDropDownButton />

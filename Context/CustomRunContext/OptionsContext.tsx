@@ -74,7 +74,7 @@ export default function OptionsContextProvider({ children }: any) {
                 color: [COLORS.MEDIUM_BLUE, COLORS.GREEN],
                 'TIME': undefined,
                 intervalType: Type.IntervalCombination.SPEED_DISTANCE,
-                speak: "not time"
+                speak: 'speed and distance'
             };
             setDistanceCompletion(null)
         };
@@ -86,7 +86,7 @@ export default function OptionsContextProvider({ children }: any) {
                 color: [COLORS.PINK, COLORS.GREEN],
                 'SPEED': undefined,
                 intervalType: Type.IntervalCombination.DISTANCE_TIME,
-                speak: "not  speed"
+                speak: "distance and time"
             };
             setDistanceCompletion(null)
         };
@@ -98,7 +98,7 @@ export default function OptionsContextProvider({ children }: any) {
                 color: [COLORS.MEDIUM_BLUE, COLORS.PINK],
                 'DISTANCE': undefined,
                 intervalType: Type.IntervalCombination.SPEED_TIME,
-                speak: "not distance"
+                speak: "speed and time"
             };
             setDistanceCompletion(null)
         };
