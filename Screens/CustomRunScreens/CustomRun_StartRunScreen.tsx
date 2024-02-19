@@ -158,6 +158,7 @@ export default function CustomRun_StartRunScreen() {
 
         const intervalType = startRunIntervalsArr[counter]?.intervalType;
 
+        console.log('EOD',startRunIntervalsArr[counter]?.['DISTANCE']?.['END_ON_DISTANCE'])
         switch (intervalType) {
             case 'START':
                 if (firstTimeDistanceSpeak) {
@@ -176,7 +177,7 @@ export default function CustomRun_StartRunScreen() {
                 };
                 timer = setTimeout(() => {
                     nextIntervalHandler();
-                }, timeLeftForInterval)
+                }, timeLeftForInterval);
 
                 break;
             case 'SPEED_DISTANCE':
@@ -195,8 +196,13 @@ export default function CustomRun_StartRunScreen() {
                 };
                 if(startRunIntervalsArr[counter]?.['DISTANCE']?.['END_ON_DISTANCE']){
                     clearTimeout(timer);
-                };
-                endOnDistance();
+                    endOnDistance();
+                }else{
+                    timer = setTimeout(() => {
+                        nextIntervalHandler();
+                    }, timeLeftForInterval);
+                }
+                
 
                 break;
             case 'FINISH':

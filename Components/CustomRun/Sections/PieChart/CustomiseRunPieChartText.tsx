@@ -48,7 +48,7 @@ export default function CustomiseRunPieChartText() {
                     <Text style={styles.h1}>End on</Text>
                     <View style={styles.container}>
                         <Switch
-                            trackColor={{ false: COLORS.PINK, true: COLORS.GREEN }}
+                            trackColor={{ true: COLORS.GREEN, false: COLORS.PINK }}
                             thumbColor={isEnabled ? '#ffffff' : '#ffffff'}
                             ios_backgroundColor={COLORS.PINK}
                             onValueChange={toggleSwitch}
@@ -72,7 +72,7 @@ export default function CustomiseRunPieChartText() {
     return (
         <View>
             {optionText}
-        </View>
+        </View> 
     )
 };
 
