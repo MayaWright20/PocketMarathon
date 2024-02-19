@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import { useTimer } from 'react-timer-hook';
+import * as Location from 'expo-location';
+import haversine from 'haversine-distance';
 // import Tts from "react-native-tts";
 import * as Tts from "expo-speech";
-import * as Location from 'expo-location';
 import ConfettiCannon from 'react-native-confetti-cannon';
 
 import useTitleMaker from "../../Utils/Hooks/CustomRun/useTitleMaker";
@@ -25,7 +26,7 @@ import { SPEACH_INTRO, SPEACH_OUTRO } from "../../Constants/Speach/CustomRun/Spe
 
 
 export default function CustomRun_StartRunScreen() {
-    let explosion: any = useRef();
+    let explosion: any = useRef(null);
     const { intervalsArr } = useContext(OptionsContext);
 
     // Tts.setDefaultVoice('com.apple.voice.compact.en-IE.Moira');
@@ -95,8 +96,32 @@ export default function CustomRun_StartRunScreen() {
         setTimeLeftForInterval((intervalHours * 60 * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs * 1000));
     };
 
-    let useDistanceTravelled = useIsDistanceTravelledLocation();
+    const [prevLocation, setPrevLocation] = useState<any>(null);
+    const [pass, setPass] = useState<boolean>(false);
+    const [watchPosition, setWatchPosition] = useState<any>(null);
+    const [errorMsg, setErrorMsg] = useState<null | string>(null);
+    const [distance, setDistance] = useState<number | null>(null);
 
+
+    async function getCurrentPosition() {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            setErrorMsg('Permission to access location was denied');
+            return;
+        };
+
+        let location = await Location.getCurrentPositionAsync({
+            accuracy: Location.Accuracy.BestForNavigation,
+        });
+
+        if (!pass) {
+            setPass(true);
+            setWatchPosition({ longitude: location.coords.longitude, latitude: location.coords.latitude });
+        } else {
+            setPrevLocation(location && { longitude: location.coords.longitude, latitude: location.coords.latitude });
+        };
+    };
+        
     function nextIntervalHandler(){
         const nextInterval = startRunIntervalsArr[counter + 1]?.intervalType;
         if(startRunIntervalsArr[counter + 1]?.['DISTANCE']?.['END_ON_DISTANCE']){
@@ -135,22 +160,34 @@ export default function CustomRun_StartRunScreen() {
                 timer = setTimeout(()=>{
                     nextIntervalHandler();
                 }, timeLeftForInterval)
+                
                 break;
             case 'SPEED_TIME':
                 Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
                 timer = setTimeout(()=>{
                     nextIntervalHandler();
                 }, timeLeftForInterval)
+                
                 break;
             case 'SPEED_DISTANCE':
                 //THIS WORKS
                 if(firstTimeDistanceSpeak){
                     Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
                     setFirstTimeDistanceSpeak(false);
-                }
+                };
                 
-                // clearTimeout(timer);
-                if(useDistanceTravelled && useDistanceTravelled >= distanceLeftForInterval){
+
+                //MIGHT WANT TO PUT THIS IN A REUSABLE FUNCTION
+                getCurrentPosition();
+                if (watchPosition && prevLocation){
+                    setDistance(haversine(watchPosition, prevLocation));
+                };
+          
+                if(distance && distance >= distanceLeftForInterval){
+                    setDistance(null);
+                    setPass(false);
+                    setPrevLocation(null);
+                    setWatchPosition(null);
                     nextIntervalHandler();
                 };
                 
@@ -163,18 +200,18 @@ export default function CustomRun_StartRunScreen() {
                     clearTimeout(timer);
                 };
                 
-                if(useDistanceTravelled && useDistanceTravelled >= distanceLeftForInterval){
+                if(useIsDistanceTravelledLocation() && useIsDistanceTravelledLocation() >= distanceLeftForInterval){
                     nextIntervalHandler();
                 };
 
                 break;
             case 'FINISH':
                 if(firstFinishSpeech){
-                    Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
+                    Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions); // add final Tts.speak('bye') with timer set to 5 mins
                     explosion.current && explosion.current.start();
                     setRunComplete(true);
                     clearTimeout(timer);
-                    setFirstFinishSpeech(false)
+                    setFirstFinishSpeech(false);
                 };
                 
                 break;
@@ -193,7 +230,9 @@ export default function CustomRun_StartRunScreen() {
         hasSpoken,
         runComplete,
         timeLeftForInterval,
-        useDistanceTravelled
+        distance,
+        watchPosition,
+        prevLocation
     ]);
 
     const renderItem = ({ item, index }: { item: any, index: number }) => {
@@ -273,7 +312,7 @@ export default function CustomRun_StartRunScreen() {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={[styles.confettiWrapper, { zIndex: runComplete ? 2 : -1 }]}>
                     <ConfettiCannon
-                        count={runComplete ? 250 : 0}
+                        count={runComplete ? 200 : 0}
                         origin={{ x: 10, y: 0 }}
                         autoStart={false}
                         colors={Object.values(COLORS)}
