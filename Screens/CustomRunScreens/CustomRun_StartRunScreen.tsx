@@ -8,6 +8,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 
 import useTitleMaker from "../../Utils/Hooks/CustomRun/useTitleMaker";
 import useColorMaker from "../../Utils/Hooks/CustomRun/useColorMaker";
+import useIsDistanceTravelledLocation from "../../Utils/Hooks/General/location";
 
 import PieChart from "../../Components/CustomRun/Sections/PieChart/PieChart";
 import ScreenLinearBackground from "../../Constants/Styling/ScreenLinearBackground";
@@ -30,8 +31,11 @@ export default function CustomRun_StartRunScreen() {
     // Tts.setDefaultVoice('com.apple.voice.compact.en-IE.Moira');
     // Tts.setDucking(true);
     // Tts.setIgnoreSilentSwitch(true);
+    // const TtsOptions = {
+    //     voice: "com.apple.voice.enhanced.en-GB.Malcolm"
+    // }
     const TtsOptions = {
-        voice: "com.apple.voice.enhanced.en-GB.Malcolm"
+        voice: "com.apple.voice.compact.en-IE.Moira"
     }
 
     let startRunIntervalsArr = [{
@@ -43,7 +47,8 @@ export default function CustomRun_StartRunScreen() {
             "MINS": undefined,
             "SECS": "5"
         },
-        speak: "SPEACH_INTRO"
+        speak: "SPEACH_INTRO",
+        intervalType: 'START',
     }, ...intervalsArr,
     {
         color: [COLORS.LIGHT_ORANGE, COLORS.ORANGE],
@@ -55,7 +60,7 @@ export default function CustomRun_StartRunScreen() {
             "SECS": "5"
         },
         intervalType: 'FINISH',
-        speak: SPEACH_OUTRO
+        speak: "SPEACH_OUTRO"
     }];
 
     const [isRunning, setIsRunning] = useState(true);
@@ -64,35 +69,54 @@ export default function CustomRun_StartRunScreen() {
     const [intervalHours, setIntervalHours] = useState(startRunIntervalsArr[counter]?.TIME?.HOURS === undefined ? 0 : Number(startRunIntervalsArr[counter]?.TIME?.HOURS));
     const [intervalMins, setIntervalMins] = useState(startRunIntervalsArr[counter]?.TIME?.MINS === undefined ? 0 : Number(startRunIntervalsArr[counter]?.TIME?.MINS));
     const [intervalSecs, setIntervalSecs] = useState(startRunIntervalsArr[counter]?.TIME?.SECS === undefined ? 0 : Number(startRunIntervalsArr[counter]?.TIME?.SECS));
-    const [timeLeftForInterval, setTimeLeftForInterval] = useState((intervalHours * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs * 1000));
+    const [timeLeftForInterval, setTimeLeftForInterval] = useState(5 * 1000);
     const [distanceMiles, setDistanceMiles] = useState(0);
     const [distanceKms, setDistanceKms] = useState(0);
     const [distanceMetres, setDistanceMetres] = useState(0);
     const [distanceLeftForInterval, setDistanceLeftForInterval] = useState((distanceMiles * 1609.34) + (distanceKms * 1000) + distanceMetres);
     const [runComplete, setRunComplete] = useState(false);
 
+    const [firstTimeDistanceSpeak, setFirstTimeDistanceSpeak] = useState(true);
+    const [firstFinishSpeech, setFirstFinishSpeech] = useState(true);
 
-    const [location, setLocation] = useState<any>();
-    const [prevLocation, setPrevLocation] = useState<any>(null);
-    const [distanceComplete, setDistanceComplete] = useState(false);
 
     let timer: any;
 
-    function setDistanceNextInterval(){
+    function setDistanceNextInterval() {
         setDistanceMiles(startRunIntervalsArr[counter + 1]?.DISTANCE?.MILES === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.DISTANCE?.MILES));
         setDistanceKms(startRunIntervalsArr[counter + 1]?.DISTANCE?.KMS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.DISTANCE?.KMS));
         setDistanceMetres(startRunIntervalsArr[counter + 1]?.DISTANCE?.METRES === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.DISTANCE?.METRES));
         setDistanceLeftForInterval((distanceMiles * 1609.34) + (distanceKms * 1000) + (distanceMetres));
     };
-    function setTimeNextInterval(){
+    function setTimeNextInterval() {
         setIntervalHours(startRunIntervalsArr[counter + 1]?.TIME?.HOURS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.HOURS));
         setIntervalMins(startRunIntervalsArr[counter + 1]?.TIME?.MINS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.MINS));
         setIntervalSecs(startRunIntervalsArr[counter + 1]?.TIME?.SECS === undefined ? 0 : Number(startRunIntervalsArr[counter + 1]?.TIME?.SECS));
-        setTimeLeftForInterval((intervalHours * 60 * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs * 1000));     
+        setTimeLeftForInterval((intervalHours * 60 * 60 * 1000) + (intervalMins * 60 * 1000) + (intervalSecs * 1000));
+    };
+
+    let useDistanceTravelled = useIsDistanceTravelledLocation();
+
+    function nextIntervalHandler(){
+        const nextInterval = startRunIntervalsArr[counter + 1]?.intervalType;
+        if(startRunIntervalsArr[counter + 1]?.['DISTANCE']?.['END_ON_DISTANCE']){
+            setDistanceNextInterval();
+            setTimeNextInterval();
+            setFirstTimeDistanceSpeak(true);
+            setCounter(prev => prev + 1);
+        }else if(nextInterval === 'SPEED_DISTANCE'){
+            setDistanceNextInterval();
+            clearTimeout(timer);
+            setFirstTimeDistanceSpeak(true);
+            setCounter(prev => prev + 1);
+        }else{
+            setTimeNextInterval();
+            setFirstTimeDistanceSpeak(true);
+            setCounter(prev => prev + 1);
+        };
     };
 
     useEffect(() => {
-
 
         if (!isRunning) {
             clearTimeout(timer);
@@ -102,69 +126,63 @@ export default function CustomRun_StartRunScreen() {
             Tts.resume();
         };
 
-        //speaks the start interval
-        if (!hasSpoken) {
-            Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
-            setTimeNextInterval();
-            setDistanceNextInterval();
-            setHasSpoken(true);
-        };
-
-        if (counter === startRunIntervalsArr.length - 1) {
-            setRunComplete(true);
-            explosion.current && explosion.current.start();
-        };
-
-       
-
+        const intervalType = startRunIntervalsArr[counter]?.intervalType;
         
+        switch (intervalType) {
+            case 'START':
+                Tts.speak('START', TtsOptions);
+                console.log('START');
+                timer = setTimeout(()=>{
+                    nextIntervalHandler();
+                }, timeLeftForInterval)
+                break;
+            case 'SPEED_TIME':
+                Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
+                timer = setTimeout(()=>{
+                    nextIntervalHandler();
+                }, timeLeftForInterval)
+                break;
+            case 'SPEED_DISTANCE':
+                //THIS WORKS
+                if(firstTimeDistanceSpeak){
+                    Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
+                    setFirstTimeDistanceSpeak(false);
+                }
+                
+                // clearTimeout(timer);
+                if(useDistanceTravelled && useDistanceTravelled >= distanceLeftForInterval){
+                    nextIntervalHandler();
+                };
+                
+                break;
+            case 'DISTANCE_TIME':
+                
+                Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
+               
+                if(startRunIntervalsArr[counter]?.['DISTANCE']?.['END_ON_DISTANCE']){
+                    clearTimeout(timer);
+                };
+                
+                if(useDistanceTravelled && useDistanceTravelled >= distanceLeftForInterval){
+                    nextIntervalHandler();
+                };
 
-        timer = counter < startRunIntervalsArr.length - 1 && startRunIntervalsArr[counter]?.['DISTANCE']?.['END_ON_DISTANCE'] !== true && setTimeout(() => {
-
-            Tts.speak(String(startRunIntervalsArr[counter + 1]?.speak), TtsOptions);
-
-            let intervalType = startRunIntervalsArr[counter]?.intervalType;
-            switch(intervalType){
-                case 'SPEED_TIME':
-                    intervalType = setTimeNextInterval();
-                    setCounter(prevCounter => prevCounter + 1);
-                    break;
-                case 'SPEED_DISTANCE':
-                    if(startRunIntervalsArr[counter + 1 ]?.['DISTANCE']?.['END_ON_DISTANCE'] === true){
-                        intervalType = setDistanceNextInterval();
-                        setCounter(prevCounter => prevCounter + 1);
-                        //promise for the distance calculator
-                        //wait for the distance calculator to be true
-                        // set the password to false (new promise)
-                        
-                    }else{
-                        intervalType = console.log('end on distance = false');
-                        setDistanceNextInterval();
-                        setDistanceNextInterval();
-                        setTimeNextInterval();
-                        setCounter(prevCounter => prevCounter + 1);
-                        //something to show if the distance has been made or not (tts.speak(distance made))
-                    };
-                    console.log('hi');
-                    break;
-                case 'DISTANCE_TIME':
-                    setDistanceNextInterval();
-                    setTimeNextInterval();
-                    setCounter(prevCounter => prevCounter + 1);
-                    //something to show if the distance has been made or not (tts.speak(distance made))
-                    break;
-                case 'FINSIH':
-                    setTimeout(()=> Tts.speak('Work out complete! See you again next time!'), 5 * 60 * 1000);
-                    setDistanceComplete(false);
-                default:
-                    console.log('Error');
-                    setCounter(prevCounter => prevCounter + 1);
-            };
-
-            
-        }, timeLeftForInterval);
-
-    
+                break;
+            case 'FINISH':
+                if(firstFinishSpeech){
+                    Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions);
+                    explosion.current && explosion.current.start();
+                    setRunComplete(true);
+                    clearTimeout(timer);
+                    setFirstFinishSpeech(false)
+                };
+                
+                break;
+            default:
+                Tts.speak('DEFAULT', TtsOptions);
+                console.log('default')
+                break;
+        };
 
         return () => {
             clearTimeout(timer);
@@ -175,8 +193,7 @@ export default function CustomRun_StartRunScreen() {
         hasSpoken,
         runComplete,
         timeLeftForInterval,
-        distanceComplete,
-        location,
+        useDistanceTravelled
     ]);
 
     const renderItem = ({ item, index }: { item: any, index: number }) => {

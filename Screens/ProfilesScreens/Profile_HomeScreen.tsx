@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
-import useDistanceTravelledLocation from '../../Utils/Hooks/General/useIsDistanceTravelledLocation';
+import useIsDistanceTravelledLocation from '../../Utils/Hooks/General/location';
 
 export default function Profile_HomeScreen() {
-const distance = useDistanceTravelledLocation({distanceInterval: 1});
+const distance = useIsDistanceTravelledLocation();
+
+const hi = distance >= 2;
 
   return (
     <Text>
-      {JSON.stringify(distance)}
+      {JSON.stringify(hi)}
     </Text>
   );
 };
