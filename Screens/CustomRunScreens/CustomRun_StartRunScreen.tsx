@@ -187,7 +187,6 @@ export default function CustomRun_StartRunScreen() {
                     setFirstTimeDistanceSpeak(false);
                 };
                 endOnDistance();
-
                 break;
             case 'DISTANCE_TIME':
                 if (firstTimeDistanceSpeak) {
@@ -201,17 +200,19 @@ export default function CustomRun_StartRunScreen() {
                     timer = setTimeout(() => {
                         nextIntervalHandler();
                     }, timeLeftForInterval);
-                }
-                
+                };
 
                 break;
             case 'FINISH':
                 if (firstFinishSpeech) {
                     Tts.speak(String(startRunIntervalsArr[counter]?.speak), TtsOptions); // add final Tts.speak('bye') with timer set to 5 mins
-                    explosion.current && explosion.current.start();
-                    setRunComplete(true);
                     clearTimeout(timer);
                     setFirstFinishSpeech(false);
+                    setTimeout(() => {
+                        explosion.current && explosion.current.start();
+                        setRunComplete(true);
+                        Tts.speak('Congratulations youve completed the run!')
+                    }, 5000);
                 };
 
                 break;
@@ -301,11 +302,15 @@ export default function CustomRun_StartRunScreen() {
         isRunning: totalIsRunning,
         pause: totalPause,
         resume: totalResume,
-    } = useTimer({ expiryTimestamp, autoStart: false, onExpire: () => setRunTimeComplete(true) });
+    } = useTimer({ expiryTimestamp, autoStart: true, onExpire: () => setRunTimeComplete(true) });
 
     function onPressPauseHandler() {
-        totalIsRunning ? totalPause() : totalResume();
-        setIsRunning(!isRunning);
+        if(runComplete){
+            //go to save screen
+        }else{
+            totalIsRunning ? totalPause() : totalResume();
+            setIsRunning(!isRunning);
+        }
     };
 
     return (
@@ -372,7 +377,7 @@ export default function CustomRun_StartRunScreen() {
                     </RectagularCTAButton>
                 </View>
                 <View style={styles.pillCTAButtonWrapper}>
-                    <PillCTAButton onPress={onPressPauseHandler} color1={COLORS.LIGHT_ORANGE} color2={COLORS.ORANGE} title={totalIsRunning ? 'PAUSE' : 'RESUME'} />
+                    <PillCTAButton onPress={onPressPauseHandler} color1={COLORS.LIGHT_ORANGE} color2={COLORS.ORANGE} title={totalIsRunning ? 'PAUSE' : runComplete ? 'SAVE' : 'RESUME'} />
                 </View>
             </ScrollView>
         </ScreenLinearBackground>
@@ -416,7 +421,8 @@ const styles = StyleSheet.create({
     pillCTAButtonWrapper: {
         top: -120,
         marginBottom: 150,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        zIndex: 11
     },
     confettiWrapper: {
         width: SCREEN_WIDTH,
