@@ -23,6 +23,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../Constants/General/DIMENSIONS"
 import { HEADER_1 } from "../../Constants/Styling/STYLES";
 import { COLORS } from "../../Constants/General/COLORS";
 import { SPEACH_INTRO, SPEACH_OUTRO } from "../../Constants/Speach/CustomRun/SpeachMaker";
+import { IRunIntervalsData } from "../../Types/Types";
 
 
 export default function CustomRun_StartRunScreen() {
@@ -79,8 +80,11 @@ export default function CustomRun_StartRunScreen() {
 
     const [firstTimeDistanceSpeak, setFirstTimeDistanceSpeak] = useState(true);
     const [firstFinishSpeech, setFirstFinishSpeech] = useState(true);
+    const [speedStatisticsData, setSpeedStatisticsData] = useState<IRunIntervalsData[]>(startRunIntervalsArr.filter((item) => item?.['SPEED']))
+    const [speedTotalIntervalsComplete, setSpeedTotalIntervalsComplete]= useState(false);
 
 
+    // let speedStatisticsData = startRunIntervalsArr.filter((item) => item?.['SPEED']);
     let timer: any;
 
     function setDistanceNextInterval() {
@@ -122,10 +126,12 @@ export default function CustomRun_StartRunScreen() {
         };
     };
 
+    // console.log({counter}, startRunIntervalsArr.length -1)
     function nextIntervalHandler() {
         setTimeNextInterval();
         setFirstTimeDistanceSpeak(true);
         setCounter(prev => prev + 1);
+        console.log('speedStatisticsData.length', speedStatisticsData.length)
     };
 
     function endOnDistance() {
@@ -140,6 +146,11 @@ export default function CustomRun_StartRunScreen() {
             setPass(false);
             setPrevLocation(null);
             setWatchPosition(null);
+            if(speedStatisticsData.length === 1 || speedStatisticsData.length === undefined){
+                setSpeedTotalIntervalsComplete(true);
+            }else{
+                setSpeedStatisticsData(prev => prev.splice(1));
+            }
             nextIntervalHandler();
         };
         setTimeNextInterval();
@@ -177,6 +188,11 @@ export default function CustomRun_StartRunScreen() {
                 };
                 timer = setTimeout(() => {
                     nextIntervalHandler();
+                    if(speedStatisticsData.length === 1 || speedStatisticsData.length === undefined){
+                        setSpeedTotalIntervalsComplete(true);
+                    }else{
+                        setSpeedStatisticsData(prev => prev.splice(1));
+                    }
                 }, timeLeftForInterval);
 
                 break;
@@ -234,7 +250,6 @@ export default function CustomRun_StartRunScreen() {
         distance,
         watchPosition,
         prevLocation,
-
     ]);
 
     const renderItem = ({ item, index }: { item: any, index: number }) => {
@@ -259,6 +274,7 @@ export default function CustomRun_StartRunScreen() {
     };
 
     const speedStatisticsItemRender = ({ item, index }: { item: any, index: number }) => {
+        
         return (
             <View style={styles.statisticsWrapper}>
                 <Text style={styles.h1Timer}>{item?.SPEED}</Text>
@@ -365,12 +381,17 @@ export default function CustomRun_StartRunScreen() {
                         </View>
                     </RectagularCTAButton>
                     <RectagularCTAButton colors={[COLORS.LIGHT_BLUE, COLORS.MEDIUM_BLUE]} emoji={"🏎️"}>
-                        <FlatList
+                        {speedTotalIntervalsComplete ?
+                         <Text style={styles.h1Timer}>COMPLETE</Text>
+                         :
+                         <FlatList
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
-                            data={startRunIntervalsArr.filter((item) => item?.['SPEED'])}
+                            data={speedStatisticsData}
                             renderItem={speedStatisticsItemRender}
                         />
+                    }
+                        
                     </RectagularCTAButton>
                     <RectagularCTAButton colors={[COLORS.MINT_GREEN, COLORS.GREEN]} emoji={"📏"}>
                         <Text>THIS WILL CONTAINER A TIMER LIKE TIME</Text>
